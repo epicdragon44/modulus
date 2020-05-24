@@ -10,11 +10,13 @@ import * as ROUTES from '../../constants/routes';
 import './signin.css';
 
 const SignInPage = () => (
-    <div className="content">
-        <br /><br /><h1>Sign In</h1><br />
-        <SignInForm />
-        <PasswordForgetLink />
-        <SignUpLink />
+    <div class="dialogwallpaper">
+        <div className="content">
+            <br /><br /><h1>Sign In</h1><br />
+            <SignInForm />
+            <PasswordForgetLink />
+            <SignUpLink />
+        </div>
     </div>
 );
 

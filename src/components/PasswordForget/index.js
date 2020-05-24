@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 const PasswordForgetPage = () => (
-    <div className="content">
-        <h1><br /><br />Forgot Password</h1><br />
-        <PasswordForgetForm />
+    <div className="dialogwallpaper">
+        <div className="content">
+            <h1><br /><br />Forgot Password</h1><br />
+            <PasswordForgetForm />
+        </div>
     </div>
 );
 const INITIAL_STATE = {

@@ -8,6 +8,11 @@
   height: 100%;
 }
 
+div.paperwallpaper {
+  background-image: url(./paper.jpg);
+  height: 1600px;
+}
+
 div {
   overflow: auto;
 }

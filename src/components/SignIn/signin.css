@@ -1,6 +1,6 @@
-div {
-    text-align: center;
-    flex: auto;
+div.dialogwallpaper {
+    background-image: url(./wallpaper2.png);
+    height: 1800px;
 }
 
 div.content {
@@ -11,6 +11,7 @@ div.content {
     width: 30em;
     height: 30em;
     vertical-align: middle;
+    text-align: center;
     flex: auto;
     background-color: whitesmoke;
 }

@@ -121,7 +121,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
 
                 <div class="courseheader">
                     {welcomeMsg}
-
                 </div>
 
                 <div class="modulelist">
