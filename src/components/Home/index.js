@@ -1475,6 +1475,9 @@ class Container extends React.Component {
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             courses: newCourses.slice(),
         });
+
+        window.location.reload();
+        window.location.reload(); 
     }
 
     getModules(name) {
