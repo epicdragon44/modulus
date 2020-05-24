@@ -1272,16 +1272,6 @@ class Container extends React.Component { //the main container for everything on
     }
 
     getModules(name) {
-        if (name="THISISANEWCOURSE") {
-            return [ 
-                {
-                    title: "Example Module",
-                    contents: ["Example Item",],
-                    vark: ['V',],
-                    internals: ["https://youtu.be/e3RbWSfhlp4",]
-                },
-            ];
-        }
 
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
         if ( name === "none")
