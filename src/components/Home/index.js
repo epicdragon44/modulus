@@ -11,21 +11,32 @@ require('@firebase/database');
 
 function CourseListItem(props) {
     return (
-        <div>
-            <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
-                {props.name}
-            </div>
-            <div style={{fontSize: "5px"}}>
-                <br />
-            </div>
+        <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
+            {props.name}
         </div>
     );
 }
 
 function AddCourseItem(props) {
     return (
-        <div className="addcourseitem" onClick={props.addCourseMode}>
-            +
+        <div>
+            <br />
+            <div className="addcourseitem" onClick={props.addCourseMode}>
+                Enroll in a course
+            </div>
+            <br />
+        </div>
+    );
+}
+
+function CreateCourseItem(props) {
+    return (
+        <div>
+            <br />
+            <div className="addcourseitem" onClick={props.createCourseMode}>
+                Create a course
+            </div>
+            <br />
         </div>
     );
 }
@@ -43,17 +54,28 @@ class Sidebar extends React.Component { //the entire left sidebar
     //utility functions to pass info up to container
     changeActiveCourse = (name) => {this.props.changeActiveCourse(name);}
     addCourseMode = () => {this.props.addCourseMode();}
+    createCourseMode = () => {this.props.createCourseMode();}
 
     render() {
         return (
             <div>
                 <div className="sidebar">
-                <br />
-                <div className="courselist">
-                {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
-                   <AddCourseItem addCourseMode={this.addCourseMode}/>
+                    <center>
+                        <table width="90%">
+                            <tr>
+                                <td>
+                                    <AddCourseItem addCourseMode={this.addCourseMode}/>
+                                </td>
+                                <td>
+                                    <CreateCourseItem createCourseMode={this.createCourseMode}/>
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                    <div className="courselist">
+                        {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You're not enrolled in any courses yet.<br/>Enroll or teach using the buttons above.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
+                    </div>
                 </div>
-            </div>
             </div>
             
         );
@@ -1043,6 +1065,34 @@ class MainPanel extends React.Component { //the entire right half of the screen 
     }
 }
 
+class CreateForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {    this.setState({value: event.target.value});  }
+
+    handleSubmit(event) {
+        this.props.createCourse(this.state.value);
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Enter the name for your new course below<br /><br />
+                    <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
+                <br /><br />
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+
 class NameForm extends React.Component {
     constructor(props) {
         super(props);
@@ -1088,12 +1138,25 @@ class NameForm extends React.Component {
     }
 }
 
+function CreateCoursePanel(props) {
+    return (
+        <div className="mainpanel">
+            <div className="addcourseview">
+                <div className="addcoursetitle">
+                    <b>Create a course</b>
+                </div>
+                <CreateForm username={props.username} courses={props.courses} createCourse={props.createCourse}/>
+            </div>
+        </div>
+    );
+}
+
 function AddCoursePanel(props) {
     return (
         <div className="mainpanel">
             <div className="addcourseview">
                 <div className="addcoursetitle">
-                    <b>Add a course</b>
+                    <b>Enroll in a course</b>
                 </div>
                 <NameForm username={props.username} courses={props.courses} addCourse={props.addCourse}/>
             </div>
@@ -1106,14 +1169,15 @@ class Container extends React.Component { //the main container for everything on
         super(props);
 
         //bind the state setting functions to the current class
-        this.changeActiveCourse = this.changeActiveCourse.bind(this)
-        this.addCourseMode = this.addCourseMode.bind(this)
+        this.changeActiveCourse = this.changeActiveCourse.bind(this);
+        this.addCourseMode = this.addCourseMode.bind(this);
+        this.createCourseMode = this.createCourseMode.bind(this);
 
         this.state = {
             arrCourses: props.courses,
             activeCourse: "none", //to be updated with the current open course
             username: props.name,
-            mainPanelMode: 0, //0 means modules view (default), 1 means add-course view
+            mainPanelMode: 0, //0 means modules view (default), 1 means add-course view, 2 means create-course view
             varkClicks: props.varkClicks,
         }
 
@@ -1133,6 +1197,13 @@ class Container extends React.Component { //the main container for everything on
         this.render(); //force React to rerender
     }
 
+    createCourseMode() { //switches main panel view to createCourseMode
+        this.setState({
+            mainPanelMode: 2
+        });
+        this.render(); //force React to rerender
+    }
+
     addCourse = (nameOfCourse) => { //actually adds the course
         var newCourses = this.state.arrCourses.slice();
         newCourses.push(nameOfCourse);
@@ -1146,6 +1217,15 @@ class Container extends React.Component { //the main container for everything on
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             courses: newCourses.slice(),
         });
+    }
+
+    createCourse = (nameOfCourse) => { //actually adds the course
+        alert("Created " + nameOfCourse);
+        //TODO: generate classcode, make the course with nameOfCourse, add it to the db
+        var classCode = "002"; // <-- set this to the class code
+
+        //done for you: at the end, enroll the person in their own course by calling this.addCourse(classCode);
+        this.addCourse(classCode);
     }
 
     addVarkClicks = (varkCharacter) => {
@@ -1231,6 +1311,8 @@ class Container extends React.Component { //the main container for everything on
             mainpanel = <MainPanel firebase={this.props.firebase} username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
         } else if (this.state.mainPanelMode===1) {
             mainpanel = <AddCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} addCourse={this.addCourse}/>
+        } else if (this.state.mainPanelMode===2) {
+            mainpanel = <CreateCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} createCourse={this.createCourse}/>
         }
         return (
             <div className="App">
@@ -1242,6 +1324,7 @@ class Container extends React.Component { //the main container for everything on
                             arrCourses={this.state.arrCourses}
                             changeActiveCourse={this.changeActiveCourse}
                             addCourseMode={this.addCourseMode}
+                            createCourseMode={this.createCourseMode}
                         />
                     </div>
                     <div className="right-element">
