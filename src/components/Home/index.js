@@ -261,7 +261,7 @@ class Select extends React.PureComponent {
     state = {
       options: [
         {
-            name: 'Filter items by VARK type',
+            name: 'Show all VARK types',
             value: "All",
         },
         {
@@ -294,13 +294,13 @@ class Select extends React.PureComponent {
   
       return (
         <React.Fragment>
-          <select onChange={this.handleChange} value={value}>
-            {options.map(item => (
-              <option key={item.value} value={item.value}>
-                {item.name}
-              </option>
-            ))}
-          </select>
+            <select name="search_categories" id="search_categories" onChange={this.handleChange} value={value}>
+                {options.map(item => (
+                <option className="option" key={item.value} value={item.value}>
+                    &nbsp;&nbsp;&nbsp;{item.name}
+                </option>
+                ))}
+            </select>
         </React.Fragment>
       );
     }
@@ -439,6 +439,9 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                                     <tr>
                                         <td>
                                             {unenroll}
+                                        </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </td>
                                         <td>
                                             {filter}
