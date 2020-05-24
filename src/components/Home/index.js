@@ -90,7 +90,42 @@ class MyModal extends React.Component{
 
     handleSubmit(event) { 
         if (this.props.addItemMode) {
-            //TODO: plugs into the backend to add a new item to the module. this.state.value contains the link to implement and this.state.itemName contains the name of the new item
+            const allCourses = JSON.parse(localStorage.getItem('courses'));
+            var courseID;
+            for (let i = 0, len = allCourses.length; i < len; ++i) {
+                var course = allCourses[i];
+                if (course.CourseName === this.props.activeCourse) {
+                    courseID = course.appID; // identifies current course child name to update
+                    break;
+                }
+            }
+            const arrModules = this.props.modules;
+            const curModule = this.props.moduleTitle;
+            for ( let i = 0; i < arrModules.length; ++i) {
+                var neededModule;
+                if ( arrModules[i].title === curModule) {
+                    neededModule = arrModules[i]; break; // finds needed module to edit
+                }
+            }
+           
+            const contents = neededModule.contents; // add your new items
+            const internals = neededModule.internals;
+            const vark = neededModule.vark;
+            contents.push(this.state.itemName);
+            internals.push(this.state.value);
+            vark.push(this.state.varkselection);
+            
+            
+            const newPush = this.props.modules;
+            
+            
+            this.props.firebase.courses().child(courseID).update({
+                modules: newPush.slice(),
+            });
+            
+        }
+        else {
+            //TODO: plugs into the backend to change the link for the item using this.state.value (the link to implement) 
             //this.props.modules should contain an array of javascript objects with every module inside
             //this.props.activeCourse should contain the string name of the currently active course
             //this.props.moduleTitle should contain the string title of the current module
@@ -105,7 +140,6 @@ class MyModal extends React.Component{
                 }
             }
             const arrModules = this.props.modules;
-            const curCourse = this.props.activeCourse;
             const curModule = this.props.moduleTitle;
             for ( let i = 0; i < arrModules.length; ++i) {
                 var neededModule;
@@ -113,7 +147,7 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-            //console.log(this.props.modules);
+           
             const contents = neededModule.contents; // add your new items
             const internals = neededModule.internals;
             const vark = neededModule.vark;
@@ -123,25 +157,11 @@ class MyModal extends React.Component{
             
             
             const newPush = this.props.modules;
-            const newPush2 = this.props.modules;
-            for ( let i = 0; i < newPush.length; ++i) {
-                newPush2["module" + (i+1)] = newPush[i];
-                delete newPush2[i];
-            }
-            console.log(newPush2);
-            console.log(courseID);
+            
             
             // this.props.firebase.courses().child(courseID).update({
-            //     modules: newPush2,
+            //     moduleTest: newPush,
             // });
-            // this.props.db.ref('courses/' + courseID + '/')
-        }
-        else {
-            //TODO: plugs into the backend to change the link for the item using this.state.value (the link to implement) 
-            //this.props.modules should contain an array of javascript objects with every module inside
-            //this.props.activeCourse should contain the string name of the currently active course
-            //this.props.moduleTitle should contain the string title of the current module
-            //this.props.firebase should let you access firebase
         }
         event.preventDefault();
     }
