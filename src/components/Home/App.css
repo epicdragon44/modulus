@@ -1,0 +1,292 @@
+.container {
+  position: fixed;
+  left: 0px;
+  padding: 0;
+  margin: 0;
+  background-color: #ff00ff;
+  width: 100%;
+  height: 100%;
+}
+
+.left-element {
+  background: whitesmoke;
+  display: inline-block;
+  float: left;
+  width: 20%;
+  height: 100%;
+  box-shadow: 10px 10px 5px grey;
+}
+
+.right-element {
+  background: white;
+  display: inline-block;
+  width: 80%;
+  height: 100%;
+}
+
+.left-element-flip {
+  background: white;
+  display: inline-block;
+  float: left;
+  width: 15%;
+  height: 100%;
+  box-shadow: 10px 10px 5px grey;
+}
+
+.right-element-flip {
+  background: whitesmoke;
+  display: inline-block;
+  width: 85%;
+  height: 100%;
+}
+
+.logo {
+  height: 100px;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+  padding-bottom: 10px;;
+}
+
+.sidebarheader {
+  margin-top: 2.5em;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+}
+
+.courselist {
+  height: 40em;
+  text-align: left;
+  padding-bottom: 2.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  overflow: auto;
+}
+
+.sessionbar {
+  height: 35px;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+}
+
+.namebar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 20px;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+}
+
+.courselistitem {
+  background-color: gold;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  height: 20px;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+  cursor: default;
+}
+
+.activecourselistitem {
+  background-color: goldenrod;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  height: 20px;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+}
+
+.addcourseitem {
+  background-color: #003459;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: large;
+  height: 20px;
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
+  cursor: default;
+}
+
+.moduleitem {
+  margin-left: 7em;
+  margin-top: 5em;
+  margin-right: 7em;
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.activemoduleitem {
+  margin-left: 7em;
+  margin-top: 5em;
+  margin-right: 7em;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.moduletitle {
+  background-color: #003459;
+  color: white;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.modulecontents {
+  transition: height 0.4s ease-in-out;
+  background-color: whitesmoke;
+}
+
+.Vmodulecontentitem {
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid red;
+  border-bottom: 2px black;
+}
+
+.Amodulecontentitem {
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid blue;
+  border-bottom: 2px black;
+}
+
+.Rmodulecontentitem {
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid green;
+  border-bottom: 2px black;
+}
+
+.Kmodulecontentitem {
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid purple;
+  border-bottom: 2px black;
+}
+
+.activemodulecontentitem {
+  background-color: lightgrey;
+  padding-left: 3em;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  padding-right: 3em;
+}
+
+.leftalign {
+	float: left;
+}
+.rightalign {
+	float: right;
+}
+
+.foo {
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.red {
+  background: red;
+}
+
+.blue {
+  background: blue;
+}
+
+.green {
+  background: green;
+}
+
+.purple {
+  background: purple;
+}
+
+.varkguide {
+  display: flex;
+  background-color: lightgray;
+  margin-left: 7em;
+  margin-right: 7em;
+}
+
+.varkguideintro {
+  min-width: 40%;
+  margin-left: 1em;
+  font-size: smaller;
+}
+
+.varkguideelement {
+  min-width: 15%;
+  font-size: smaller;
+}
+
+.addcourseview {
+  margin-left: 7em;
+  margin-top: 7em;
+  margin-right: 7em;
+}
+
+.addcoursetitle {
+  color: #003459;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  font-size: xx-large;
+}
+
+input[type=text] {
+  width: 10em;
+  padding: 5px 5px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: none;
+  transition: width 0.4s ease-in-out;
+  border-bottom: 2px solid lightgray;
+}
+
+input[type=text]:focus {
+  width: 35em;
+  border-bottom: 2px solid #003459;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #003459;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button {
+  background-color: #003459;
+  border: none;
+  color: white;
+  padding: 6px 32px;
+  text-decoration: none;
+  margin: 4px 4px;
+  cursor: pointer;
+}
+
+.courseheader {
+  color: #003459;
+  padding-top: 2.5em;
+  padding-left: 3.5em;
+  font-size: xx-large;
+}
