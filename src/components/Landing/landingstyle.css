@@ -1,0 +1,74 @@
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    background: #f9f9f9;
+    font-size: 24px;
+    padding: 25px;
+}
+.parallax1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("./images/header.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 650px;
+    width: 100%;
+}
+.parallax2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("images/library.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+}
+.parallax3 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("images/research.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+}
+.parallax4 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("images/team.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+}
+.header {
+    font-weight: 900;
+    font-size: 150px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#DDE0B2,#FCC290);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0px;
+}
+.header2 {
+    font-weight: 900;
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#f9f9f9,#bebebe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 180px;
+}
+.text-block {
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    top: 10%;
+    bottom: 0;
+    left: 30%;
+    right: 30%;
+    margin: auto;
+    text-align: center;
+}
+.noscrollbar {
+    overflow: hidden;
+}

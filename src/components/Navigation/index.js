@@ -25,6 +25,7 @@ function MenuItem(props) {
         <li>
             <Link to={props.link}>{props.name}</Link>
         </li>
+<<<<<<< Updated upstream
     );
 }
 
@@ -46,6 +47,17 @@ const NavigationAuth = ({ authUser }) => (
             </li>
         </ul>
     </div>
+=======
+        {authUser.roles.includes(ROLES.ADMIN) && (
+            <li>
+                <Link to={ROUTES.ADMIN}>Admin</Link>
+            </li>
+        )}
+        <li>
+            <SignOutButton />
+        </li>
+    </ul>
+>>>>>>> Stashed changes
 );
 
 const NavigationNonAuth = () => (
