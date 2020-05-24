@@ -159,14 +159,15 @@ class NameForm extends React.Component {
 
     handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
         let shouldAddCourse = false;
-
-        const usr = JSON.parse(localStorage.getItem('authUser')); //TODO: I'm really not sure what this block of code does...@Ryan Ma ??? Remove it, or tell me what it does
-        if (usr.courses.includes(this.state.value)) { 
-            //this.state.value = false; //dont force state values like this, instead, use the setState method
-            this.setState({
-                value: false,
-            })
-        } 
+        // TODO: @dan this is meant to check if user currently has the course he wants to add. You asked me to do this. This doesn't work
+        // const usr = JSON.parse(localStorage.getItem('authUser')); // Checks if course is already added. If so, set false to course is not added
+        // console.log(this.state.value);
+        // if (Object.values(usr).slice()[2].some(this.state.value)) {
+        //     //this.state.value = false; //dont force state values like this, instead, use the setState method
+        //     this.setState({
+        //         value: false,
+        //     })
+        // }
 
         //check that the course is available on the database. If not, throw an error to the user
         const allCourses = JSON.parse(localStorage.getItem('courses')); 
@@ -225,6 +226,7 @@ class Container extends React.Component { //the main container for everything on
             username: props.name,
             mainPanelMode: 0, //0 means modules view (default), 1 means add-course view
         }
+
     }
 
     changeActiveCourse(nameOfActiveCourse) {
@@ -242,12 +244,19 @@ class Container extends React.Component { //the main container for everything on
     }
 
     addCourse = (nameOfCourse) => { //actually adds the course
-        //TODO: @Ryan Ma you need to also push this up to the user's database
+        //Done, pushes correctly to user's updated list of courses. 
         var newCourses = this.state.arrCourses.slice();
         newCourses.push(nameOfCourse);
         this.setState({
             arrCourses: newCourses.slice(),
         }, () => {this.changeActiveCourse(nameOfCourse);});
+        const usr = JSON.parse(localStorage.getItem('authUser'));
+        console.log(Object.values(usr).slice()[2]);
+        localStorage.setItem('authUser', JSON.stringify(usr));
+        console.log(Object.values(usr).slice()[2]);
+        this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
+            courses: newCourses.slice(),
+        });
     }
 
 
@@ -259,7 +268,7 @@ class Container extends React.Component { //the main container for everything on
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
 
-            console.log(course.CourseName);
+
             if ( course.CourseName === name) { //now we've retrieved the correct course to display
                 //here we need to return all of the modules in that course in an array
 
@@ -325,9 +334,9 @@ class Home extends React.Component {
         super(props);
         const usr = JSON.parse(localStorage.getItem('authUser'));
         this.state = {
-            username: usr.username,
-            email: usr.email,
-            courses: usr.courses,
+            username: Object.values(usr).slice()[4],
+            email: Object.values(usr).slice()[1],
+            courses: Object.values(usr).slice()[2],
         }
 
     }
@@ -341,17 +350,18 @@ class Home extends React.Component {
             }));
             localStorage.setItem('courses', JSON.stringify(coursesList));
             this.setState({
-                username: usr.username,
-                email: usr.email,
-                courses: usr.courses,
-                courseList: coursesList,
+                username: Object.values(usr).slice()[4],
+                email: Object.values(usr).slice()[1],
+                courses: Object.values(usr).slice()[2],
+
             });
         });
+
     }
 
     render() {
         return ( //when login is implemented, it should create an app with the appropriate username passed in
-            <Container name={this.state.username} courses={this.state.courses}/>
+            <Container name={this.state.username} courses={this.state.courses} firebase={this.props.firebase}/>
         );
     }
 }
