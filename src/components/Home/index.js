@@ -345,7 +345,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         return (
             <div className="mainpanel">
                 <table>
-                    <tr>                        
+                    <tr>
                         <td>
                             <div className="courseheader">
                                 {welcomeMsg}
@@ -362,7 +362,21 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 </table>                       
                 <br />
                 {moduleList}     
-
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 {/* <div className="modulelist">
                     {Object.values(this.props.modules).map(module =>
                         <ModuleItem
