@@ -733,7 +733,9 @@ class AddModuleItem extends React.Component {
 
     handleChange(event) {    this.setState({newVal: event.target.value});  }
 
-    handleSubmit() {
+    handleSubmit(event) {
+        event.preventDefault();
+
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var courseID;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
