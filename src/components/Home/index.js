@@ -849,11 +849,11 @@ function ModuleItem(props) {
     );
     if (teacherMode) {
         topbar = (
-            <div className="teachermoduletitle">
+            <div className="teachermoduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
                 <table width="100%">
                     <tr>
                         <td className="leftcontentitem">
-                            <div onClick={() => setActive(active==="active" ? "" : "active")}>
+                            <div>
                                 {props.name}
                             </div>
                         </td>
