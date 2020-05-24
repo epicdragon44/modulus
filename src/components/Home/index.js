@@ -858,6 +858,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         this.filterCallback = this.filterCallback.bind(this);
         this.getCurrentUserEmail = this.getCurrentUserEmail.bind(this);
         this.getTeacherEmail = this.getTeacherEmail.bind(this);
+        this.getCourseID = this.getCourseID.bind(this);
     }
 
     handleRemove(event) {
@@ -891,9 +892,17 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         return curEmail;
     }
 
+    getCourseID(nameOfCourse) {
+        //TODO: return the ID of the course based on the name of the course. Should be super simple.
+
+        return "983y5ut4iwhi";
+    }
+
     render() { //active: "" means the module is minimized, "active" means its expanded
         var showModules = true;
         var showVarkProfile = true;
+
+        var courseid = this.getCourseID(this.props.activeCourse);
 
         var teacherMode = this.getTeacherEmail(this.props.activeCourse)===this.getCurrentUserEmail();
         // console.log(this.getTeacherEmail(this.props.activeCourse));
@@ -924,7 +933,8 @@ class MainPanel extends React.Component { //the entire right half of the screen 
             if (teacherMode) {
                 unenroll = (
                     <div className="teachernotice">
-                        <p>You are the teacher for this course. You can edit the course below.</p>
+                        <p>You are the author of this course.</p>
+                        <p><b>Course ID:&nbsp;&nbsp;&nbsp;</b> {courseid}</p>
                     </div>
                 );
                 filter = (<div />);
@@ -1262,6 +1272,17 @@ class Container extends React.Component { //the main container for everything on
     }
 
     getModules(name) {
+        if (name="THISISANEWCOURSE") {
+            return [ 
+                {
+                    title: "Example Module",
+                    contents: ["Example Item",],
+                    vark: ['V',],
+                    internals: ["https://youtu.be/e3RbWSfhlp4",]
+                },
+            ];
+        }
+
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
         if ( name === "none")
             return []
