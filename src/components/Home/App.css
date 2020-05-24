@@ -192,11 +192,11 @@ div {
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   border-radius: 10px;
-  transition: 0.5s;
+  transition: 1s;
 }
 
 .moduleitem:focus {
-  max-height: 500px;
+  max-height: fit-content;
 }
 
 .addmoduleitem {
@@ -218,7 +218,7 @@ div {
   margin-top: 1em;
   margin-bottom: 2em;
   margin-right: 7em;
-  max-height: 500px;
+  max-height: fit-content;
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   transition: 0.5s;
@@ -820,6 +820,11 @@ input.smallbutton:hover {
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   border-radius: 10px;
+  transition: 0.5s;
+}
+
+.moduleitemteacher:focus {
+  max-height: fit-content;
 }
 
 .activemoduleitemteacher {
@@ -830,6 +835,11 @@ input.smallbutton:hover {
   max-height: fit-content;
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
+  transition: 0.5s;
+}
+
+.activemoduleitemteacher:focus {
+  max-height: 85px;
 }
 
 .dividertext {
@@ -933,6 +943,7 @@ hr {
   padding-left: 15px;
   padding-right: 15px;
   padding: 6px 12px;
+  padding-bottom:10px;
   text-align: center;
   margin-right: 1em;
   vertical-align: auto;
@@ -946,6 +957,7 @@ hr {
   border-right: none;
   border-left: none;
   border-bottom: 10px solid #003459;
+  padding-bottom:0;
 }
 
 .react-tabs__tab--selected {
@@ -956,6 +968,7 @@ hr {
   border-right: none;
   border-left: none;
   border-bottom: 10px solid #003459;
+  padding-bottom:0;
 }
 
 .react-tabs__tab--disabled {
