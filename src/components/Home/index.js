@@ -484,6 +484,7 @@ class MyModal extends React.Component{
     handleSubmit(event) {
         this.setState({
             value: this.state.newVal,
+            active: false,
         });
 
         // this will rename the current module
@@ -556,6 +557,7 @@ class RenameItem extends React.Component {
     handleSubmit(event) {
         this.setState({
             value: this.state.newVal,
+            active: false,
         });
 
         const allCourses = JSON.parse(localStorage.getItem('courses'));
@@ -600,7 +602,7 @@ class RenameItem extends React.Component {
     }
 
     render() {
-        var inside = (<p className="renamebutton">[Rename]</p>);
+        var inside = (<p className="renamebutton">&nbsp;&nbsp;[Rename]</p>);
         if (this.state.active) {
             inside = (
                 <form onSubmit={this.handleSubmit}>
@@ -1092,8 +1094,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
             if (teacherMode) {
                 unenroll = (
                     <div className="teachernotice">
-                        <p>You are the author of this course.</p>
-                        <p><b>Course ID:&nbsp;&nbsp;&nbsp;</b> {courseid}</p>
+                        <p><b>Join Course ID:&nbsp;&nbsp;&nbsp;</b> {courseid}</p>
                     </div>
                 );
                 filter = (<div />);
@@ -1119,6 +1120,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                     activeCourse={this.props.activeCourse}
                     modules={this.props.modules}
                     firebase={this.props.firebase}
+                    changeActiveCourse={this.props.changeActiveCourse}
                 />
             );
         }
@@ -1145,6 +1147,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                             />
                         )
                     }
+                    {addModuleItem}
                 </div>
             );
         }
@@ -1217,7 +1220,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 </table>
                 <br />
                 {moduleList}
-                {addModuleItem}
                 <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
             </div>
         )
@@ -1339,14 +1341,18 @@ class Container extends React.Component { //the main container for everything on
             mainPanelMode: 0, //0 means modules view (default), 1 means add-course view, 2 means create-course view
             varkClicks: props.varkClicks,
         }
-
     }
 
     changeActiveCourse(courseCode) {
         this.setState({
             mainPanelMode: 0,
             activeCourse: courseCode,
-        }, () => {this.render();});
+        }, () => {
+            this.render();
+        });
+
+        window.location = window.location.href.substring(0, window.location.href.indexOf("#")) + '#' + courseCode;
+        //window.location.reload();
     }
 
     addCourseMode() { //switches main panel view to addCourseMode
@@ -1384,7 +1390,7 @@ class Container extends React.Component { //the main container for everything on
     }
 
     createCourse = (nameOfCourse) => { //actually adds the course
-        alert("Created " + nameOfCourse);
+        // alert("Created " + nameOfCourse);
         //TODO: generate classcode, make the course with nameOfCourse, add it to the db
         // use getModules(nameOfCourse) to get arbitrary items
         const usr = JSON.parse(localStorage.getItem('authUser'));
@@ -1556,13 +1562,14 @@ class Home extends React.Component {
                 appID: key,
             }));
             localStorage.setItem('courses', JSON.stringify(coursesList));
-            console.log(JSON.parse(localStorage.getItem('courses')));
+            //console.log(JSON.parse(localStorage.getItem('courses')));
             this.setState({
                 username: Object.values(usr).slice()[4],
                 email: Object.values(usr).slice()[1],
                 courses: Object.values(usr).slice()[2],
 
             });
+            console.log("bitch");
         });
     }
 
