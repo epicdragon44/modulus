@@ -9,8 +9,6 @@ import * as firebase from 'firebase'
 import { Resizable, ResizableBox } from 'react-resizable';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import backarrow from './backarrow.png';
-import moduleicon from './moduleicon.svg';
-import moreicon from './moreicon.svg';
 require('@firebase/database');
 
 //DOC: Item 1: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
