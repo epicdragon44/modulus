@@ -430,6 +430,15 @@ class MyModal extends React.Component{
             value: this.state.newVal,
         });
 
+        if (this.props.moduleTitle==="New Module") {
+            //inside of this if statement, it means that the module doesn't actually exist on the database at all yet. We need to make one.
+            //TODO: make a new module with this.state.newVal as its name.
+            //To help you, you have:
+            //this.props.activeCourse which is the currently active course
+            //this.props.modules which contains all the current modules
+            //this.props.firebase to let you access firebase
+        }
+
         // this will rename the current module
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var courseID;
@@ -451,6 +460,7 @@ class MyModal extends React.Component{
         this.props.firebase.courses().child(courseID).update({
             modules: newPush.slice(),
         });
+
         event.preventDefault();
     }
 
@@ -1413,7 +1423,6 @@ class Home extends React.Component {
 
             });
         });
-
     }
 
     render() {
