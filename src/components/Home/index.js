@@ -14,6 +14,7 @@ import darkdeleteicon from './deletedark.svg';
 import darkrenameicon from './renamedark.svg';
 import whitedeleteicon from './deletewhite.svg';
 import whiterenameicon from './renamewhite.svg';
+import deviceicon from './rotatedevice.png';
 require('@firebase/database');
 
 //DOC: Component: This component renders a single course button in the sidebar that, when clicked, changes the main panel to display that course.
@@ -327,7 +328,7 @@ class MyModal extends React.Component {
                             content: {
                             position                : 'relative',
                             margin                  : '15% auto',
-                            width                   : '60%',
+                            width                   : '80%',
                             height                  : '600px',
                             border                  : '1px solid rgba(0, 0, 0, .2)',
                             background              : '#fff',
@@ -458,7 +459,7 @@ class MyModal extends React.Component {
                             content: {
                             position                : 'relative',
                             margin                  : '15% auto',
-                            width                   : '60%',
+                            width                   : '90%',
                             height                  : '600px',
                             border                  : '1px solid rgba(0, 0, 0, .2)',
                             background              : '#fff',
@@ -896,9 +897,13 @@ class ModuleContentItem extends React.Component {
 
     openModal() { //this registers the click
         this.props.addVarkClicks(this.props.vark);
-
-        const header = this.props.name;
-        ModalManager.open(<MyModal itemName={this.props.name} firebase={this.props.firebase} text={header} modules={this.props.modules} activeCourse={this.props.activeCourse} moduleTitle={this.props.moduleTitle} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true} teacherMode={this.props.teacherMode} />);
+        if (this.props.instantOpen) {
+            window.open(this.props.internal, '_blank');
+        }
+        else {
+            const header = this.props.name;
+            ModalManager.open(<MyModal itemName={this.props.name} firebase={this.props.firebase} text={header} modules={this.props.modules} activeCourse={this.props.activeCourse} moduleTitle={this.props.moduleTitle} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true} teacherMode={this.props.teacherMode} />);
+        }
     }
 
     render() {
@@ -1186,6 +1191,7 @@ function ModuleItem(props) {
                         (
                             (contentitem!=="DELETE THAT YOU HOT DOG") ?
                             (<ModuleContentItem
+                                instantOpen={props.instantOpen}
                                 name={contentitem}
                                 vark={(props.showVark) ? (props.vark[props.contents.indexOf(contentitem)]) : ("")}
                                 internal={props.internals[props.contents.indexOf(contentitem)]}
@@ -1569,6 +1575,7 @@ class MainPanel extends React.Component {
                         Object.values(this.props.modules).map(module =>
                             (module.title!=="DELETE THAT YOU HOT DOG") ? 
                             (<ModuleItem
+                                instantOpen={this.props.instantOpen}
                                 name={module.title}
                                 contents={module.contents}
                                 vark={module.vark}
@@ -1593,6 +1600,7 @@ class MainPanel extends React.Component {
                         Object.values(this.props.modules).map(module =>
                             (module.title!=="DELETE THAT YOU HOT DOG") ? 
                             (<ModuleItem
+                                instantOpen={this.props.instantOpen}
                                 name={module.title}
                                 contents={module.contents}
                                 vark={module.vark}
@@ -1864,10 +1872,12 @@ class MainPanel extends React.Component {
             </Tabs>
         ) : (<div />);
 
+        let atmainpanel = (this.props.isMobile==="medium") ? ("mobile-mainpanel") : ("mainpanel");
+        let atcourseheader = (this.props.isMobile==="medium") ? ("mobile-courseheader") : ("courseheader");
 
         return (
-            <div className="mainpanel">
-                <h1 className="courseheader">
+            <div className={atmainpanel}>
+                <h1 className={atcourseheader}>
                     {welcomeMsg}
                 </h1>
                 
@@ -2223,19 +2233,37 @@ class Container extends React.Component {
     }
 
     render() {
+        var instantOpen = false;
+        if (this.props.isMobile==="small") {
+            return (
+                <div>
+                    <center>
+                        <br /><br /><br /><br />
+                        <img src={deviceicon} width="100px" />
+                        <br /><br />
+                        <h3>Please rotate your device to landscape</h3>
+                        <br /><br /><br /><br />
+                    </center>
+                </div>
+            );
+        } else if (this.props.isMobile==="medium") {
+            instantOpen = true;
+        }
+
         var mainpanel;
         if (this.state.mainPanelMode===0) {
-            mainpanel = <MainPanel firebase={this.props.firebase} username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
+            mainpanel = <MainPanel instantOpen={instantOpen} isMobile={this.props.isMobile} firebase={this.props.firebase} username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
         } else if (this.state.mainPanelMode===1) {
             mainpanel = <AddCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} addCourse={this.addCourse}/>
         } else if (this.state.mainPanelMode===2) {
             mainpanel = <CreateCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} createCourse={this.createCourse}/>
         }
 
+        var leftelementattribute = (!(this.props.isMobile==="medium")) ? ("left-element") : ("mobile-left-element");
         var leftelement = (<div />);
         if (!this.state.hidden) {
             leftelement=(
-                <div className="left-element">
+                <div className={leftelementattribute}>
                     <ResizableBox width={300} height={0} axis={'x'} resizeHandles={['ne']}
                     minConstraints={[150, 0]} maxConstraints={[400, 0]} />
                     <Sidebar
@@ -2251,24 +2279,40 @@ class Container extends React.Component {
         }
 
         var button = (this.state.hidden) ? (
-            <button className="smallsidebartoggle" onClick={this.toggleHidden}>
-                <img className="flipimage" src={backarrow} width="12px"/> 
+            <button className={(!(this.props.isMobile==="medium")) ? ("smallsidebartoggle") : ("mobile-smallsidebartoggle")} onClick={this.toggleHidden}>
+                <img className={(!this.props.isMobile) ? ("flipimage") : ("")} src={backarrow} width="12px"/> 
             </button>
         ) : (
-            <button className="sidebartoggle" onClick={this.toggleHidden}>
-                <img src={backarrow} width="12px"/> 
+            <button className={(!(this.props.isMobile==="medium")) ? ("sidebartoggle") : ("mobile-sidebartoggle")} onClick={this.toggleHidden}>
+                <img className={(this.props.isMobile) ? ("flipimage") : ("")} src={backarrow} width="12px"/> 
             </button>
         );
+
+        var rightelement;
+        if (this.props.isMobile==="medium") {
+            if (this.state.hidden) {
+                rightelement = (
+                    <div className="right-element">
+                        {mainpanel}
+                    </div>
+                );
+            } else {
+                rightelement = (null);
+            }
+        } else {
+            rightelement = (
+                <div className="right-element">
+                    {mainpanel}
+                </div>
+            );
+        }
 
         return (
             <div className="App">
                 <div className="container">
-                    
                     {leftelement}
                     {button}
-                    <div className="right-element">
-                        {mainpanel}
-                    </div>
+                    {rightelement}
                 </div>
             </div>
         );
@@ -2282,14 +2326,20 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         const usr = JSON.parse(localStorage.getItem('authUser'));
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.state = {
             username: Object.values(usr).slice()[4],
             email: Object.values(usr).slice()[1],
             courses: Object.values(usr).slice()[2],
             varkClicks: Object.values(usr).slice()[6],
+            isMobile: "large", //either large, medium or small
         }
     }
+
     componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+
         const usr = JSON.parse(localStorage.getItem('authUser'));
         this.props.firebase.courses().on('value', snapshot => {
             const coursesObject = snapshot.val();
@@ -2307,10 +2357,29 @@ class Home extends React.Component {
             });
         });
     }
+      
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+    
+    updateWindowDimensions() {
+        if (window.innerWidth<480) {
+            this.setState({ isMobile: "small" },
+            () => this.render());
+        }
+        else if (window.innerWidth<1100) {
+            this.setState({ isMobile: "medium" },
+            () => this.render());
+        }
+        else {
+            this.setState({ isMobile: "large" },
+            () => this.render());
+        }
+    }
 
     render() {
         return ( //when login is implemented, it should create an app with the appropriate username passed in
-            <Container name={this.state.username} courses={this.state.courses} firebase={this.props.firebase} varkClicks={this.state.varkClicks} />
+            <Container name={this.state.username} courses={this.state.courses} firebase={this.props.firebase} varkClicks={this.state.varkClicks} isMobile={this.state.isMobile}/>
         );
     }
 }

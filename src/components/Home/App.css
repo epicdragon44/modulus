@@ -1133,3 +1133,58 @@ div.managecontent {
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   border-radius: 10px;
 }
+
+.mobile-courseheader {
+  color: #003459;
+  padding-top: 2em;
+  padding-bottom: 1em;
+  font-size: xx-large;
+  padding-left: 15px;
+  max-width: 23em;
+}
+
+.mobile-left-element {
+  background: whitesmoke;
+  display: inline-block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  box-shadow: 20px 20px 25px lightgray;
+}
+
+.mobile-mainpanel {
+  margin-left: 0em;
+  padding-left: 1em;
+}
+
+.mobile-sidebartoggle {
+  position: fixed;
+  width: 75px;
+  height: 75px;
+  top: 80%;
+  border-radius: 100px;
+  left: 85%;
+  box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
+  outline:none;
+}
+
+.mobile-sidebartoggle:hover {
+  background-color: #00233b;
+  transition: 1s;
+}
+
+.mobile-smallsidebartoggle {
+  position: fixed;
+  width: 75px;
+  height: 75px;
+  top: 80%;
+  border-radius: 100px;
+  left: 85%;
+  box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
+  outline:none;
+}
+
+.mobile-smallsidebartoggle:hover {
+  background-color: #00233b;
+  transition: 1s;
+}
