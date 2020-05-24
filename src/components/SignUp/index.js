@@ -34,6 +34,11 @@ class SignUpFormBase extends Component {
         const { username, email, passwordOne, isAdmin } = this.state;
         const roles = [];
         const courses = ["Welcome"];
+        const wvarkclicks = [""];
+        const vcourseprogress = [];
+        const tempCourse = ["Item1"];
+        vcourseprogress['TempCourse'] = tempCourse;
+
         if (isAdmin) {
             roles.push(ROLES.ADMIN);
         }else{
@@ -51,6 +56,8 @@ class SignUpFormBase extends Component {
                         email,
                         roles,
                         courses,
+                        vcourseprogress,
+                        wvarkclicks,
                     })
                     .then(() => {
                         this.setState({ ...INITIAL_STATE });
