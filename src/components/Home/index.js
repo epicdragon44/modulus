@@ -116,9 +116,9 @@ class MyModal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleItemNameChange = this.handleItemNameChange.bind(this);
         this.state = {
-            varkselection: null,
+            varkselection: (this.props.vark==="V" || this.props.vark==="A" || this.props.vark==="R" || this.props.vark==="K") ? (this.props.vark) : (null),
             value: this.props.internal,
-            itemName: "",
+            itemName: (this.props.itemName==="add") ? ("") : (this.props.itemName),
             //modules: this.props.modules.slice(), //modify this.state.modules //push the entirety of this.state.modules up to the database
         };
     }
@@ -127,6 +127,12 @@ class MyModal extends React.Component {
     handleItemNameChange(event) {    this.setState({itemName: event.target.value});  }
 
     handleSubmit(event) {
+        if (!(this.state.varkselection==="V" || this.state.varkselection==="A" || this.state.varkselection==="R" || this.state.varkselection==="K")) {
+            alert('You need to select a VARK type!');
+            event.preventDefault();
+            return;
+        }
+
         if (this.props.addItemMode) {
             const allCourses = JSON.parse(localStorage.getItem('courses'));
             var courseID;
@@ -160,9 +166,9 @@ class MyModal extends React.Component {
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
             });
-
         }
         else {
+    
             const allCourses = JSON.parse(localStorage.getItem('courses'));
             var courseID;
             for (let i = 0, len = allCourses.length; i < len; ++i) {
@@ -520,11 +526,11 @@ class RenameModule extends React.Component {
         var inside = (<p className="renamebutton">[Rename]</p>);
         if (this.state.active) {
             inside = (
-                <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <label>
-                    <input type="text" value={this.state.newVal} onChange={this.handleChange} />
+                    <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Submit" />
+                <input className="internal" type="submit" value="Submit" />
             </form>
             );
         }
@@ -610,7 +616,7 @@ class RenameItem extends React.Component {
         var inside = (<p className="renamebutton">&nbsp;&nbsp;[Rename]</p>);
         if (this.state.active) {
             inside = (
-                <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <label>
                     <input type="text" value={this.state.newVal} onChange={this.handleChange} />
                 </label>
@@ -638,7 +644,7 @@ class ModuleContentItem extends React.Component {
         this.props.addVarkClicks(this.props.vark);
 
         const header = this.props.name;
-        ModalManager.open(<MyModal itemName={this.props.name} firebase={this.props.firebase} text={header} modules={this.props.modules} activeCourse={this.props.activeCourse} moduleTitle={this.props.moduleTitle} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true} teacherMode={this.props.teacherMode}/>);
+        ModalManager.open(<MyModal itemName={this.props.name} firebase={this.props.firebase} text={header} modules={this.props.modules} activeCourse={this.props.activeCourse} moduleTitle={this.props.moduleTitle} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true} teacherMode={this.props.teacherMode} />);
     }
 
     render() {
@@ -781,9 +787,9 @@ class AddModuleItem extends React.Component {
                 <div>
                     <form onSubmit={this.handleSubmit}>
                         <label>
-                            <input type="text" value={this.state.newVal} onChange={this.handleChange} />
+                            <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} />
                         </label>
-                        <input className="button" type="submit" value="Submit" />
+                        <input className="button" type="submit" value="Add" />
                     </form>
                 </div>
             );
@@ -1078,6 +1084,7 @@ class MainPanel extends React.Component {
 
         var welcomeMsg;
         var unenroll;
+        var joinCode;
         var filter;
         var teacherReveal;
         var showRest = true;
@@ -1085,6 +1092,9 @@ class MainPanel extends React.Component {
         if (this.props.activeCourse==="none") {
             welcomeMsg = "No course selected.";
             teacherReveal = "";
+            joinCode = (
+                <div />
+            );
             unenroll = (
                 <div />
             );
@@ -1099,16 +1109,28 @@ class MainPanel extends React.Component {
             let teachermsg = "Taught by " + this.getTeacherName(this.getTeacherEmail(this.props.activeCourse));
             teacherReveal = teachermsg;
             unenroll = (
-                <div className="removecoursebutton" onClick={this.handleRemove}>
-                    Unenroll
+                <div className="managecontent">
+                    <br />
+                    <h3>
+                        Unenroll from this course
+                    </h3>
+                    <center>
+                    <div className="removecoursebutton" onClick={this.handleRemove}>
+                        Unenroll
+                    </div>
+                    </center>
+                    <br /><br />
                 </div>
             );
             filter = (<Select passState={this.handleFilter} default={"Show all VARK types"}/>);
             if (teacherMode) {
-                unenroll = (
+                joinCode = (
                     <div className="teachernotice">
                         <p><b>Join Course ID:&nbsp;&nbsp;&nbsp;</b> {courseid}</p>
                     </div>
+                );
+                unenroll = (
+                    <div />
                 );
                 filter = (<div />);
             }
@@ -1116,6 +1138,9 @@ class MainPanel extends React.Component {
                 welcomeMsg = "Select or add a course on the left to get started."
                 showModules = false;
                 unenroll = (
+                    <div />
+                );
+                joinCode = (
                     <div />
                 );
                 showVarkProfile = false;
@@ -1139,9 +1164,10 @@ class MainPanel extends React.Component {
             );
         }
 
-        var moduleList = (<div />);
+        var viewModuleList = (<div />);
+        var editModuleList = (<div />);
         if (showModules) {
-            moduleList = (
+            viewModuleList = (
                 <div className="modulelist">
                     {
                         Object.values(this.props.modules).map(module =>
@@ -1154,7 +1180,29 @@ class MainPanel extends React.Component {
                                 username={this.props.username}
                                 addVarkClicks={this.props.addVarkClicks}
                                 varkMode={this.state.varkselection}
-                                teacherMode={teacherMode}
+                                teacherMode={false}
+                                activeCourse={this.props.activeCourse}
+                                modules={this.props.modules}
+                                firebase={this.props.firebase}
+                            />
+                        )
+                    }
+                </div>
+            );
+            editModuleList = (
+                <div className="modulelist">
+                    {
+                        Object.values(this.props.modules).map(module =>
+                            <ModuleItem
+                                name={module.title}
+                                contents={module.contents}
+                                vark={module.vark}
+                                internals={module.internals}
+                                active=""
+                                username={this.props.username}
+                                addVarkClicks={this.props.addVarkClicks}
+                                varkMode={this.state.varkselection}
+                                teacherMode={true}
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
@@ -1204,69 +1252,89 @@ class MainPanel extends React.Component {
 
         var mailtostring = "mailto:" + teacherEmail;
 
+        var contactTeacher = (teacherMode) ? (null) : (
+            <div className="managecontent">
+                <center>
+                    <br />
+                    <h3>
+                        {teacherReveal} 
+                    </h3>
+                    <p className="smallparagraph">
+                        {teacherEmail}<br /><br />
+                    </p>
+                    <a className="smalllinkbutton" href={mailtostring}>Contact</a>
+                    <br /><br />
+                </center>
+            </div>
+        );
+
+        var manageStudents = (teacherMode) ? ( //TODO: ACTUALLY LET THEM MANAGE STUDENTS ENROLLED HERE
+            <div className="managecontent">
+                <center>
+                    <h1>Manage Students here</h1>
+                </center>
+            </div>
+        ) : (null);
+
+        var ModulesTab = (teacherMode) ? (<Tab>View Modules</Tab>) : (<Tab>Modules</Tab>);
+        var EditModulesTab = (teacherMode) ? (<Tab>Edit Modules</Tab>) : (null);
+        var OtherTab = (teacherMode) ? (<Tab>Manage Course</Tab>) : (<Tab>Other</Tab>);
+        
+        var ViewModulesPanel = (
+            <TabPanel>
+                {filter}
+                {viewModuleList}
+            </TabPanel>
+        );
+        var EditModulesPanel = (teacherMode) ? (
+            <TabPanel>
+                {filter}
+                {editModuleList}
+            </TabPanel>
+        ) : (null);
+
         var restOfPage = (showRest) ? (
             <Tabs>
-                    <TabList>
-                        <Tab>Modules</Tab>
-                        <Tab>Other</Tab>
-                    </TabList>
-                    <TabPanel>
-                        {filter}
-                        {moduleList}
-                    </TabPanel>
-                    <TabPanel>
-                        <div className="managecontent">
-                            <center>
-                                <br />
-                                <h3>
-                                    {teacherReveal} 
-                                </h3>
-                                <p className="smallparagraph">
-                                    {teacherEmail}<br /><br />
-                                </p>
-                                <a className="smalllinkbutton" href={mailtostring}>Contact</a>
-                                <br /><br />
-                            </center>
-                        </div>
-                        <br />
-                        <div className="managecontent">
-                            <center>
-                                <h3><br /> <br />Course VARK Profile</h3> 
-                                <p className="smallparagraph">Every course has a different profile, composed of different types and numbers of items.</p> <br />
-                                <table className="offsetleft">
-                                    <tr>
-                                        <td>
-                                            {varkProfile}
-                                        </td>
-                                        <td>
-                                            <p className="smallparagraph" style={{color: "red"}}>Visual</p>
-                                            <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
-                                            <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
-                                            <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </center>
-                            <center>
-                                <p className="smallparagraph">To learn more about the different learning models, visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.</p>
-                                <br /> <br />
-                            </center>
-                        </div>
-                        <br />
-                        <div className="managecontent">
+                <TabList>
+                    {ModulesTab}
+                    {EditModulesTab}
+                    {OtherTab}
+                </TabList>
+                {ViewModulesPanel}
+                {EditModulesPanel}
+                <TabPanel>
+                    {contactTeacher}
+                    {manageStudents}
+                    <br />
+                    <div className="managecontent">
+                        <center>
+                            <h3><br /> <br />Course VARK Profile</h3> 
+                            <p className="smallparagraph">Every course has a different profile,<br />composed of different types and numbers of items.</p> <br />
+                            <table className="offsetleft">
+                                <tr>
+                                    <td>
+                                        {varkProfile}
+                                    </td>
+                                    <td>
+                                        <p className="smallparagraph" style={{color: "red"}}>Visual</p>
+                                        <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
+                                        <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
+                                        <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                        <center>
                             <br />
-                            <h3>
-                                Unenroll from this course
-                            </h3>
-                            <center>
-                            {unenroll}
-                            </center>
-                            <br /><br />
-                        </div>
-
-                        <br /><br /><br /><br /><br />
-                    </TabPanel>
-                </Tabs>
+                            <p className="smallparagraph">To learn more about the different learning models,<br /> visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.</p>
+                            <br /> <br />
+                        </center>
+                    </div>
+                    <br />
+                    {unenroll}
+                    <br /><br /><br /><br /><br />
+                </TabPanel>
+            </Tabs>
         ) : (<div />);
 
 
