@@ -63,6 +63,12 @@ function currentUserIsAdmin() {
     return (Object.values(usr).slice()[3][0]==="ADMIN");
 }
 
+function isUserBlocked(username, activeCourse) {
+    // TODO: return false if the user is blocked from the course, and true if the user is not blocked
+    // This should simply be the value in the key-value pair in the database you set up in getListOfStudents()
+    return true; //placeholder to remove
+}
+
 //DOC: Item 4: The entire left sidebar
 class Sidebar extends React.Component {
     constructor(props) {
@@ -87,7 +93,7 @@ class Sidebar extends React.Component {
                     <br />
                     <AddCourseItem addCourseMode={this.addCourseMode}/>
                     <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                    {(this.props.arrCourses.length<=1) ? (null) : this.props.arrCourses.map(course => ((course==="Welcome") ? (null) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
+                    {(this.props.arrCourses.length<=1) ? (null) : this.props.arrCourses.map(course => ((course==="Welcome" || !isUserBlocked(this.state.username, this.state.activeCourse)) ? (null) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
                 </div>
             </div>
 
@@ -1381,7 +1387,7 @@ class MainPanel extends React.Component {
         // Then, right here, push to the current course the value of (event.target.checked+""), which will be either "true" or "false"
         // To help you, this.props.activeCourse should have the current course code
         // When users make new courses in the future, this attribute should automatically be included, and set to true by default
-        this.setState({ [event.target.name]: event.target.checked });
+        this.setState({ [event.target.name]: event.target.checked }); //Keep this line of code
     };
 
     render() { //active: "" means the module is minimized, "active" means its expanded
