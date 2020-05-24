@@ -6,6 +6,7 @@ import { Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import { PieChart } from 'react-minimal-pie-chart';
 import 'react-contexify/dist/ReactContexify.min.css';
 import * as firebase from 'firebase'
+import { Resizable, ResizableBox } from 'react-resizable';
 import backarrow from './backarrow.png';
 require('@firebase/database');
 
@@ -74,30 +75,28 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className="sidebar">
-                    {/* <center> */}
-                        {/* <table width="90%">
-                            <tr>
-                                <td>
-                                    <AddCourseItem addCourseMode={this.addCourseMode}/>
-                                </td>
-                                <td>
-                                    <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                                </td>
-                            </tr>
-                        </table> */}
-                        {/* <AddCourseItem addCourseMode={this.addCourseMode}/>
-                        <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                    </center>
-                    <hr />
-                    <br /> */}
-                    <div className="courselist">
-                        <br />
-                        <AddCourseItem addCourseMode={this.addCourseMode}/>
-                        <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                        {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
-                    </div>
+            <div className="sidebar">
+                {/* <center> */}
+                    {/* <table width="90%">
+                        <tr>
+                            <td>
+                                <AddCourseItem addCourseMode={this.addCourseMode}/>
+                            </td>
+                            <td>
+                                <CreateCourseItem createCourseMode={this.createCourseMode}/>
+                            </td>
+                        </tr>
+                    </table> */}
+                    {/* <AddCourseItem addCourseMode={this.addCourseMode}/>
+                    <CreateCourseItem createCourseMode={this.createCourseMode}/>
+                </center>
+                <hr />
+                <br /> */}
+                <div className="courselist">
+                    <br />
+                    <AddCourseItem addCourseMode={this.addCourseMode}/>
+                    <CreateCourseItem createCourseMode={this.createCourseMode}/>
+                    {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
                 </div>
             </div>
 
@@ -1554,16 +1553,20 @@ class Container extends React.Component {
         return (
             <div className="App">
                 <div className="container">
-                    <div className="left-element">
-                        <Sidebar
-                            username={this.state.username}
-                            activeCourse={this.state.activeCourse}
-                            arrCourses={this.state.arrCourses}
-                            changeActiveCourse={this.changeActiveCourse}
-                            addCourseMode={this.addCourseMode}
-                            createCourseMode={this.createCourseMode}
-                        />
-                    </div>
+                    
+                        <div className="left-element">
+                            <ResizableBox width={300} height={10} axis={'x'} resizeHandles={['ne']}
+                            minConstraints={[150, 10]} maxConstraints={[400, 10]} />
+                            <Sidebar
+                                username={this.state.username}
+                                activeCourse={this.state.activeCourse}
+                                arrCourses={this.state.arrCourses}
+                                changeActiveCourse={this.changeActiveCourse}
+                                addCourseMode={this.addCourseMode}
+                                createCourseMode={this.createCourseMode}
+                            />
+                        </div>
+                    
                     <div className="right-element">
                         {mainpanel}
                     </div>
