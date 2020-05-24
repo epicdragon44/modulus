@@ -8,11 +8,6 @@
   background-color: white;
 }
 
-div.paperwallpaper {
-  background-image: url(./paper.jpg);
-  height: 1600px;
-}
-
 div {
   overflow: auto;
 }
@@ -125,7 +120,7 @@ div {
 
 .moduleitem {
   margin-left: 7em;
-  margin-top: 5em;
+  margin-top: 3em;
   margin-right: 7em;
   max-height: 50px;
   overflow: hidden;
@@ -133,7 +128,7 @@ div {
 
 .activemoduleitem {
   margin-left: 7em;
-  margin-top: 5em;
+  margin-top: 3em;
   margin-right: 7em;
   max-height: 500px;
   overflow: hidden;
@@ -141,7 +136,9 @@ div {
 
 .moduletitle {
   background-color: #003459;
+  height: 21px;
   color: white;
+  font-size: large;
   padding-left: 1em;
   padding-bottom: 1em;
   padding-top: 1em;
@@ -191,8 +188,8 @@ div {
 .activemodulecontentitem {
   background-color: lightgrey;
   padding-left: 3em;
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
   padding-right: 3em;
 }
 
@@ -296,6 +293,6 @@ button {
 .courseheader {
   color: #003459;
   padding-top: 2.5em;
-  padding-left: 3.5em;
+  padding-left: 5em;
   font-size: xx-large;
 }

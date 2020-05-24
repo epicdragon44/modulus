@@ -76,7 +76,8 @@ function ModuleContentItem(props) {
     var attribute = precede+"modulecontentitem"
     return (
         <div className={attribute} onClick={() => open("active")}>
-            {props.name}
+            {/* Remove currently contains part later and replace it with a link to open the item view with the proper internal */}
+            {props.name} currently contains {props.internal}
         </div>
     );
 }
@@ -91,7 +92,14 @@ function ModuleItem(props) {
                 {props.name}
             </div>
             <div class="modulecontents">
-                {props.contents.map(contentitem => <ModuleContentItem name={contentitem} vark={props.vark[props.contents.indexOf(contentitem)]}/>)}
+                {props.contents.map(
+                    contentitem => 
+                    <ModuleContentItem 
+                        name={contentitem} 
+                        vark={props.vark[props.contents.indexOf(contentitem)]} 
+                        internal={props.internals[props.contents.indexOf(contentitem)]}
+                    />
+                )}
             </div>
         </div>
     );
@@ -129,6 +137,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                             name={module.title}
                             contents={module.contents}
                             vark={module.vark}
+                            internals={module.internals}
                             active=""
                             username={this.props.username}
                         />)}
@@ -158,6 +167,8 @@ class NameForm extends React.Component {
         if (usr.courses.includes(this.state.value)) {
             this.state.value = false;
         }
+
+        //below this line, the code is dan's
         if (shouldAddCourse) {
             this.props.addCourse(this.state.value);
         }
@@ -233,27 +244,27 @@ class Container extends React.Component { //the main container for everything on
         //TODO: BASED ON USERNAME (THIS.STATE.USERNAME) AND CURRENTLY OPEN COURSE (THIS.STATE.ACTIVECOURSE), PULL THE MODULES FROM DATABASE HERE AND RETURN IT AS AN ARRAY OF JAVASCRIPT OBJECTS. 
         //YOU CAN SEE THE DUMMY EXAMPLES BELOW, BUT PLEASE REPLACE THIS SHIT
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
-        if ( name == "none")
+        if ( name === "none")
             return []
+
+        console.log(allCourses);
 
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
+
             console.log(course.CourseName);
             if ( course.CourseName === name)
+                //here 
                 return [ {
                     title: course.CourseName,
-                    contents: ['w'], //yeet
-                    vark: ['w'],
-
+                    contents: ["Item 1", "Item 2", "Item 3"],
+                    vark: ['V', "A", "R"],
+                    internals: ["https://www.youtube.com/watch?v=2qv_vCHZkcg&t=1689s", "oogwayascends.mp3", "In the beginning, there was darkness."]
                 }];
             else{
                 console.log("whoops");
             }
         }
-
-
-
-
     }
 
     render() {
@@ -309,14 +320,12 @@ class Home extends React.Component {
                 email: usr.email,
                 courses: usr.courses,
                 courseList: coursesList,
-
             });
         });
 
     }
 
     render() {
-
         return ( //when login is implemented, it should create an app with the appropriate username passed in
             <Container name={this.state.username} courses={this.state.courses}/>
         );
