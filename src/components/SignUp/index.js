@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
+import Recaptcha from "react-recaptcha";
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
-
 const SignUpPage = () => (
     <div className="dialogwallpaper">
         <div className="content">
@@ -21,12 +20,15 @@ const INITIAL_STATE = {
     passwordTwo: '',
     isAdmin: false,
     error: null,
+    isVerified: false,
 };
 
 class SignUpFormBase extends Component {
     constructor(props) {
         super(props);
 
+        this.recaptchaLoaded = this.recaptchaLoaded.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
         this.state = { ...INITIAL_STATE };
     }
 
@@ -82,6 +84,28 @@ class SignUpFormBase extends Component {
         this.setState({ [event.target.name]: event.target.checked });
     };
 
+    recaptchaLoaded() {
+        console.log("recaptcha has been loaded");
+    }
+    verifyCallback(response) {
+        if(response) {
+            this.setState({
+                isVerified: true,
+            })
+            console.log("here");
+        }
+    }
+    showPW = event => {
+        var x = document.getElementById("pw1");
+        var y = document.getElementById("pw2");
+        if (x.type === "password") {
+            x.type = "text";
+            y.type = "text";
+        } else {
+            x.type = "password";
+            y.type = "password";
+        }
+    }
     render() {
         const {
             username,
@@ -90,13 +114,15 @@ class SignUpFormBase extends Component {
             passwordTwo,
             isAdmin,
             error,
+            isVerified,
         } = this.state;
 
-        const isInvalid =
-            passwordOne !== passwordTwo ||
-            passwordOne === '' ||
-            email === '' ||
-            username === '';
+        const isValid =
+            ((passwordOne === passwordTwo &&
+            passwordOne !== '' &&
+            email !== '' &&
+            username !== '') &&
+            isVerified);
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -116,6 +142,7 @@ class SignUpFormBase extends Component {
                 /><br /><br />
                 <input
                     name="passwordOne"
+                    id="pw1"
                     value={passwordOne}
                     onChange={this.onChange}
                     type="password"
@@ -123,6 +150,7 @@ class SignUpFormBase extends Component {
                 /><br /><br />
                 <input
                     name="passwordTwo"
+                    id="pw2"
                     value={passwordTwo}
                     onChange={this.onChange}
                     type="password"
@@ -135,6 +163,12 @@ class SignUpFormBase extends Component {
                         type="checkbox"
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
+                    />
+                    Show Passwords
+                    <input
+                        name="show pw"
+                        type="checkbox"
+                        onClick={this.showPW}
                     />
                 </label><br /><br />
                 <center>
@@ -151,7 +185,7 @@ class SignUpFormBase extends Component {
                 <button disabled={!isValid} type="submit">
                     Sign Up
                 </button>
-
+                {console.log(isValid)}
                 {error && <p>{error.message}</p>}
             </form>
         );
