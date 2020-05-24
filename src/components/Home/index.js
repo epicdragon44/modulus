@@ -409,7 +409,7 @@ class MyModal extends React.Component{
 
         alert(this.state.newVal);
         
-        //TODO: plugs into the backend to change the name for the item using this.state.newVal (the new name of the item) 
+        //TODO: plugs into the backend to change the name for the module using this.state.newVal (the new name of the item) 
         //this.props.modules should contain an array of javascript objects with every module inside
         //this.props.activeCourse should contain the string name of the currently active course
         //this.props.moduleTitle should contain the string title of the current module
