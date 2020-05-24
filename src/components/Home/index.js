@@ -15,6 +15,7 @@ import darkrenameicon from './renamedark.svg';
 import whitedeleteicon from './deletewhite.svg';
 import whiterenameicon from './renamewhite.svg';
 import deviceicon from './rotatedevice.png';
+import ReactGA from 'react-ga';
 require('@firebase/database');
 
 //DOC: Component: This component renders a single course button in the sidebar that, when clicked, changes the main panel to display that course.
@@ -2337,9 +2338,11 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
+        //update window size
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
 
+        //pull data from firebase
         const usr = JSON.parse(localStorage.getItem('authUser'));
         this.props.firebase.courses().on('value', snapshot => {
             const coursesObject = snapshot.val();
@@ -2356,6 +2359,9 @@ class Home extends React.Component {
 
             });
         });
+
+        //initialize google analytics
+        ReactGA.initialize('UA-167407187-1');
     }
       
     componentWillUnmount() {
