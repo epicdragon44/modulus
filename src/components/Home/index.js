@@ -3,6 +3,9 @@ import logo from './logowithtext.svg';
 import './App.css';
 import { withAuthorization } from '../Session';
 
+import * as firebase from 'firebase'
+require('@firebase/database');
+
 
 function Logo() {
     return (
@@ -48,14 +51,11 @@ class Sidebar extends React.Component { //the entire left sidebar
             <div>
 <div className="sidebar">
                 <Logo />
-                {/*this part cannot draw null list*/}
-                {/*<div class="sidebarheader"><p><b>Your courses:</b></p></div>*/}
-                {/*<div class="courselist">*/}
-                {/*    {this.props.arrCourses.map(course => <CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)}*/}
-                {/*    <AddCourseItem addCourseMode={this.addCourseMode}/>*/}
-                {/*</div>*/}
-                <NameBar username={this.props.username} />
-                <SessionBar username={this.props.username} />
+                 <div class="sidebarheader"><p><b>Your courses:</b></p></div>
+                <div class="courselist">
+                   {this.props.arrCourses.map(course => <CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)}
+                   <AddCourseItem addCourseMode={this.addCourseMode}/>
+                </div>
             </div>
             </div>
             
@@ -154,6 +154,10 @@ class NameForm extends React.Component {
         //  - GET A LIST OF THE COURSES THE USER (THIS.PROPS.USERNAME) IS CURRENTLY ENROLLED
         //  - IF THAT LIST ALREADY INCLUDES THE COURSENAME (THIS.STATE.VALUE), SET SHOULDADDCOURSE TO FALSE
         //  - OTHERWISE, ADD THE COURSENAME TO THE LIST OF COURSES THEY ARE ENROLLED IN
+        const usr = JSON.parse(localStorage.getItem('authUser'));
+        if (usr.courses.includes(this.state.value)) {
+            this.state.value = false;
+        }
         if (shouldAddCourse) {
             this.props.addCourse(this.state.value);
         }
@@ -224,41 +228,26 @@ class Container extends React.Component { //the main container for everything on
         }, () => {this.changeActiveCourse(nameOfCourse);});
     }
 
+
     getModules(name) {
         //TODO: BASED ON USERNAME (THIS.STATE.USERNAME) AND CURRENTLY OPEN COURSE (THIS.STATE.ACTIVECOURSE), PULL THE MODULES FROM DATABASE HERE AND RETURN IT AS AN ARRAY OF JAVASCRIPT OBJECTS. 
         //YOU CAN SEE THE DUMMY EXAMPLES BELOW, BUT PLEASE REPLACE THIS SHIT
+        const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
 
-        if (name==="none") {
-            return []
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            // add if statement here to determine if current course and one in list matches up
+            return [ {
+                title: course.CourseName,
+                contents: ['w'], //yeet
+                vark: ['w'],
+
+            }];
         }
-        else if (name==="Voyage - Math 2") {
-            return [
-                {
-                    title: "Trig",
-                    contents: ["Item 1", "Item 2", "Item 3"],
-                    vark: ["V", "A", "R"],
-                },
-                {
-                    title: "Precalculus",
-                    contents: ["Item 1", "Item 2"],
-                    vark: ["K", "R"]
-                },
-            ]
-        }
-        else {
-            return [
-                {
-                    title: "Module 1",
-                    contents: ["Item 1", "Item 2", "Item 3"],
-                    vark: ["V", "A", "R"],
-                },
-                {
-                    title: "Module 2",
-                    contents: ["Item 1", "Item 2"],
-                    vark: ["K", "R"]
-                },
-            ]
-        }
+
+
+
+
     }
 
     render() {
@@ -292,13 +281,36 @@ class Container extends React.Component { //the main container for everything on
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        const usr = JSON.parse(localStorage.getItem('authUser'));
         this.state = {
-            username: props.name,  //TODO: PUT CURRENT EMAIL HERE
-            courses: props.courses,//TODO: PULL COURSES FROM TABLE OF USERS HERE
+            username: "",
+            email: "",
+            courses: [],
         }
+
+    }
+    componentDidMount() {
+        const usr = JSON.parse(localStorage.getItem('authUser'));
+        this.props.firebase.courses().on('value', snapshot => {
+            const coursesObject = snapshot.val();
+            const coursesList = Object.keys(coursesObject).map(key => ({
+                ...coursesObject[key],
+                appID: key,
+            }));
+            localStorage.setItem('courses', JSON.stringify(coursesList));
+            this.setState({
+                username: usr.username,
+                email: usr.email,
+                courses: usr.courses,
+                courseList: coursesList,
+
+            });
+        });
+
     }
 
     render() {
+
         return ( //when login is implemented, it should create an app with the appropriate username passed in
             <Container name={this.state.username} courses={this.state.courses}/>
         );

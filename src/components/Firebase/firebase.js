@@ -19,6 +19,7 @@ class Firebase {
 
         this.auth = app.auth();
         this.db = app.database();
+
     }
     // *** Auth API ***
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -54,6 +55,7 @@ class Firebase {
                         };
                         next(authUser);
                     });
+
             } else {
                 fallback();
             }
@@ -62,6 +64,13 @@ class Firebase {
     // *** User API ***
     user = uid => this.db.ref(`users/${uid}`);
     users = () => this.db.ref('users');
+
+    course = appID => this.db.ref(`courses/${appID}`);
+    courses = () => this.db.ref('courses');
+
+
 }
+
+
 
 export default Firebase;
