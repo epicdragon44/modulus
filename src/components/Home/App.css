@@ -233,9 +233,9 @@ div {
   height: 16px;
   color: white;
   font-size: large;
-  padding-left: 1em;
+  padding-left: 1.5em;
   padding-bottom: 1em;
-  padding-top: 0.95em;
+  padding-top: 0.90em;
   border-radius: 10px 10px 0px 0px;
   overflow: hidden;
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
@@ -253,32 +253,25 @@ div {
 }
 
 .modulecontentitem {
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding-left: 1.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
   padding-right: 3em;
-  border-bottom: 2px black;
+  border-top: 1px gray;
   cursor: pointer;
-  border-left: 5px solid white;
+  border-left: 5px solid gray;
   background-color: white;
   font-size: large;
 }
 
 .modulecontentitem:hover {
   background-color: rgb(230, 230, 230);
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  padding-right: 3em;
-  border-left: 5px solid rgb(230, 230, 230);
-  border-bottom: 2px black;
-  font-size: large;
 }
 
 .Vmodulecontentitem {
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding-left: 1.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
   padding-right: 3em;
   border-left: 5px solid red;
   border-bottom: 2px black;
@@ -287,9 +280,9 @@ div {
 }
 
 .Amodulecontentitem {
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;;
+  padding-left: 1.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
   padding-right: 3em;
   border-left: 5px solid blue;
   border-bottom: 2px black;
@@ -298,9 +291,9 @@ div {
 }
 
 .Rmodulecontentitem {
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding-left: 1.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
   padding-right: 3em;
   border-left: 5px solid green;
   border-bottom: 2px black;
@@ -309,9 +302,9 @@ div {
 }
 
 .Kmodulecontentitem {
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding-left: 1.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
   font-size: large;
   padding-right: 3em;
   border-left: 5px solid purple;
