@@ -16,7 +16,7 @@ import whitedeleteicon from './deletewhite.svg';
 import whiterenameicon from './renamewhite.svg';
 require('@firebase/database');
 
-//DOC: Item 1: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
+//DOC: Component: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
 function CourseListItem(props) {
     var code = codeToName(props.name);
     return ( 
@@ -26,7 +26,7 @@ function CourseListItem(props) {
     );
 }
 
-//DOC: Converts the class code passed into the function into the actual English name of the course
+//DOC: Function: Converts the class code passed into the function into the actual English name of the course
 function codeToName(classcode) {
 	const allCourses = JSON.parse(localStorage.getItem('courses'));
         for (let i = 0, len = allCourses.length; i < len; ++i) {
@@ -37,7 +37,7 @@ function codeToName(classcode) {
         }
 }
 
-//DOC: Item 2: Displays a single button in the sidebar, that, when clicked, changes the main panel to allow you to enroll in a course
+//DOC: Component: Displays a single button in the sidebar, that, when clicked, changes the main panel to allow you to enroll in a course
 function AddCourseItem(props) {
     return (
         (!currentUserIsAdmin()) ? 
@@ -47,7 +47,7 @@ function AddCourseItem(props) {
     );
 }
 
-//DOC: Item 3: Displays a single button in the sidebar, that, when clicked, changes the main panel to allow you to create a course
+//DOC: Component: Displays a single button in the sidebar, that, when clicked, changes the main panel to allow you to create a course
 function CreateCourseItem(props) {
     return (
         (currentUserIsAdmin()) ? 
@@ -57,19 +57,20 @@ function CreateCourseItem(props) {
     );
 }
 
-//DOC: Determines whether the current user logged in is an Admin, or Teacher, or a student. Returns true if the former, and false if the latter.
+//DOC: Function: Determines whether the current user logged in is an Admin, or Teacher, or a student. Returns true if the former, and false if the latter.
 function currentUserIsAdmin() {
     const usr = JSON.parse(localStorage.getItem('authUser'));
     return (Object.values(usr).slice()[3][0]==="ADMIN");
 }
 
+//DOC: Function: Determines whether the user is blocked from the activeCourse
 function isUserBlocked(username, activeCourse) {
     // TODO: return false if the user is blocked from the course, and true if the user is not blocked
     // This should simply be the value in the key-value pair in the database you set up in getListOfStudents()
     return true; //placeholder to remove
 }
 
-//DOC: Item 4: The entire left sidebar
+//DOC: Component: The entire left sidebar
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
@@ -102,7 +103,7 @@ class Sidebar extends React.Component {
 }
 
 
-//DOC: Displays a popup dialog
+//DOC: Component: Displays a popup dialog
 class MyModal extends React.Component {
     constructor(props) {
         super(props);
@@ -492,7 +493,7 @@ class MyModal extends React.Component {
     }
 }
 
-//DOC: Item 15: Inline button that, when clicked, allows the user to rename a module.
+//DOC: Component: Inline button that, when clicked, allows the user to rename a module.
 class RenameModule extends React.Component {
     constructor(props) {
         super(props);
@@ -589,7 +590,7 @@ class RenameModule extends React.Component {
     }
 }
 
-//DOC: Item 15: Inline button that, when clicked, allows the user to delete a module.
+//DOC: Component: Inline button that, when clicked, allows the user to delete a module.
 class DeleteModule extends React.Component {
     constructor(props) {
         super(props);
@@ -665,7 +666,7 @@ class DeleteModule extends React.Component {
     }
 }
 
-//DOC: Item 14: Inline button that, when clicked, allows the user to rename an item.
+//DOC: Component: Inline button that, when clicked, allows the user to rename an item.
 class RenameItem extends React.Component {
     constructor(props) {
         super(props);
@@ -774,7 +775,7 @@ class RenameItem extends React.Component {
 }
 
 
-//DOC: Item 14: Inline button that, when clicked, allows the user to rename an item.
+//DOC: Component: Inline button that, when clicked, allows the user to delete an item.
 class DeleteItem extends React.Component {
     constructor(props) {
         super(props);
@@ -862,7 +863,7 @@ class DeleteItem extends React.Component {
     }
 }
 
-//DOC: Item 13: A course item, that, when clicked, displays one of the course contents.
+//DOC: Component: A course item, that, when clicked, displays one of the course contents.
 class ModuleContentItem extends React.Component {
     constructor(props) {
         super(props);
@@ -936,7 +937,7 @@ class ModuleContentItem extends React.Component {
     }
 }
 
-//DOC: Item 16: A button that allows the user (assumedly a teacher) to add an item to the module
+//DOC: Component: A button that allows the user (assumedly a teacher) to add an item to the module
 class AddModuleContentItemItem extends React.Component {
     constructor(props) {
         super(props);
@@ -960,7 +961,7 @@ class AddModuleContentItemItem extends React.Component {
     }
 }
 
-//DOC: Item 17: A button that allows the user (assumedly a teacher) to add a module to the course
+//DOC: Component: A button that allows the user (assumedly a teacher) to add a module to the course
 class AddModuleItem extends React.Component {
     constructor(props) {
         super(props);
@@ -1058,7 +1059,7 @@ class AddModuleItem extends React.Component {
     }
 }
 
-//DOC: Item 11: Displays an entire module, including all of its content items.
+//DOC: Component: Displays an entire module, including all of its content items.
 function ModuleItem(props) {
     const [active, setActive] = React.useState(props.active);
 
@@ -1176,8 +1177,7 @@ function ModuleItem(props) {
     );
 }
 
-//DOC: Item 10: Displays the entire VARK Profile
-
+//DOC: Component: Displays the entire VARK Profile
 function VarkProfile(props) {
     const lineWidth = 60;
     return (
@@ -1226,7 +1226,7 @@ function VarkProfile(props) {
         </div>
     );
 }
-//DOC: Item 8: Allows the user to filter which VARK-type of items to display
+//DOC: Component: Allows the user to filter which VARK-type of items to display
 class Select extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -1282,7 +1282,7 @@ class Select extends React.PureComponent {
     }
 }
 
-//DOC: Item 5: The entire right half of the screen, which can change its display depending on whether we want to show the contents of the course, with all the modules; or the screen that lets us enroll in a course; or the screen that lets us create a course.
+//DOC: Component: The entire right half of the screen, which can change its display depending on whether we want to show the contents of the course, with all the modules; or the screen that lets us enroll in a course; or the screen that lets us create a course.
 class MainPanel extends React.Component {
     constructor (props){
         super(props);
@@ -1768,7 +1768,7 @@ class MainPanel extends React.Component {
     }
 }
 
-//DOC: The form that allows you to create a class.
+//DOC: Component: The form that allows you to create a class.
 class CreateForm extends React.Component {
     constructor(props) {
         super(props);
@@ -1806,7 +1806,7 @@ class CreateForm extends React.Component {
     }
 }
 
-//DOC: The form that allows you to enroll in a class.
+//DOC: Component: The form that allows you to enroll in a class.
 class NameForm extends React.Component {
     constructor(props) {
         super(props);
@@ -1852,7 +1852,7 @@ class NameForm extends React.Component {
     }
 }
 
-//DOC: The mainpanel view that allows you to create a class.
+//DOC: Component: The mainpanel view that allows you to create a class.
 function CreateCoursePanel(props) {
     return (
         <div className="mainpanel">
@@ -1866,7 +1866,7 @@ function CreateCoursePanel(props) {
     );
 }
 
-//DOC: The mainpanel view that allows you to add a class
+//DOC: Component: The mainpanel view that allows you to add a class
 function AddCoursePanel(props) {
     return (
         <div className="mainpanel">
@@ -1880,7 +1880,7 @@ function AddCoursePanel(props) {
     );
 }
 
-//DOC: The main container for everything on the screen, that also stores most global data in its state.
+//DOC: Component: The main container for everything on the screen, that also stores most global data in its state.
 class Container extends React.Component { 
     constructor(props) {
         super(props);
@@ -2130,7 +2130,7 @@ class Container extends React.Component {
     }
 }
 
-//DOC: Renders and returns a Container, and initializes it with proper defaults.
+//DOC: Component: Renders and returns a Container, and initializes it with proper defaults.
 class Home extends React.Component {
     constructor(props) {
         super(props);
