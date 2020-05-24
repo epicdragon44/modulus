@@ -19,6 +19,7 @@ function CourseListItem(props) {
         </div>
     );
 }
+
 function codeToName(classcode) {
 	const allCourses = JSON.parse(localStorage.getItem('courses'));
         for (let i = 0, len = allCourses.length; i < len; ++i) {
@@ -39,10 +40,16 @@ function AddCourseItem(props) {
 
 function CreateCourseItem(props) {
     return (
-            <div className="addcourseitem" onClick={props.createCourseMode}>
+        (currentUserIsAdmin()) ? 
+            (<div><div className="addcourseitem" onClick={props.createCourseMode}>
                 Create a course
-            </div>
+            </div><br /></div>) : (<div />)
     );
+}
+
+function currentUserIsAdmin() {
+    const usr = JSON.parse(localStorage.getItem('authUser'));
+    return (Object.values(usr).slice()[3][0]==="ADMIN");
 }
 
 class Sidebar extends React.Component { //the entire left sidebar
@@ -85,7 +92,6 @@ class Sidebar extends React.Component { //the entire left sidebar
                         <AddCourseItem addCourseMode={this.addCourseMode}/>
                         <br />
                         <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                        <br />
                         <hr />
                         <br />
                         {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You don't have any courses yet.<br/>Enroll or teach using the buttons above.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<div><CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/><br /></div>)))}

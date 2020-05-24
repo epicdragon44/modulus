@@ -163,7 +163,7 @@ class SignUpFormBase extends Component {
                         type="checkbox"
                         onClick={this.showPW}
                     /><br /><br />
-                    Admin:
+                    Teacher:
                     <input
                         name="isAdmin"
                         type="checkbox"
