@@ -76,7 +76,7 @@ function ModuleContentItem(props) {
     var attribute = precede+"modulecontentitem"
     return (
         <div className={attribute} onClick={() => open("active")}>
-            {/* Remove currently contains part later and replace it with a link to open the item view with the proper internal */}
+            {/* TODO: Remove currently contains part later and replace it with a link to open the item view with the proper internal */}
             {props.name} currently contains {props.internal}
         </div>
     );
@@ -112,9 +112,12 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         var welcomeMsg;
         if (this.props.activeCourse==="none") {
             welcomeMsg = "Select or add a course on the left to get started.";
-        } else {
+        }
+        else {
             welcomeMsg = "Welcome to " + (this.props.activeCourse);
-
+            if (welcomeMsg === "Welcome to Welcome") {
+                welcomeMsg = "Welcome to Modulus!"
+            }
         }
 
         return (
@@ -124,7 +127,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 </div>
 
                 <div className="modulelist">
-                    {this.props.modules.map(module =>
+                    {Object.values(this.props.modules).map(module =>
                         <ModuleItem
                             name={module.title}
                             contents={module.contents}
@@ -150,22 +153,29 @@ class NameForm extends React.Component {
     handleChange(event) {    this.setState({value: event.target.value});  }
 
     handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
-        let shouldAddCourse = true;
-        //TODO: 
-        //  - GET A LIST OF THE COURSES THE USER (THIS.PROPS.USERNAME) IS CURRENTLY ENROLLED
-        //  - IF THAT LIST ALREADY INCLUDES THE COURSENAME (THIS.STATE.VALUE), SET SHOULDADDCOURSE TO FALSE
-        //  - OTHERWISE, ADD THE COURSENAME TO THE LIST OF COURSES THEY ARE ENROLLED IN
-        const usr = JSON.parse(localStorage.getItem('authUser'));
-        if (usr.courses.includes(this.state.value)) {
-            //this.state.value = false;
+        let shouldAddCourse = false;
+
+        const usr = JSON.parse(localStorage.getItem('authUser')); //TODO: I'm really not sure what this block of code does...@Ryan Ma ??? Remove it, or tell me what it does
+        if (usr.courses.includes(this.state.value)) { 
+            //this.state.value = false; //dont force state values like this, instead, use the setState method
             this.setState({
                 value: false,
             })
+        } 
+
+        //check that the course is available on the database. If not, throw an error to the user
+        const allCourses = JSON.parse(localStorage.getItem('courses')); 
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.CourseName === this.state.value) {
+                shouldAddCourse = true;
+            }
         }
 
-        //below this line, the code is dan's
         if (shouldAddCourse) {
             this.props.addCourse(this.state.value);
+        } else {
+            alert('Sorry, class not found');
         }
         event.preventDefault();
     }
@@ -174,7 +184,7 @@ class NameForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Enter the course code below<br /><br />
+                    Enter the course name below<br /><br />
                     <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
                 <br /><br />
                 <input type="submit" value="Submit" />
@@ -227,6 +237,7 @@ class Container extends React.Component { //the main container for everything on
     }
 
     addCourse = (nameOfCourse) => { //actually adds the course
+        //TODO: @Ryan Ma you need to also push this up to the user's database
         var newCourses = this.state.arrCourses.slice();
         newCourses.push(nameOfCourse);
         this.setState({
@@ -236,8 +247,6 @@ class Container extends React.Component { //the main container for everything on
 
 
     getModules(name) {
-        //TODO: BASED ON USERNAME (THIS.STATE.USERNAME) AND CURRENTLY OPEN COURSE (THIS.STATE.ACTIVECOURSE), PULL THE MODULES FROM DATABASE HERE AND RETURN IT AS AN ARRAY OF JAVASCRIPT OBJECTS. 
-        //YOU CAN SEE THE DUMMY EXAMPLES BELOW, BUT PLEASE REPLACE THIS SHIT
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
         if ( name === "none")
             return []
