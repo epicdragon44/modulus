@@ -54,6 +54,11 @@ function VarkProfile(props) {
     );
 }
 
+function currentUserIsAdmin() {
+    const usr = JSON.parse(localStorage.getItem('authUser'));
+    return (Object.values(usr).slice()[3][0]==="ADMIN");
+}
+
 function AccountPage(props) {
     if(!window.location.hash) {
         window.location = window.location + '#loaded';
@@ -91,41 +96,48 @@ function AccountPage(props) {
         />
     );
 
+    var topPanel = (
+        <div class="largecontent">
+            <center>
+                <h1><br /> <br />Your VARK Profile</h1> 
+                <p className="widespace">Based on what you clicked on within courses,<br /> we estimated your learning style preferences.</p> <br />
+                <table className="offsetleft">
+                    <tr>
+                        <td>
+                            {varkProfile}
+                        </td>
+                        <td>
+                            <p style={{color: "red"}}>Visual</p>
+                            <p style={{color: "blue"}}>Auditory</p>
+                            <p style={{color: "green"}}>Reading/Writing</p>
+                            <p style={{color: "purple"}}>Kinesthetic</p>
+                        </td>
+                    </tr>
+                </table>
+                
+            </center>
+            
+            <center>
+                {/* <p style={{color: "red"}}>Visual: Learns best through diagrams and charts</p>
+                <p style={{color: "blue"}}>Auditory: Learns best through videos and lectures</p>
+                <p style={{color: "green"}}>Reading/Writing: Learns best through reading and writing</p>
+                <p style={{color: "purple"}}>Kinesthetic: Learns best through touching and testing</p> */}
+                <br />
+                {/* <p className="widespace">All students learn in different ways, and by knowing your VARK Profile,<br /> you can invest in courses that match your preferred education. </p> */}
+                <p className="widespace">To learn more about the different learning models, visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.<br />You can also take their <a className="nonformatted" href="https://vark-learn.com/the-vark-questionnaire/">quiz</a> and see how closely it matches your profile here.</p>
+                <br /> <br /><br /> <br />
+            </center>
+        </div>
+    );
+    if (currentUserIsAdmin()) {
+        topPanel=(<div />);
+    }
+
     return (
         <AuthUserContext.Consumer>
             {authUser => (
                 <div class="dialogwallpaper">
-                    <div class="largecontent">
-                        <center>
-                            <h1><br /> <br />Your VARK Profile</h1> 
-                            <p className="widespace">Based on what you clicked on within courses,<br /> we estimated your learning style preferences.</p> <br />
-                            <table className="offsetleft">
-                                <tr>
-                                    <td>
-                                        {varkProfile}
-                                    </td>
-                                    <td>
-                                        <p style={{color: "red"}}>Visual</p>
-                                        <p style={{color: "blue"}}>Auditory</p>
-                                        <p style={{color: "green"}}>Reading/Writing</p>
-                                        <p style={{color: "purple"}}>Kinesthetic</p>
-                                    </td>
-                                </tr>
-                            </table>
-                            
-                        </center>
-                        
-                        <center>
-                            {/* <p style={{color: "red"}}>Visual: Learns best through diagrams and charts</p>
-                            <p style={{color: "blue"}}>Auditory: Learns best through videos and lectures</p>
-                            <p style={{color: "green"}}>Reading/Writing: Learns best through reading and writing</p>
-                            <p style={{color: "purple"}}>Kinesthetic: Learns best through touching and testing</p> */}
-                            <br />
-                            {/* <p className="widespace">All students learn in different ways, and by knowing your VARK Profile,<br /> you can invest in courses that match your preferred education. </p> */}
-                            <p className="widespace">To learn more about the different learning models, visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.<br />You can also take their <a className="nonformatted" href="https://vark-learn.com/the-vark-questionnaire/">quiz</a> and see how closely it matches your profile here.</p>
-                            <br /> <br /><br /> <br />
-                        </center>
-                    </div>
+                    {topPanel}
                     <div class="largecontent">
                         <center>
                             <h1> <br /> <br />Change Password</h1> 

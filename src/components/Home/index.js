@@ -11,8 +11,6 @@ require('@firebase/database');
 
 function CourseListItem(props) {
     var code = codeToName(props.name);
-    //CodeToName : turn the variable code into the name
-
     return ( 
         <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
             {code} 
@@ -1066,9 +1064,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         var courseid = (this.props.activeCourse);
 
         var teacherMode = this.getTeacherEmail(this.props.activeCourse)===this.getCurrentUserEmail();
-        // console.log(this.getTeacherEmail(this.props.activeCourse));
-        // console.log(this.getCurrentUserEmail());
-        // console.log(teacherMode);
 
         var welcomeMsg;
         var unenroll;
@@ -1569,7 +1564,6 @@ class Home extends React.Component {
                 courses: Object.values(usr).slice()[2],
 
             });
-            console.log("bitch");
         });
     }
 
