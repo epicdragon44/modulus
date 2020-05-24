@@ -6,7 +6,7 @@ import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 const SignUpPage = () => (
     <div className="dialogwallpaper">
-        <div className="content">
+        <div className="largecontent">
             <br /><br /><h1>Sign Up</h1>
             <SignUpForm />
         </div>
@@ -157,18 +157,18 @@ class SignUpFormBase extends Component {
                     placeholder="Confirm Password"
                 /><br /><br />
                 <label>
+                    Show Passwords
+                    <input
+                        name="show pw"
+                        type="checkbox"
+                        onClick={this.showPW}
+                    /><br /><br />
                     Admin:
                     <input
                         name="isAdmin"
                         type="checkbox"
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
-                    />
-                    Show Passwords
-                    <input
-                        name="show pw"
-                        type="checkbox"
-                        onClick={this.showPW}
                     />
                 </label><br /><br />
                 <center>
@@ -185,6 +185,7 @@ class SignUpFormBase extends Component {
                 <button disabled={!isValid} type="submit">
                     Sign Up
                 </button>
+                <br /><br /><br /><br />
                 {console.log(isValid)}
                 {error && <p>{error.message}</p>}
             </form>
