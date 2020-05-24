@@ -94,6 +94,7 @@ class MyModal extends React.Component{
             //this.props.modules should contain an array of javascript objects with every module inside
             //this.props.activeCourse should contain the string name of the currently active course
             //this.props.moduleTitle should contain the string title of the current module
+            //this.props.firebase should let you access firebase
             const allCourses = JSON.parse(localStorage.getItem('courses'));
             var courseID;
             for (let i = 0, len = allCourses.length; i < len; ++i) {
@@ -140,6 +141,7 @@ class MyModal extends React.Component{
             //this.props.modules should contain an array of javascript objects with every module inside
             //this.props.activeCourse should contain the string name of the currently active course
             //this.props.moduleTitle should contain the string title of the current module
+            //this.props.firebase should let you access firebase
         }
         event.preventDefault();
     }
@@ -153,6 +155,7 @@ class MyModal extends React.Component{
         //this.props.modules should contain an array of javascript objects with every module inside
         //this.props.activeCourse should contain the string name of the currently active course
         //this.props.moduleTitle should contain the string title of the current module
+        //this.props.firebase should let you access firebase
         this.render();
     }
 
@@ -372,7 +375,7 @@ class AddModuleContentItemItem extends React.Component {
     }
 
     openModal() { //this registers the click
-        ModalManager.open(<MyModal moduleTitle={this.props.moduleTitle} activeCourse={this.props.activeCourse} modules={this.props.modules} onRequestClose={() => true} teacherMode={true} addItemMode={true}/>);
+        ModalManager.open(<MyModal firebase={this.props.firebase} moduleTitle={this.props.moduleTitle} activeCourse={this.props.activeCourse} modules={this.props.modules} onRequestClose={() => true} teacherMode={true} addItemMode={true}/>);
     }
 
     render() {
@@ -401,6 +404,7 @@ function ModuleItem(props) {
                 moduleTitle={props.name}
                 activeCourse={props.activeCourse}
                 modules={props.modules}
+                firebase={props.firebase}
             />
         );
     }
@@ -664,6 +668,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                                 teacherMode={teacherMode}
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
+                                firebase={this.props.firebase}
                             />
                         )
                     }
@@ -930,7 +935,7 @@ class Container extends React.Component { //the main container for everything on
     render() {
         var mainpanel;
         if (this.state.mainPanelMode===0) {
-            mainpanel = <MainPanel username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
+            mainpanel = <MainPanel firebase={this.props.firebase} username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
         } else if (this.state.mainPanelMode===1) {
             mainpanel = <AddCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} addCourse={this.addCourse}/>
         }
