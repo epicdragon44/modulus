@@ -25,12 +25,12 @@ const Landing = () => (
                 <div className="parallax2"></div>
                 <div className="text-block2">
                     <AnchorLink style={linkstyle} href='#header'>&laquo; Top</AnchorLink>
-                    <h2 className="topper1"><b>WHAT</b> is Modulus</h2>
+                    <h2 className="topper1"><b>Our Product</b></h2>
                     <p>Modulus is an online education platform, similar in concept to Canvas or Blackboard, both of which are used by schools and universities around the nation. But unlike existing platforms, Modulus directly integrates the VARK learning styles - a psychological framework for teaching - into an incredibly simple to use, modular course structure that anyone can use to teach anything. The result is a fairer, more accessible, and more equitable online education for everyone.</p>
-                    <h2 className="topper2"><b>WHY</b> is Modulus</h2>
+                    <h2 className="topper2"><b>Our Mission</b></h2>
                     <p>In light of the recent COVID-19 crisis, we’ve seen staggering demand for online courses as students grapple with a reality in which education is now delivered over the internet. But traditional e-learning platforms like Khanacademy struggle to keep up with the pace of demand, while LMS platforms like Canvas, which requires teachers to sign up as part of large, wealthy organizations such as school districts, are difficult to use and lock out small independent teachers that just want to continue teaching. And on top of all that, all platforms rely solely on one medium of teaching, such as Udemy through videos, and Edmodo through text, without regard for user learning preferences.
                     </p>
-                    <h2 className="topper3"><b>HOW</b> is Modulus</h2>
+                    <h2 className="topper3"><b>Our User Experience</b></h2>
                     <p>Enrolling in courses is as easy as typing the name of the course into a field, and each course has the same layout: tasks, color coded by their teaching style, grouped into lists we call “Modules.” There’s no complicated embedded forms, hard-to-navigate buttons, tabbed menus, or other user interface disasters, and the whole interface has been built from the ground up to be fast, responsive, and intuitive.
                     </p>
                     <p style={{margin: 30}}></p>
