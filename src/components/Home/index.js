@@ -112,7 +112,7 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-            console.log(this.props.modules);
+            //console.log(this.props.modules);
             const contents = neededModule.contents; // add your new items
             const internals = neededModule.internals;
             const vark = neededModule.vark;
@@ -120,15 +120,19 @@ class MyModal extends React.Component{
             internals.push(this.state.value);
             vark.push(this.state.varkselection);
             
-            var pushedModules;
-            for (let i = 0; i < this.props.modules.length; ++i) {
-                pushedModules['module'+(i+1)] = this.props.modules[i];
+            
+            const newPush = this.props.modules;
+            const newPush2 = this.props.modules;
+            for ( let i = 0; i < newPush.length; ++i) {
+                newPush2["module" + (i+1)] = newPush[i];
+                delete newPush2[i];
             }
-
-            console.log(pushedModules);
-
-
-
+            console.log(newPush2);
+            console.log(courseID);
+            
+            // this.props.firebase.courses().child(courseID).update({
+            //     modules: newPush2,
+            // });
             // this.props.db.ref('courses/' + courseID + '/')
         }
         else {
