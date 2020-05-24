@@ -627,6 +627,8 @@ class ModuleContentItem extends React.Component {
     }
 
     render() {
+        let precede = this.props.vark;
+        var attribute = precede+"modulecontentitem"
 
         var teacherMode = this.props.teacherMode;
         var teacherDisplay = (<div />);
@@ -644,21 +646,34 @@ class ModuleContentItem extends React.Component {
             );
         }
 
-        let precede = this.props.vark;
-        var attribute = precede+"modulecontentitem"
+        var datacells = (
+            <tr>
+                <td>
+                    <div className={attribute} onClick={() => this.openModal()}>
+                        {this.props.name}
+                    </div>
+                </td>
+            </tr>
+        );
+        if (teacherMode) {
+            datacells = (
+                <tr>
+                    <td className="leftcontentitem">
+                        <div className={attribute} onClick={() => this.openModal()}>
+                            {this.props.name}
+                        </div>
+                    </td>
+                    <td className="rightcontentitem">
+                        {teacherDisplay}
+                    </td>
+                </tr>
+            );
+        }
+
         return (
             <div>
                 <table width="100%">
-                    <tr>
-                        <td className="leftcontentitem">
-                            <div className={attribute} onClick={() => this.openModal()}>
-                                {this.props.name}
-                            </div>
-                        </td>
-                        <td className="rightcontentitem">
-                            {teacherDisplay}
-                        </td>
-                    </tr>
+                    {datacells}
                 </table>
             </div>
 
