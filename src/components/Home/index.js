@@ -31,25 +31,17 @@ function codeToName(classcode) {
 
 function AddCourseItem(props) {
     return (
-        <div>
-            <br />
             <div className="addcourseitem" onClick={props.addCourseMode}>
                 Enroll in a course
             </div>
-            <br />
-        </div>
     );
 }
 
 function CreateCourseItem(props) {
     return (
-        <div>
-            <br />
             <div className="addcourseitem" onClick={props.createCourseMode}>
                 Create a course
             </div>
-            <br />
-        </div>
     );
 }
 
@@ -72,8 +64,8 @@ class Sidebar extends React.Component { //the entire left sidebar
         return (
             <div>
                 <div className="sidebar">
-                    <center>
-                        <table width="90%">
+                    {/* <center> */}
+                        {/* <table width="90%">
                             <tr>
                                 <td>
                                     <AddCourseItem addCourseMode={this.addCourseMode}/>
@@ -82,11 +74,20 @@ class Sidebar extends React.Component { //the entire left sidebar
                                     <CreateCourseItem createCourseMode={this.createCourseMode}/>
                                 </td>
                             </tr>
-                        </table>
+                        </table> */}
+                        {/* <AddCourseItem addCourseMode={this.addCourseMode}/>
+                        <CreateCourseItem createCourseMode={this.createCourseMode}/>
                     </center>
                     <hr />
-                    <br />
+                    <br /> */}
                     <div className="courselist">
+                        <br />
+                        <AddCourseItem addCourseMode={this.addCourseMode}/>
+                        <br />
+                        <CreateCourseItem createCourseMode={this.createCourseMode}/>
+                        <br />
+                        <hr />
+                        <br />
                         {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You don't have any courses yet.<br/>Enroll or teach using the buttons above.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<div><CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/><br /></div>)))}
                     </div>
                 </div>
