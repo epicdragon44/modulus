@@ -1323,11 +1323,7 @@ class Select extends React.PureComponent {
 class MainPanel extends React.Component {
     constructor (props){
         super(props);
-        this.state = {
-            varkselection: "All",
-            copied: false,
-            showVark: true,
-        };
+        
         this.handleRemove = this.handleRemove.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
         this.filterCallback = this.filterCallback.bind(this);
@@ -1335,6 +1331,13 @@ class MainPanel extends React.Component {
         this.getTeacherEmail = this.getTeacherEmail.bind(this);
         this.getTeacherName = this.getTeacherName.bind(this);
         this.codeToName = this.codeToName.bind(this);
+        this.isVarkEnabled = this.isVarkEnabled.bind(this);
+
+        this.state = {
+            varkselection: "All",
+            copied: false,
+            showVark: this.isVarkEnabled(),
+        };
     }
 
     handleRemove(event) {
@@ -1441,7 +1444,17 @@ class MainPanel extends React.Component {
         alert(studentEmail + ' ' + kickStatus); //Placeholder output, delete later
     }
 
-    onChangeCheckbox = event => {
+    isVarkEnabled() {
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                return course.varkEnabled;
+            }
+        }
+    }
+
+    onChangeCheckbox(varkStatus) {
         // changes whether the course shows VARK or no
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var courseID;
@@ -1453,15 +1466,17 @@ class MainPanel extends React.Component {
             }
         }
         this.props.firebase.courses().child(courseID).update({
-            varkEnabled: event.target.checked,
+            varkEnabled: varkStatus,
         });
 
-        this.setState({ [event.target.name]: event.target.checked }); //Keep this line of code
+        //this.setState({ [event.target.name]: event.target.checked }); //Keep this line of code
     };
 
     render() { //active: "" means the module is minimized, "active" means its expanded
         var showModules = true;
         var showVarkProfile = true;
+
+        var varkStatus = this.isVarkEnabled();
 
         var courseid = (this.props.activeCourse);
 
@@ -1500,14 +1515,14 @@ class MainPanel extends React.Component {
                         Unenroll from this course
                     </h3>
                     <center>
-                    <div className="removecoursebutton" onClick={this.handleRemove}>
-                        Unenroll
-                    </div>
+                        <div className="removecoursebutton" onClick={this.handleRemove}>
+                            Unenroll
+                        </div>
                     </center>
                     <br /><br />
                 </div>
             );
-            filter = (<Select passState={this.handleFilter} default={"Show all VARK types"}/>);
+            filter = (varkStatus) ? (<Select passState={this.handleFilter} default={"Show all VARK types"}/>) : (null);
             if (teacherMode) {
                 joinCode = (
                     <div className="teachernotice">
@@ -1517,7 +1532,6 @@ class MainPanel extends React.Component {
                 unenroll = (
                     <div />
                 );
-                filter = (<div />);
             }
             if (welcomeMsg === "Welcome to Welcome") {
                 welcomeMsg = "Select or add a course on the left to get started."
@@ -1529,9 +1543,6 @@ class MainPanel extends React.Component {
                     <div />
                 );
                 showVarkProfile = false;
-                filter = (
-                    <div />
-                );
                 showRest = false;
             }
         }
@@ -1570,7 +1581,7 @@ class MainPanel extends React.Component {
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
-                                showVark={this.state.showVark}
+                                showVark={varkStatus}
                             />) : (null)
                         )
                     }
@@ -1594,7 +1605,7 @@ class MainPanel extends React.Component {
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
-                                showVark={this.state.showVark}
+                                showVark={varkStatus}
                             />) : (null)
                         )
                     }
@@ -1740,70 +1751,92 @@ class MainPanel extends React.Component {
             </TabPanel>
         ) : (null);
 
-        const {
-            showVark
-        } = this.state;
-
-        var varkSwitchDisplay = (teacherMode) ? (
-            <div>
-                <p>VARK is <b>Enabled</b></p>
-                <label className="switch">
-                    <input
-                        name="showVark"
-                        type="checkbox"
-                        checked={showVark}
-                        onChange={this.onChangeCheckbox}
-                    />
-                    <span class="slider round"></span>
-                </label>
-                <br /><br /><br />
-                <hr />
-            </div>
-        ) : (null);
-
-        var varkContent = (this.state.showVark) ? (
-            <div className="managecontent">
-                <center>
-                    <h3><br /> <br />Course VARK Profile</h3> 
-                    {varkSwitchDisplay}
-                    <br /><br />
-                    <table className="offsetleft">
-                        <tr>
-                            <td>
-                                {varkProfile}
-                            </td>
-                            <td>
-                                <p className="smallparagraph" style={{color: "red"}}>Visual</p>
-                                <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
-                                <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
-                                <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
-                            </td>
-                        </tr>
-                    </table>
-                    <br /><br /><br />
-                </center>
-            </div>
-        ) : (
-            <div className="managecontent">
-                <center>
-                    <h3><br /> <br />Course VARK Profile</h3> 
-                    <div>
-                        <p>VARK is <b>Disabled</b></p>
-                    </div>
-                    <label className="switch">
-                        <input
-                            name="showVark"
-                            type="checkbox"
-                            checked={showVark}
-                            onChange={this.onChangeCheckbox}
-                        />
-                        <span class="slider round"></span>
-                    </label>
-                    
-                    <br /><br /><br /><br />
-                </center>
-            </div>
-        );
+        var varkContent = null;
+        if (varkStatus && teacherMode) {
+            varkContent = (
+                <div className="managecontent">
+                    <center>
+                        <h3><br /> <br />Course VARK Profile</h3> 
+                        <div>
+                            <p>VARK is <b>Enabled</b></p>
+                            <label className="switch">
+                                <input
+                                    name="showVark"
+                                    type="checkbox"
+                                    checked={varkStatus}
+                                    onChange={(event) => this.onChangeCheckbox(event.target.checked)}
+                                />
+                                <span class="slider round"></span>
+                            </label>
+                            <br /><br /><br />
+                            <hr />
+                        </div>
+                        <br /><br />
+                        <table className="offsetleft">
+                            <tr>
+                                <td>
+                                    {varkProfile}
+                                </td>
+                                <td>
+                                    <p className="smallparagraph" style={{color: "red"}}>Visual</p>
+                                    <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
+                                    <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
+                                    <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <br /><br /><br />
+                    </center>
+                </div>
+            );
+        } else if (!varkStatus && teacherMode) {
+            varkContent = (
+                <div className="managecontent">
+                    <center>
+                        <h3><br /> <br />Course VARK Profile</h3> 
+                        <div>
+                            <p>VARK is <b>Disabled</b></p>
+                        </div>
+                        <label className="switch">
+                            <input
+                                name="showVark"
+                                type="checkbox"
+                                checked={varkStatus}
+                                onChange={(event) => this.onChangeCheckbox(event.target.checked)}
+                            />
+                            <span class="slider round"></span>
+                        </label>
+                        
+                        <br /><br /><br /><br />
+                    </center>
+                </div>
+            );
+        } else if (varkStatus && !teacherMode) {
+            varkContent = (
+                <div className="managecontent">
+                    <center>
+                        <h3><br /> <br />Course VARK Profile</h3> 
+                        <br /><br />
+                        <table className="offsetleft">
+                            <tr>
+                                <td>
+                                    {varkProfile}
+                                </td>
+                                <td>
+                                    <p className="smallparagraph" style={{color: "red"}}>Visual</p>
+                                    <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
+                                    <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
+                                    <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <br /><br /><br />
+                    </center>
+                </div>
+            );
+        } else if (!varkStatus && !teacherMode) {
+            varkContent = null;
+        }
 
         var ManagePanel = (
             <TabPanel>
