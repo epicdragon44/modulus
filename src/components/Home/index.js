@@ -881,6 +881,25 @@ class MainPanel extends React.Component { //the entire right half of the screen 
             }
         }
 
+        var addModuleItem = (<div />);
+        if (teacherMode) {
+            addModuleItem = (
+                <ModuleItem
+                    name="New Module"
+                    contents={[]}
+                    vark={[]}
+                    internals={[]}
+                    active=""
+                    username={this.props.username}
+                    addVarkClicks={this.props.addVarkClicks}
+                    varkMode={this.state.varkselection}
+                    teacherMode={true}
+                    activeCourse={this.props.activeCourse}
+                    modules={this.props.modules}
+                />
+            );
+        }
+
         var moduleList = (<div />);
         if (showModules) {
             moduleList = (
@@ -975,6 +994,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 </table>
                 <br />
                 {moduleList}     
+                {addModuleItem}
                 <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
             </div>
         )
