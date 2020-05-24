@@ -4,8 +4,6 @@ import { withAuthorization } from '../Session';
 
 import { Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import { PieChart } from 'react-minimal-pie-chart';
-import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
-import { contextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.min.css';
 import * as firebase from 'firebase'
 import backarrow from './backarrow.png';
@@ -152,6 +150,8 @@ class MyModal extends React.Component{
                 modules: newPush.slice(),
             });
         }
+
+        ModalManager.close();
         event.preventDefault();
     }
 
