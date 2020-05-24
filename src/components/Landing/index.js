@@ -1,7 +1,9 @@
 import React from 'react';
 import './landingstyle.css';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
+import { Link } from 'react-router-dom';
 import AboutUs from "./AboutUs";
+import * as ROUTES from "../../constants/routes";
 const linkstyle = {
     fontSize: 20,
     color: 'white',
@@ -14,6 +16,7 @@ const Landing = () => (
                     <div className="text-block1">
                         <h1 className="header">Modulus</h1>
                         <p className="header2">Where Learning Happens</p>
+                        <Link className="Button2" to={ROUTES.SIGN_UP}>Sign Up Now &raquo;</Link>
                         <AnchorLink style={linkstyle} href='#info'>Click for more information &raquo;</AnchorLink>
                     </div>
                 </div>
