@@ -430,7 +430,6 @@ class MyModal extends React.Component{
             value: this.state.newVal,
         });
 
-        alert(this.state.newVal);
         // this will rename the current module
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var courseID;
@@ -501,8 +500,6 @@ class RenameItem extends React.Component {
         this.setState({
             value: this.state.newVal,
         });
-
-        alert(this.state.newVal);
 
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var courseID;
