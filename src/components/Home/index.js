@@ -233,10 +233,13 @@ class Container extends React.Component { //the main container for everything on
         //TODO: BASED ON USERNAME (THIS.STATE.USERNAME) AND CURRENTLY OPEN COURSE (THIS.STATE.ACTIVECOURSE), PULL THE MODULES FROM DATABASE HERE AND RETURN IT AS AN ARRAY OF JAVASCRIPT OBJECTS. 
         //YOU CAN SEE THE DUMMY EXAMPLES BELOW, BUT PLEASE REPLACE THIS SHIT
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
+        if ( name == "none")
+            return []
 
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
-            // add if statement here to determine if current course and one in list matches up
+            console.log(course.CourseName);
+            // need statement here to find matching coursename
             return [ {
                 title: course.CourseName,
                 contents: ['w'], //yeet
