@@ -79,8 +79,17 @@ function currentUserIsAdmin() {
 //Input: username, activeCourse
 //Output: boolean
 function isUserBlocked(username, activeCourse) {
-    // TODO: return false if the user is blocked from the course, and true if the user is not blocked
+    // return false if the user is blocked from the course, and true if the user is not blocked
     // This should simply be the value in the key-value pair in the database you set up in getListOfStudents()
+    const allCourses = JSON.parse(localStorage.getItem('courses'));
+    var stulist;
+    for (let i = 0, len = allCourses.length; i < len; ++i) {
+        var course = allCourses[i];
+        if (course.nclasscode === activeCourse) {
+            stulist = course.ostudentList; // identifies current course child name to update
+            return stulist[username];
+        }
+    }
     return true; //placeholder to remove
 }
 
@@ -1415,8 +1424,8 @@ class MainPanel extends React.Component {
         var stukeys = [];
         if ( stulist != undefined) {
             for (let [key, value] of Object.entries(stulist)) {
-                if ((value === true) && (key !== "exampleStudentEmail")) 
-                    stukeys.push(JSON.stringify(key));
+                if (key !== "exampleStudentEmail") 
+                    stukeys.push(key);
             }
         }
         console.log(stukeys);
@@ -1440,16 +1449,46 @@ class MainPanel extends React.Component {
             for (let [key, value] of Object.entries(stulist)) {
                 if (key !== "exampleStudentEmail")
                     stu.push(JSON.stringify(value));
+                    console.log(stu);
             }
         }
-        console.log(stu);
+        
         return stu; 
     }
 
     setStudentKick(studentEmail, kickStatus) { //kickStatus is a string, studentEmail is a string
-        // Continuation of the TODO in getListOfStudents:
+        // Continuation of the in getListOfStudents:
         // This function needs to set the kickStatus(value) of the studentEmail(key) to what's been passed into this function
-
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var stulist;
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                stulist = course.ostudentList; // identifies current course child name to update
+                courseID = course.appID;
+                break;
+            }
+        }
+        if ( stulist != undefined) {
+            for (let key in stulist) {
+                console.log(JSON.stringify(key).replace(/\"/, ''))
+                if (JSON.stringify(key).replace(/\"/g, '') == studentEmail){ 
+                    console.log(1);
+                    var newkick;
+                    if (kickStatus === "false") 
+                        newkick = false;
+                    else
+                        newkick = true;
+                    stulist[studentEmail] = newkick;
+                    console.log(stulist);
+                    this.props.firebase.courses().child(courseID).update({
+                        ostudentList: stulist,
+                    });
+                }
+            }
+        }
+        
         alert(studentEmail + ' ' + kickStatus); //Placeholder output, delete later
     }
 
@@ -2087,8 +2126,7 @@ class Container extends React.Component {
                 if (course.nclasscode === courseCode) {
                     courseID = course.appID; // identifies current course child name to update
                     stuemails = course.ostudentList;
-                    console.log(stuemails);
-                    const newemail = Object.values(usr).slice()[1].replace(/[^A-Z0-9]/ig, "_");
+                    const newemail = Object.values(usr).slice()[1].replace(/\./g,'EMAILDOT');
                     stuemails[newemail] = true;
                     this.props.firebase.courses().child(courseID).update({
                         ostudentList: stuemails,
