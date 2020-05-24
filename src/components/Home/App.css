@@ -84,6 +84,30 @@ div {
   overflow: hidden;
 }
 
+.sidebartoggle {
+  position: fixed;
+  width: 75px;
+  height: 75px;
+  top: 90%;
+  border-radius: 100px;
+  left: 1em;
+  box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
+}
+
+.flipimage {
+  transform: rotate(180deg);
+}
+
+.smallsidebartoggle {
+  position: fixed;
+  width: 75px;
+  height: 75px;
+  top: 90%;
+  border-radius: 100px;
+  left: 1em;
+  box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
+}
+
 .sessionbar {
   height: 35px;
   text-align: center;

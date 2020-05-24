@@ -14,6 +14,7 @@ import darkdeleteicon from './deletedark.svg';
 import darkrenameicon from './renamedark.svg';
 import whitedeleteicon from './deletewhite.svg';
 import whiterenameicon from './renamewhite.svg';
+import sidebaricon from './sidebar.svg';
 require('@firebase/database');
 
 //DOC: Item 1: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
@@ -80,24 +81,9 @@ class Sidebar extends React.Component {
     createCourseMode = () => {this.props.createCourseMode();}
 
     render() {
+
         return (
             <div className="sidebar">
-                {/* <center> */}
-                    {/* <table width="90%">
-                        <tr>
-                            <td>
-                                <AddCourseItem addCourseMode={this.addCourseMode}/>
-                            </td>
-                            <td>
-                                <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                            </td>
-                        </tr>
-                    </table> */}
-                    {/* <AddCourseItem addCourseMode={this.addCourseMode}/>
-                    <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                </center>
-                <hr />
-                <br /> */}
                 <div className="courselist">
                     <br />
                     <AddCourseItem addCourseMode={this.addCourseMode}/>
@@ -1760,6 +1746,7 @@ class Container extends React.Component {
         this.changeActiveCourse = this.changeActiveCourse.bind(this);
         this.addCourseMode = this.addCourseMode.bind(this);
         this.createCourseMode = this.createCourseMode.bind(this);
+        this.toggleHidden = this.toggleHidden.bind(this);
 
         this.state = {
             arrCourses: props.courses,
@@ -1767,6 +1754,7 @@ class Container extends React.Component {
             username: props.name,
             mainPanelMode: 0, //0 means modules view (default), 1 means add-course view, 2 means create-course view
             varkClicks: props.varkClicks,
+            hidden: false,
         }
     }
 
@@ -1940,6 +1928,12 @@ class Container extends React.Component {
         }
     }
 
+    toggleHidden() {
+        this.setState({
+            hidden: !this.state.hidden,
+        });
+    }
+
     render() {
         var mainpanel;
         if (this.state.mainPanelMode===0) {
@@ -1949,22 +1943,41 @@ class Container extends React.Component {
         } else if (this.state.mainPanelMode===2) {
             mainpanel = <CreateCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} createCourse={this.createCourse}/>
         }
+
+        var leftelement = (<div />);
+        if (!this.state.hidden) {
+            leftelement=(
+                <div className="left-element">
+                    <ResizableBox width={300} height={10} axis={'x'} resizeHandles={['ne']}
+                    minConstraints={[150, 10]} maxConstraints={[400, 10]} />
+                    <Sidebar
+                        username={this.state.username}
+                        activeCourse={this.state.activeCourse}
+                        arrCourses={this.state.arrCourses}
+                        changeActiveCourse={this.changeActiveCourse}
+                        addCourseMode={this.addCourseMode}
+                        createCourseMode={this.createCourseMode}
+                    />
+                </div>
+            );
+        }
+
+        var button = (this.state.hidden) ? (
+            <button className="smallsidebartoggle" onClick={this.toggleHidden}>
+                <img className="flipimage" src={backarrow} width="12px"/> 
+            </button>
+        ) : (
+            <button className="sidebartoggle" onClick={this.toggleHidden}>
+                <img src={backarrow} width="12px"/> 
+            </button>
+        );
+
         return (
             <div className="App">
                 <div className="container">
                     
-                    <div className="left-element">
-                        <ResizableBox width={300} height={10} axis={'x'} resizeHandles={['ne']}
-                        minConstraints={[150, 10]} maxConstraints={[400, 10]} />
-                        <Sidebar
-                            username={this.state.username}
-                            activeCourse={this.state.activeCourse}
-                            arrCourses={this.state.arrCourses}
-                            changeActiveCourse={this.changeActiveCourse}
-                            addCourseMode={this.addCourseMode}
-                            createCourseMode={this.createCourseMode}
-                        />
-                    </div>
+                    {leftelement}
+                    {button}
                     <div className="right-element">
                         {mainpanel}
                     </div>
