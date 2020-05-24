@@ -123,6 +123,8 @@ class SignUpFormBase extends Component {
             email !== '' &&
             username !== '') &&
             isVerified);
+        
+        let signupmode = (isAdmin) ? "Teacher" : "Student";
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -163,14 +165,22 @@ class SignUpFormBase extends Component {
                         type="checkbox"
                         onClick={this.showPW}
                     /><br /><br />
-                    Teacher:
+                </label>
+                
+                <br />
+                <br />
+                Sign up as a <b>{signupmode}</b>
+                <br />
+                <br />
+                <label className="switch">
                     <input
                         name="isAdmin"
                         type="checkbox"
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
                     />
-                </label><br /><br />
+                    <span class="slider round"></span>
+                </label><br /><br /><br />
                 <center>
                     <Recaptcha
                         sitekey = "6LfvB_IUAAAAADxPHcPo2P8I9wwZmSsHwmqH9cqZ"
