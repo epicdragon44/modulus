@@ -14,7 +14,7 @@ function CourseListItem(props) {
     var code = codeToName(props.name);
     return ( 
         <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
-            {code} 
+            {code}
         </div>
     );
 }
@@ -96,10 +96,7 @@ class Sidebar extends React.Component {
                         <br />
                         <AddCourseItem addCourseMode={this.addCourseMode}/>
                         <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                        <br />
-                        <hr />
-                        <br />
-                        {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You don't have any courses yet.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<div><CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/><br /></div>)))}
+                        {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
                     </div>
                 </div>
             </div>
@@ -781,12 +778,14 @@ class AddModuleItem extends React.Component {
         var inside = (<p className="addrenamebutton">Add a Module</p>);
         if (this.state.active) {
             inside = (
-                <form onSubmit={this.handleSubmit}>
-                <label>
-                    <input type="text" value={this.state.newVal} onChange={this.handleChange} />
-                </label>
-                <input className="button" type="submit" value="Submit" />
-            </form>
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            <input type="text" value={this.state.newVal} onChange={this.handleChange} />
+                        </label>
+                        <input className="button" type="submit" value="Submit" />
+                    </form>
+                </div>
             );
         }
 

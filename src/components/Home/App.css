@@ -98,16 +98,17 @@ div {
   font-size: medium;
   height: 20px;
   text-align: center;
-  margin: auto;
+  margin-top: 15px;
   overflow: hidden;
   cursor: default;
   border-radius: 10px;
+  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
 }
 
 .courselistitem:hover {
   background-color: whitesmoke;
+  box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
   text-align: center;
-  margin: auto;
   overflow: hidden;
   cursor: default;
 }
@@ -133,6 +134,7 @@ div {
 
 .addcourseitem:hover {
   background-color: #002136;
+  box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
   /* box-shadow: 0 10px 29px 0 rgba(28, 36, 59, 0.1) */
 }
 
@@ -387,7 +389,6 @@ div {
   padding-bottom: 1em;
   padding-top: 1em;
   font-size: large;
-
 }
 
 input[type=text] {
