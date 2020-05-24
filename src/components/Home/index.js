@@ -412,7 +412,7 @@ class MyModal extends React.Component{
 
     handleChange(event) {    this.setState({newVal: event.target.value});  }
 
-    handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
+    handleSubmit(event) { 
         this.setState({
             value: this.state.newVal,
         });
@@ -469,7 +469,7 @@ class RenameItem extends React.Component {
 
     handleChange(event) {    this.setState({newVal: event.target.value});  }
 
-    handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
+    handleSubmit(event) {
         this.setState({
             value: this.state.newVal,
         });
