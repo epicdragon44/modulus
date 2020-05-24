@@ -192,6 +192,11 @@ div {
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   border-radius: 10px;
+  transition: 0.5s;
+}
+
+.moduleitem:focus {
+  max-height: 500px;
 }
 
 .addmoduleitem {
@@ -216,6 +221,11 @@ div {
   max-height: 500px;
   box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
+  transition: 0.5s;
+}
+
+.activemoduleitem:focus {
+  max-height: 50px;
 }
 
 .moduletitle {
@@ -233,17 +243,9 @@ div {
 
 .moduletitle:hover {
   background-color: #002136;
-  height: 16px;
-  color: white;
-  font-size: large;
-  padding-left: 1em;
-  padding-bottom: 1em;
-  padding-top: 0.95em;
-  border-radius: 10px 10px 0px 0px;
 }
 
 .modulecontents {
-  transition: height 0.4s ease-in-out;
   /* border: 1px solid #003459; */
   background-color: whitesmoke;
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
