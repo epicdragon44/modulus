@@ -252,6 +252,36 @@ div {
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
 }
 
+.titlemodulecontentitem {
+  padding-left: 1.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
+  padding-right: 3em;
+  cursor: pointer;
+  background-color: #003459;
+  font-size: large;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  max-height: 53px;
+  overflow: hidden;
+}
+
+.titlemodulecontentitem:hover {
+  background-color: #001f35;
+}
+
+.addmodulecontentitem {
+  padding-left: 2.5em;
+  padding-top: 1.5vh;
+  padding-bottom: 1.5vh;
+  padding-right: 3em;
+  border-top: 1px gray;
+  cursor: pointer;
+  border-left: 5px solid gray;
+  background-color: white;
+  font-size: large;
+}
+
 .modulecontentitem {
   padding-left: 1.5em;
   padding-top: 1.5vh;
@@ -812,15 +842,13 @@ select:active {
 .editflex {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .editflextext {
   padding-left: 1em;
   padding-top: 0.8em;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  flex-grow: 5;
 }
 
 .editflexicon {

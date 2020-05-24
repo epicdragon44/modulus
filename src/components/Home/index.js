@@ -913,8 +913,7 @@ class ModuleContentItem extends React.Component {
                         </div>
                         <div className="editflexicon">
                             {deleteDisplay}
-                        </div>
-                        <div className="editflexicon">
+                            &nbsp;&nbsp;&nbsp;
                             {renameDisplay}
                         </div>
                     </div>
@@ -943,7 +942,7 @@ class AddModuleContentItemItem extends React.Component {
     }
 
     render() {
-        var attribute = "modulecontentitem";
+        var attribute = "addmodulecontentitem";
 
         var inner = (<div>Add an item</div>);
 
@@ -1110,18 +1109,28 @@ function ModuleItem(props) {
     );
     if (teacherMode) {
         topbar = (
-            <div className="teachermoduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
-                <div className="editflex">
-                    <div className="editflextext">
+            // <div className="teachermoduletitle" >
+            //     <div className="editflex">
+            //         <div className="editflextext" onClick={() => setActive(active==="active" ? "" : "active")}>
+            //             {props.name}
+            //         </div>
+            //         <div className="editflexicon">
+            //             {deleteDisplay}
+            //             &nbsp;&nbsp;&nbsp;
+            //             {renameDisplay} 
+            //         </div>
+            //     </div>
+            // </div>
+
+            <div className="titlemodulecontentitem" >
+                <div className="editflex" >
+                    <div className="editflextext" onClick={() => setActive(active==="active" ? "" : "active")}>
                         {props.name}
                     </div>
-                    &nbsp;&nbsp;
                     <div className="editflexicon">
                         {deleteDisplay}
-                    </div>
-                    &nbsp;&nbsp;
-                    <div className="editflexicon">
-                        {renameDisplay} 
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {renameDisplay}
                     </div>
                 </div>
             </div>
@@ -1133,7 +1142,7 @@ function ModuleItem(props) {
             <div className={attribute} >
                 {topbar}
                 <div className="modulecontents">
-                    {props.contents.map(
+                    {(active==="active") ? (props.contents.map(
                         contentitem =>
                         (props.varkMode==="All" || props.varkMode===props.vark[props.contents.indexOf(contentitem)])
                         ?
@@ -1153,8 +1162,8 @@ function ModuleItem(props) {
                         )
                         :
                         (<div />)
-                    )}
-                    {addCourseItemItem}
+                    )) : (null)}
+                    {(active==="active") ? (addCourseItemItem) : (null)}
                 </div>
             </div>
         </div>
