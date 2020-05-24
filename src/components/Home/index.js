@@ -1424,8 +1424,10 @@ class MainPanel extends React.Component {
         var stukeys = [];
         if ( stulist != undefined) {
             for (let [key, value] of Object.entries(stulist)) {
-                if (key !== "exampleStudentEmail") 
+                if (key !== "exampleStudentEmail") {
+                    key = key.replace(/EMAILDOT/g, ".");
                     stukeys.push(key);
+                }
             }
         }
         console.log(stukeys);
@@ -1457,6 +1459,7 @@ class MainPanel extends React.Component {
     }
 
     setStudentKick(studentEmail, kickStatus) { //kickStatus is a string, studentEmail is a string
+        studentEmail = studentEmail.replace(/\./g,'EMAILDOT');
         // Continuation of the in getListOfStudents:
         // This function needs to set the kickStatus(value) of the studentEmail(key) to what's been passed into this function
         const allCourses = JSON.parse(localStorage.getItem('courses'));
@@ -1488,8 +1491,6 @@ class MainPanel extends React.Component {
                 }
             }
         }
-        
-        alert(studentEmail + ' ' + kickStatus); //Placeholder output, delete later
     }
 
     isVarkEnabled() {
@@ -1752,7 +1753,7 @@ class MainPanel extends React.Component {
                 {(listOfStudents.length<=1) ? (
                     <p className="smallparagraph">You don't have any students yet.</p>
                 ) : listOfStudents.map(
-                    student => (
+                    student => (student===this.props.email) ? (null) : (
                         (listOfStudentKicks[listOfStudents.indexOf(student)]==="false") ? (
                             <div className="studentrow">
                                 <label className="switch">
@@ -2295,7 +2296,7 @@ class Container extends React.Component {
 
         var mainpanel;
         if (this.state.mainPanelMode===0) {
-            mainpanel = <MainPanel instantOpen={instantOpen} isMobile={this.props.isMobile} firebase={this.props.firebase} username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
+            mainpanel = <MainPanel instantOpen={instantOpen} isMobile={this.props.isMobile} firebase={this.props.firebase} username={this.state.username} email={this.props.email} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
         } else if (this.state.mainPanelMode===1) {
             mainpanel = <AddCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} addCourse={this.addCourse}/>
         } else if (this.state.mainPanelMode===2) {
@@ -2323,11 +2324,11 @@ class Container extends React.Component {
 
         var button = (this.state.hidden) ? (
             <button className={(!(this.props.isMobile==="medium")) ? ("smallsidebartoggle") : ("mobile-smallsidebartoggle")} onClick={this.toggleHidden}>
-                <img className={(!this.props.isMobile) ? ("flipimage") : ("")} src={backarrow} width="12px"/> 
+                <img className={("flipimage")} src={backarrow} width="12px"/> 
             </button>
         ) : (
             <button className={(!(this.props.isMobile==="medium")) ? ("sidebartoggle") : ("mobile-sidebartoggle")} onClick={this.toggleHidden}>
-                <img className={(this.props.isMobile) ? ("flipimage") : ("")} src={backarrow} width="12px"/> 
+                <img className={("")} src={backarrow} width="12px"/> 
             </button>
         );
 
@@ -2427,7 +2428,7 @@ class Home extends React.Component {
 
     render() {
         return ( //when login is implemented, it should create an app with the appropriate username passed in
-            <Container name={this.state.username} courses={this.state.courses} firebase={this.props.firebase} varkClicks={this.state.varkClicks} isMobile={this.state.isMobile}/>
+            <Container name={this.state.username} email={this.state.email} courses={this.state.courses} firebase={this.props.firebase} varkClicks={this.state.varkClicks} isMobile={this.state.isMobile}/>
         );
     }
 }
