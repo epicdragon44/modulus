@@ -74,51 +74,112 @@ class MyModal extends React.Component{
 
        var internalDisplay = ""; //set this to the appropriate stuff based on this.props.internal and vark
 
-       var beforeCode = "<a class=\"linkbutton\" target=\"_blank\" href=\"";
-       var afterCode = "\">Click here to open content in new tab</a>";
-       var code = beforeCode + this.props.internal + afterCode;
-       
-        //this be the gaey code
-        internalDisplay = (
-            <div dangerouslySetInnerHTML={{__html: 
-                code}}></div>
-        )
+       var link = this.props.internal;
 
-        // if (this.props.vark==="V") { //once we have non-gaey code, we can properly implement internals, but for now we'll just embed external services
+       if (this.props.vark==="V" || this.props.vark==="R") {
+           if (link.includes("/view?usp=sharing")) { //if its a google drive shared file
+                link = link.substring(0, link.indexOf("/view?usp=sharing")) + "/preview"; //make it an embeddable preview
+
+                //embed it
+                var beforeCode = "<iframe src=\"";
+                var afterCode = "\" width=\"100%\" height=\"750\" />";
+                var code = beforeCode + link + afterCode;
+
+                internalDisplay = (<div dangerouslySetInnerHTML={{__html: code}}></div>);
+
+                return ( //big modal
+                    <Modal
+                        style= {{
+                            overlay: {
+                              position        : 'fixed',
+                              top             : -125,
+                              left            : 0,
+                              right           : 0,
+                              bottom          : 0,
+                              zIndex          : 99999999,
+                              overflow        : 'hidden',
+                              perspective     :  1300,
+                              backgroundColor : 'rgba(0, 0, 0, 0.3)'
+                            },
+                          
+                            content: {
+                              position                : 'relative',
+                              margin                  : '15% auto',
+                              width                   : '90%',
+                              height                  : '770px',
+                              border                  : '1px solid rgba(0, 0, 0, .2)',
+                              background              : '#fff',
+                              overflow                : 'auto',
+                              borderRadius            : '4px',
+                              outline                 : 'none',
+                              boxShadow               : '0 5px 10px rgba(0, 0, 0, .3)',
+                              textAlign               : 'center',
+                              overflow                : 'hidden',
+                            }
+                        }}
+                        onRequestClose={onRequestClose}
+                        effect={Effect.ScaleUp}
+                    >
+                        {internalDisplay}
+                    </Modal>
+                );
+           }
+           else { //just create a button and insert the link as the button's destination
+            var beforeCode = "<a class=\"linkbutton\" target=\"_blank\" href=\"";
+            var afterCode = "\">Click here to open content in new tab</a>";
+            var code = beforeCode + link + afterCode;
             
-        // }
-        //  if (this.props.vark==="A") { 
-             
-        //  }
-        // if (this.props.vark==="R") {
+            internalDisplay = (<div dangerouslySetInnerHTML={{__html: code}}></div>);
 
-        // }
-        // if (this.props.vark==="K") {
+            return ( //small modal
+                <Modal
+                   className="modaldialog"
+                   onRequestClose={onRequestClose}
+                   effect={Effect.ScaleUp}>
+                   <h1 className="modaldialog">
+                       <table style={{maxHeight: "50px"}}>
+                           <tr>
+                               <td>
+                                  <button id="backbutton" onClick={ModalManager.close}>←</button> 
+                               </td>
+                               <td>
+                                  {internalDisplay}
+                               </td>
+                           </tr>
+                       </table>             
+                   </h1>
+                </Modal>
+            );
+           }
+       }
+       else { //same code for A, R, and K, to just create a button and insert the link as the button's destination
+            var beforeCode = "<a class=\"linkbutton\" target=\"_blank\" href=\"";
+            var afterCode = "\">Click here to open content in new tab</a>";
+            var code = beforeCode + link + afterCode;
+            
+            internalDisplay = (<div dangerouslySetInnerHTML={{__html: code}}></div>);
 
-        // }
-
-        
-
-       return (
-          <Modal
-             className="modaldialog"
-             onRequestClose={onRequestClose}
-             effect={Effect.ScaleUp}>
-             <h1 className="modaldialog">
-                 <table style={{maxHeight: "50px"}}>
-                     <tr>
-                         <td>
-                            <button id="backbutton" onClick={ModalManager.close}>←</button> 
-                         </td>
-                         <td>
-                            {internalDisplay}
-                         </td>
-                     </tr>
-                 </table>             
-             </h1>
-             
-          </Modal>
-       );
+            return ( //small modal
+                <Modal
+                   className="modaldialog"
+                   onRequestClose={onRequestClose}
+                   effect={Effect.ScaleUp}>
+                   <h1 className="modaldialog">
+                       <table style={{maxHeight: "50px"}}>
+                           <tr>
+                               <td>
+                                  <button id="backbutton" onClick={ModalManager.close}>←</button> 
+                               </td>
+                               <td>
+                                  {internalDisplay}
+                               </td>
+                           </tr>
+                       </table>             
+                   </h1>
+                   
+                </Modal>
+            );
+       }       
     }
  }
 
