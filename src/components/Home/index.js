@@ -100,7 +100,6 @@ class MyModal extends React.Component{
                 var course = allCourses[i];
                 if (course.CourseName === this.props.activeCourse) {
                     courseID = course.appID; // identifies current course child name to update
-                    console.log(course);
                     break;
                 }
             }
@@ -113,24 +112,20 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-            this.props.firebase.modules(courseID).on('value', snapshot => {
-                const modulesObject = snapshot.val();
-                const modulesList = Object.keys(modulesObject).map(key => ({
-                    ...modulesObject[key],
-                    appID: key,
-                }));
-                localStorage.setItem('modules', JSON.stringify(modulesList));
-            });
+            console.log(this.props.modules);
             const contents = neededModule.contents; // add your new items
             const internals = neededModule.internals;
             const vark = neededModule.vark;
             contents.push(this.state.itemName);
             internals.push(this.state.value);
             vark.push(this.state.varkselection);
-            console.log(contents);
-            console.log(internals);
-            console.log(vark);
-            //we need to edit a whole module at a time
+            
+            var pushedModules;
+            for (let i = 0; i < this.props.modules.length; ++i) {
+                pushedModules['module'+(i+1)] = this.props.modules[i];
+            }
+
+            console.log(pushedModules);
 
 
 
@@ -843,9 +838,9 @@ class Container extends React.Component { //the main container for everything on
             arrCourses: newCourses.slice(),
         }, () => {this.changeActiveCourse(nameOfCourse);});
         const usr = JSON.parse(localStorage.getItem('authUser'));
-        console.log(Object.values(usr).slice()[2]);
+        //console.log(Object.values(usr).slice()[2]);
         localStorage.setItem('authUser', JSON.stringify(usr));
-        console.log(Object.values(usr).slice()[2]);
+        //console.log(Object.values(usr).slice()[2]);
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             courses: newCourses.slice(),
         });
@@ -858,9 +853,9 @@ class Container extends React.Component { //the main container for everything on
             varkClicks: newVark.slice(),
         });
         const usr = JSON.parse(localStorage.getItem('authUser'));
-        console.log(Object.values(usr).slice()[6]);
+        //console.log(Object.values(usr).slice()[6]);
         localStorage.setItem('authUser', JSON.stringify(usr));
-        console.log(Object.values(usr).slice()[6]);
+        //console.log(Object.values(usr).slice()[6]);
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             wvarkclicks: newVark.slice(),
         });
@@ -879,9 +874,9 @@ class Container extends React.Component { //the main container for everything on
             arrCourses: newCourses.slice(),
         }, () => {this.changeActiveCourse(this.state.arrCourses.slice()[0]);});
         const usr = JSON.parse(localStorage.getItem('authUser'));
-        console.log(Object.values(usr).slice()[2]);
+        //console.log(Object.values(usr).slice()[2]);
         localStorage.setItem('authUser', JSON.stringify(usr));
-        console.log(Object.values(usr).slice()[2]);
+        //console.log(Object.values(usr).slice()[2]);
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             courses: newCourses.slice(),
         });
