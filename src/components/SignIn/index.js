@@ -52,6 +52,16 @@ class SignInFormBase extends Component {
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+    componentDidMount() {
+        this.props.firebase.courses().on('value', snapshot => {
+            const coursesObject = snapshot.val();
+            const coursesList = Object.keys(coursesObject).map(key => ({
+                ...coursesObject[key],
+                appID: key,
+            }));
+            localStorage.setItem('courses', JSON.stringify(coursesList));
+        });
+    }
 
     render() {
         const { email, password, error } = this.state;

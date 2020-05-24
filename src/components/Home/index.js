@@ -998,6 +998,16 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         this.getTeacherEmail = this.getTeacherEmail.bind(this);
         this.codeToName = this.codeToName.bind(this);
     }
+    componentDidMount() {
+        this.props.firebase.courses().on('value', snapshot => {
+            const coursesObject = snapshot.val();
+            const coursesList = Object.keys(coursesObject).map(key => ({
+                ...coursesObject[key],
+                appID: key,
+            }));
+            localStorage.setItem('courses', JSON.stringify(coursesList));
+        });
+    }
 
     handleRemove(event) {
         this.props.removeCourse(this.props.activeCourse);
