@@ -6,6 +6,7 @@ import { withAuthorization } from '../Session';
 import { Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import { PieChart } from 'react-minimal-pie-chart';
 import * as firebase from 'firebase'
+import backarrow from './backarrow.png'; // Tell webpack this JS file uses this image
 require('@firebase/database');
 
 function Logo() {
@@ -77,6 +78,9 @@ class MyModal extends React.Component{
        var link = this.props.internal;
 
        if (this.props.vark==="V" || this.props.vark==="R") {
+           if (link.includes("/edit?usp=sharing")) { //standardize on "view" as the thing to replace, since GDrive is gaey and some view-only links still have edit in the link
+                link = link.substring(0, link.indexOf("/edit?usp=sharing")) + "/view?usp=sharing";
+           }
            if (link.includes("/view?usp=sharing")) { //if its a google drive shared file
                 link = link.substring(0, link.indexOf("/view?usp=sharing")) + "/preview"; //make it an embeddable preview
 
@@ -140,7 +144,7 @@ class MyModal extends React.Component{
                        <table style={{maxHeight: "50px"}}>
                            <tr>
                                <td>
-                                  <button id="backbutton" onClick={ModalManager.close}>←</button> 
+                                  <button id="backbutton" onClick={ModalManager.close}><img src={backarrow} alt="Return" height="15px"/></button> 
                                </td>
                                <td>
                                   {internalDisplay}
@@ -168,7 +172,7 @@ class MyModal extends React.Component{
                        <table style={{maxHeight: "50px"}}>
                            <tr>
                                <td>
-                                  <button id="backbutton" onClick={ModalManager.close}>←</button> 
+                                  <button id="backbutton" onClick={ModalManager.close}><img src={backarrow} alt="Return" height="15px"/></button> 
                                </td>
                                <td>
                                   {internalDisplay}
