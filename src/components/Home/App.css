@@ -491,10 +491,65 @@ input[type=button].internal, input[type=submit].internal, input[type=reset].inte
   border-radius: 10px;
 }
 
+input[type=button].internal:hover, input[type=submit].internal:hover, input[type=reset].internal:hover {
+  color: rgb(192, 192, 192);
+}
+
+input[type=button].internaldeletion, input[type=submit].internaldeletion, input[type=reset].internaldeletion {
+  background-color: white;
+  padding-top: 4px;
+  border: none;
+  color: #003459;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+input[type=button].internaldeletion:hover, input[type=submit].internaldeletion:hover, input[type=reset].internaldeletion:hover {
+  background-color: lightgrey;
+  padding-top: 4px;
+  border: none;
+  color: #003459;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
 input[type=button].whiteinternal, input[type=submit].whiteinternal, input[type=reset].whiteinternal {
   background-color: transparent;
   border: none;
   color: #003459;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+
+input[type=button].whiteinternal:hover, input[type=submit].whiteinternal:hover, input[type=reset].whiteinternal:hover {
+  color: black;
+}
+
+input[type=button].whiteinternaldeletion, input[type=submit].whiteinternaldeletion, input[type=reset].whiteinternaldeletion {
+  background-color: #003459;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+input[type=button].whiteinternaldeletion:hover, input[type=submit].whiteinternaldeletion:hover, input[type=reset].whiteinternaldeletion:hover {
+  background-color: #001e33;
+  border: none;
+  color: white;
   padding: 10px 10px;
   text-decoration: none;
   margin: 4px 2px;

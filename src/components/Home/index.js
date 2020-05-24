@@ -630,7 +630,7 @@ class DeleteModule extends React.Component {
         if (this.state.active) {
             inside = (
             <form onSubmit={this.handleSubmit}>
-                <input className="internal" type="submit" value="Confirm Deletion" />
+                <input className="internaldeletion" type="submit" value="Confirm Deletion" />
             </form>
             );
         }
@@ -827,7 +827,7 @@ class DeleteItem extends React.Component {
         if (this.state.active) {
             inside = (
             <form onSubmit={this.handleSubmit}>
-                <input className="internal" type="submit" value="Confirm Deletion" />
+                <input className="whiteinternaldeletion" type="submit" value="Confirm Deletion" />
             </form>
             );
         }
@@ -1020,7 +1020,7 @@ class AddModuleItem extends React.Component {
                     <label>
                         <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} onClick={this.clearField}/>
                     </label>
-                    <input className="button" type="submit" value="Add a Module" />
+                    <input className="internaladd" type="submit" value="Add a Module" />
                 </form>
                 
             </div>
@@ -1099,9 +1099,11 @@ function ModuleItem(props) {
                     <div className="editflextext">
                         {props.name}
                     </div>
+                    &nbsp;&nbsp;
                     <div className="editflexicon">
                         {deleteDisplay}
                     </div>
+                    &nbsp;&nbsp;
                     <div className="editflexicon">
                         {renameDisplay} 
                     </div>
