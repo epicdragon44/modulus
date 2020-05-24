@@ -234,8 +234,8 @@ div {
   color: white;
   font-size: large;
   padding-left: 1.5em;
-  padding-bottom: 1em;
-  padding-top: 0.90em;
+  padding-bottom: 1.1em;
+  padding-top: 0.825em;
   border-radius: 10px 10px 0px 0px;
   overflow: hidden;
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
@@ -646,7 +646,15 @@ h1.modaldialog {
 #backbutton {
   padding-top: 5px;
   padding-bottom: 10px;
+  padding-left: 21px;
+  padding-right: 21px;
+  border-radius: 100px;
   font-size: xx-large;
+  outline: none;
+}
+
+#backbutton:hover {
+  background-color: #00223a;
 }
 
 a.linkbutton {

@@ -51,7 +51,7 @@ function AccountMenuItem(props) {
 function MenuItem(props) {
     return (
         <li className="nav" id="special">
-            <Link to={props.link}>{props.name}</Link>
+            <Link to={props.link}><img src={account} alt="account" height="20px"></img></Link>
         </li>
     );
 }
@@ -84,9 +84,9 @@ const NavigationAuth = ({ authUser }) => (
 
 const NavigationNonAuth = () => (
     <ul className="nav">
-        {/* <li className="left">
-                <Link to={ROUTES.LANDING}>Modulus</Link>
-        </li> */}
+        <li className="left">
+                <Logo />
+            </li>
         <MenuItem link={ROUTES.ACCOUNT} name="Sign In" />
     </ul>
 );

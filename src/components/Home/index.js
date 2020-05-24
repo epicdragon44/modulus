@@ -14,7 +14,6 @@ import darkdeleteicon from './deletedark.svg';
 import darkrenameicon from './renamedark.svg';
 import whitedeleteicon from './deletewhite.svg';
 import whiterenameicon from './renamewhite.svg';
-import sidebaricon from './sidebar.svg';
 require('@firebase/database');
 
 //DOC: Item 1: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
@@ -405,12 +404,12 @@ class MyModal extends React.Component {
                                 {internalDisplay}
                             </Modal>
                         );
-            }else if(link.includes("youtube") || link.includes("youtu.be")){
-                if(link.includes("youtu.be"))
+            } else if (link.includes("youtube") || link.includes("youtu.be")) {
+                if (link.includes("youtu.be"))
                     link = link.substring(0, link.indexOf("youtu.be")) + "youtube.com/watch?v=" + link.substring(link.indexOf("be/") + 3, link.length);
-                if(link.includes("youtube"))
+                if (link.includes("youtube"))
                     link = link.substring(0, link.indexOf("/watch?v=")) + "/embed/" + link.substring(link.indexOf("v=") + 2, link.length);
-                var beforeCode = "<iframe width=\"560\" height=\"315\" src=\"";
+                var beforeCode = "<iframe width=\"1000\" height=\"500\" src=\"";
                 var afterCode = "\" frameBorder=\"0\"\n" +
                     "allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n" +
                     "allowFullScreen></iframe>";
@@ -420,21 +419,38 @@ class MyModal extends React.Component {
 
                 return ( //small modal
                     <Modal
-                        className="modaldialog"
+                        style= {{
+                            overlay: {
+                            position        : 'fixed',
+                            top             : -150,
+                            left            : 0,
+                            right           : 0,
+                            bottom          : 0,
+                            zIndex          : 99999999,
+                            overflow        : 'hidden',
+                            perspective     :  1300,
+                            backgroundColor : 'rgba(0, 0, 0, 0.3)'
+                            },
+
+                            content: {
+                            position                : 'relative',
+                            margin                  : '15% auto',
+                            width                   : '60%',
+                            height                  : '600px',
+                            border                  : '1px solid rgba(0, 0, 0, .2)',
+                            background              : '#fff',
+                            borderRadius            : '4px',
+                            outline                 : 'none',
+                            boxShadow               : '0 5px 10px rgba(0, 0, 0, .3)',
+                            textAlign               : 'center',
+                            overflow                : 'hidden',
+                            }
+                        }}
                         onRequestClose={onRequestClose}
-                        effect={Effect.ScaleUp}>
-                        <h1 className="modaldialog">
-                            <table style={{maxHeight: "50px"}}>
-                                <tr>
-                                    <td>
-                                        <button id="backbutton" onClick={ModalManager.close}><img src={backarrow} alt="Return" height="15px"/></button>
-                                    </td>
-                                    <td style={{paddingLeft: 100}}>
-                                        {internalDisplay}
-                                    </td>
-                                </tr>
-                            </table>
-                        </h1>
+                        effect={Effect.ScaleUp}
+                    >
+                        <br /><br />
+                        {internalDisplay}
                     </Modal>
                 );
 
@@ -999,7 +1015,7 @@ class AddModuleItem extends React.Component {
             title: moduleTitle,
             contents: ["Example Item",],
             vark: ['A',],
-            internals: ["https://youtu.be/e3RbWSfhlp4",]
+            internals: ["https://youtu.be/uWJtJYXtTKo",]
         } // creates example blank module using module title
 
         arrModules.push(blankModule);
@@ -2060,8 +2076,8 @@ class Container extends React.Component {
         if (!this.state.hidden) {
             leftelement=(
                 <div className="left-element">
-                    <ResizableBox width={300} height={10} axis={'x'} resizeHandles={['ne']}
-                    minConstraints={[150, 10]} maxConstraints={[400, 10]} />
+                    <ResizableBox width={300} height={0} axis={'x'} resizeHandles={['ne']}
+                    minConstraints={[150, 0]} maxConstraints={[400, 0]} />
                     <Sidebar
                         username={this.state.username}
                         activeCourse={this.state.activeCourse}
