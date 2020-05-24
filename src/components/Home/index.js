@@ -136,9 +136,10 @@ class MyModal extends React.Component{
             
             const contents = neededModule.contents;  // modify the corresponding item
             const internals = neededModule.internals;
+            const vark = neededModule.vark;
             for ( let i = 0; i < contents.length; ++i) {
                 let itemTemp = contents[i]; 
-                if ( itemTemp === this.props.itemName) {
+                if ( itemTemp === this.props.itemName && vark[i] === this.props.vark) {
                     internals[i] = this.state.value;
                 }
             }
@@ -480,12 +481,44 @@ class RenameItem extends React.Component {
         });
 
         alert(this.state.newVal);
-        
-        //TODO: plugs into the backend to change the name for the item using this.state.newVal (the new name of the item) 
-        //this.props.modules should contain an array of javascript objects with every module inside
-        //this.props.activeCourse should contain the string name of the currently active course
-        //this.props.moduleTitle should contain the string title of the current module
-        //this.props.vark should contain the current vark type
+
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.CourseName === this.props.activeCourse) {
+                courseID = course.appID; // identifies current course child name to update
+                break;
+            }
+        }
+        const arrModules = this.props.modules;
+        const curModule = this.props.moduleTitle;
+        console.log(arrModules);
+        console.log(curModule);
+        for ( let i = 0; i < arrModules.length; ++i) {
+            var neededModule2;
+            if ( arrModules[i].title === curModule) {
+                neededModule2 = arrModules[i]; break; // finds needed module to edit
+            }
+            else
+                console.log("bope");
+        }
+
+        const contents = neededModule2.contents;  // renames the corresponding item
+        const vark = neededModule2.vark;
+        for ( let i = 0; i < contents.length; ++i) {
+            let itemTemp = contents[i];
+            if ( (itemTemp === this.props.itemName) && (vark[i] === this.props.vark)) {
+                contents[i] = this.state.newVal;
+            }
+        }
+
+        const newPush = this.props.modules; // record to database
+        console.log(newPush);
+
+        this.props.firebase.courses().child(courseID).update({
+            modules: newPush.slice(),
+        });
 
         event.preventDefault();
     }    
@@ -532,10 +565,12 @@ class ModuleContentItem extends React.Component {
             teacherDisplay = (
                 <RenameItem
                     internal={this.props.name}
-                    moduleTitle={this.props.name}
+                    moduleTitle={this.props.moduleTitle}
                     activeCourse={this.props.activeCourse}
                     modules={this.props.modules}
                     vark={this.props.vark}
+                    itemName={this.props.name}
+                    firebase={this.props.firebase}
                 />
             );
         }
