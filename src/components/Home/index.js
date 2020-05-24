@@ -408,12 +408,27 @@ class MyModal extends React.Component{
         });
 
         alert(this.state.newVal);
-        
-        //TODO: plugs into the backend to change the name for the module using this.state.newVal (the new name of the item) 
-        //this.props.modules should contain an array of javascript objects with every module inside
-        //this.props.activeCourse should contain the string name of the currently active course
-        //this.props.moduleTitle should contain the string title of the current module
-
+        // this will rename the current module
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.CourseName === this.props.activeCourse) {
+                courseID = course.appID; // identifies current course child name to update
+                break;
+            }
+        }
+        const arrModules = this.props.modules;
+        const curModule = this.props.moduleTitle;
+        for ( let i = 0; i < arrModules.length; ++i) {
+            if ( arrModules[i].title === curModule) {
+                arrModules[i].title = this.state.newVal; // sets the new name
+            }
+        }
+        const newPush = this.props.modules; // push to firebase
+        this.props.firebase.courses().child(courseID).update({
+            modules: newPush.slice(),
+        });
         event.preventDefault();
     }    
 
@@ -602,6 +617,7 @@ function ModuleItem(props) {
                 moduleTitle={props.name}
                 activeCourse={props.activeCourse}
                 modules={props.modules}
+                firebase = {props.firebase}
             />
         );
     }
