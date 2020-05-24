@@ -90,8 +90,15 @@ div {
   height: 75px;
   top: 90%;
   border-radius: 100px;
-  left: 1em;
+  left: 15em;
   box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
+  outline:none;
+}
+
+.sidebartoggle:hover {
+  background-color: #00233b;
+  left: 14em;
+  transition: 1s;
 }
 
 .flipimage {
@@ -106,6 +113,13 @@ div {
   border-radius: 100px;
   left: 1em;
   box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
+  outline:none;
+}
+
+.smallsidebartoggle:hover {
+  background-color: #00233b;
+  left: 2em;
+  transition: 1s;
 }
 
 .sessionbar {
@@ -920,6 +934,7 @@ hr {
   text-align: center;
   margin-right: 1em;
   vertical-align: auto;
+  transition: ease-in-out 0.3s;
 }
 
 .react-tabs__tab:hover {
