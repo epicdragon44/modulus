@@ -19,7 +19,6 @@ We have a separate repository for the landing page: http://modulusplatform.site/
 You can view that code at https://github.com/epicdragon44/moduluswebsite.
 
 
-
 ## Flowchart of components
 
 https://app.lucidchart.com/documents/view/12e9a358-6152-4630-9d61-8f33eee10b23/0_0
@@ -483,8 +482,3 @@ The form that allows you to enroll in a class.
 **Input:** username courses addCourse
 
 **Output:** JSXElement
-
-
-
-
-
