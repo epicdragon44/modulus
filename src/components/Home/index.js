@@ -1336,7 +1336,7 @@ class Select extends React.PureComponent {
 }
 
 //DOC: Component: The entire right half of the screen, which can change its display depending on whether we want to show the contents of the course, with all the modules; or the screen that lets us enroll in a course; or the screen that lets us create a course.
-//Input: firebase, username, activeCourse, modules, removeCourse, addVarkClicks
+//Input: firebase, username, activeCourse, modules, removeCourse, addVarkClicks, email
 //Output: JSXElement
 class MainPanel extends React.Component {
     constructor (props){
@@ -2059,7 +2059,7 @@ function AddCoursePanel(props) {
 }
 
 //DOC: Component: The main container for everything on the screen, that also stores most global data in its state.
-//Input: name, firebase, varkClicks, courses
+//Input: name, firebase, varkClicks, courses, email
 //Output: JSXElement
 class Container extends React.Component { 
     constructor(props) {
