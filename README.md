@@ -20,13 +20,15 @@ You can view that code at https://github.com/epicdragon44/moduluswebsite.
 
 
 
-# DOCUMENTATION FOR MAIN SCREEN (generated dynamically from comments)
-
-
-
-## Flowchart (may be outdated)
+## Flowchart of components
 
 https://app.lucidchart.com/documents/view/12e9a358-6152-4630-9d61-8f33eee10b23/0_0
+
+
+
+# Component Documentation
+
+
 
 
 
@@ -42,8 +44,10 @@ function codeToName(classcode)
 
 This function takes Converts the class code passed into the function into the actual English name of the course
 
-**Input: ** classcode
-**Output** String
+**Input:** classcode
+
+**Output:** String
+
 
 
 
@@ -56,8 +60,10 @@ function currentUserIsAdmin()
 
 Determines whether the current user logged in is an Admin, or Teacher, or a student. Returns true if the former, and false if the latter.
 
-**Input: ** None
-**Output** boolean
+**Input:** None
+
+**Output:** boolean
+
 
 
 
@@ -70,8 +76,10 @@ function isUserBlocked(username, activeCourse)
 
 Determines whether the user is blocked from the activeCourse
 
-**Input: ** username activeCourse
-**Output** boolean
+**Input:** username activeCourse
+
+**Output:** boolean
+
 
 
 
@@ -84,8 +92,10 @@ class MainPanel extends React.Component
 
 The entire right half of the screen, which can change its display depending on whether we want to show the contents of the course, with all the modules; or the screen that lets us enroll in a course; or the screen that lets us create a course.
 
-**Input: ** firebase username activeCourse modules removeCourse addVarkClicks
-**Output** JSXElement
+**Input:** firebase username activeCourse modules removeCourse addVarkClicks
+
+**Output:** JSXElement
+
 Contains: 
 [codeToName](#codeToName)
 [codeToName](#codeToName)
@@ -115,8 +125,10 @@ function ModuleItem(props)
 
 Displays an entire module, including all of its content items.
 
-**Input: ** name contents vark internals active username addVarkClicks varkMode teacherMode activeCourse modules firebase showVark
-**Output** JSXElement
+**Input:** name contents vark internals active username addVarkClicks varkMode teacherMode activeCourse modules firebase showVark
+
+**Output:** JSXElement
+
 Contains: 
 [ModuleContentItem](#ModuleContentItem)
 [RenameModule](#RenameModule)
@@ -134,8 +146,10 @@ class Container extends React.Component
 
 The main container for everything on the screen, that also stores most global data in its state.
 
-**Input: ** name firebase varkClicks courses
-**Output** JSXElement
+**Input:** name firebase varkClicks courses
+
+**Output:** JSXElement
+
 Contains: 
 [MainPanel](#MainPanel)
 [AddCoursePanel](#AddCoursePanel)
@@ -153,8 +167,10 @@ class Sidebar extends React.Component
 
 The entire left sidebar.
 
-**Input: ** username activeCourse arrCourses changeActiveCourse addCourseMode createCourseMode
-**Output** JSXElement
+**Input:** username activeCourse arrCourses changeActiveCourse addCourseMode createCourseMode
+
+**Output:** JSXElement
+
 Contains: 
 [AddCourseItem](#AddCourseItem)
 [CreateCourseItem](#CreateCourseItem)
@@ -171,8 +187,10 @@ class ModuleContentItem extends React.Component
 
 A course item, that, when clicked, displays one of the course contents.
 
-**Input: ** name vark internal addVarkClicks teacherMode moduleTitle activeCourse modules firebase
-**Output** JSXElement
+**Input:** name vark internal addVarkClicks teacherMode moduleTitle activeCourse modules firebase
+
+**Output:** JSXElement
+
 Contains: 
 [MyModal](#MyModal)
 [RenameItem](#RenameItem)
@@ -189,8 +207,10 @@ class MyModal extends React.Component
 
 Displays a popup dialog.
 
-**Input: ** itemName firebase text modules activeCourse moduleTitle internal vark onRequestClose teacherMode addItemMode (optional)
-**Output** JSXElement
+**Input:** itemName firebase text modules activeCourse moduleTitle internal vark onRequestClose teacherMode addItemMode (optional)
+
+**Output:** JSXElement
+
 Contains: 
 [Select](#Select)
 [Select](#Select)
@@ -206,8 +226,10 @@ function CourseListItem(props)
 
 This component renders a single course button in the sidebar that, when clicked, changes the main panel to display that course.
 
-**Input: ** name active changeActiveCourse
-**Output** JSXElement
+**Input:** name active changeActiveCourse
+
+**Output:** JSXElement
+
 Contains: 
 [codeToName](#codeToName)
 
@@ -222,8 +244,10 @@ function AddCourseItem(props)
 
 Displays a single button in the sidebar, that, when clicked, changes the main panel to allow you to enroll in a course
 
-**Input: ** addCourseMode
-**Output** JSXElement
+**Input:** addCourseMode
+
+**Output:** JSXElement
+
 Contains: 
 [currentUserIsAdmin](#currentUserIsAdmin)
 
@@ -238,8 +262,10 @@ function CreateCourseItem(props)
 
 Displays a single button in the sidebar, that, when clicked, changes the main panel to allow you to create a course
 
-**Input: ** createCourseMode
-**Output** JSXElement
+**Input:** createCourseMode
+
+**Output:** JSXElement
+
 Contains: 
 [currentUserIsAdmin](#currentUserIsAdmin)
 
@@ -254,8 +280,10 @@ class AddModuleContentItemItem extends React.Component
 
 A button that allows the user (assumedly a teacher) to add an item to the module.
 
-**Input: ** moduleTitle activeCourse modules firebase
-**Output** JSXElement
+**Input:** moduleTitle activeCourse modules firebase
+
+**Output:** JSXElement
+
 Contains: 
 [MyModal](#MyModal)
 
@@ -270,8 +298,10 @@ function CreateCoursePanel(props)
 
 The mainpanel view that allows you to create a class.
 
-**Input: ** username currentCourses createCourse
-**Output** JSXElement
+**Input:** username currentCourses createCourse
+
+**Output:** JSXElement
+
 Contains: 
 [CreateForm](#CreateForm)
 
@@ -286,8 +316,10 @@ function AddCoursePanel(props)
 
 The mainpanel view that allows you to add a class.
 
-**Input: ** username currentCourses addCourse
-**Output** JSXElement
+**Input:** username currentCourses addCourse
+
+**Output:** JSXElement
+
 Contains: 
 [NameForm](#NameForm)
 
@@ -302,8 +334,10 @@ class Home extends React.Component
 
 Renders and returns a Container, and initializes it with proper defaults.
 
-**Input: ** firebase
-**Output** JSXElement
+**Input:** firebase
+
+**Output:** JSXElement
+
 Contains: 
 [Container](#Container)
 
@@ -318,8 +352,10 @@ class RenameModule extends React.Component
 
 Inline button that, when clicked, allows the user to rename a module.
 
-**Input: ** internal moduleTitle modules firebase activeCourse
-**Output** JSXElement
+**Input:** internal moduleTitle modules firebase activeCourse
+
+**Output:** JSXElement
+
 
 
 
@@ -332,8 +368,10 @@ class DeleteModule extends React.Component
 
 Inline button that, when clicked, allows the user to delete a module.
 
-**Input: ** internal moduleTitle modules firebase activeCourse
-**Output** JSXElement
+**Input:** internal moduleTitle modules firebase activeCourse
+
+**Output:** JSXElement
+
 
 
 
@@ -346,8 +384,10 @@ class RenameItem extends React.Component
 
 Inline button that, when clicked, allows the user to rename an item.
 
-**Input: ** internal moduleTitle activeCourse modules itemName vark firebase
-**Output** JSXElement
+**Input:** internal moduleTitle activeCourse modules itemName vark firebase
+
+**Output:** JSXElement
+
 
 
 
@@ -360,8 +400,10 @@ class DeleteItem extends React.Component
 
 Inline button that, when clicked, allows the user to delete an item.
 
-**Input: ** internal moduleTitle activeCourse modules itemName vark firebase
-**Output** JSXElement
+**Input:** internal moduleTitle activeCourse modules itemName vark firebase
+
+**Output:** JSXElement
+
 
 
 
@@ -374,8 +416,10 @@ class AddModuleItem extends React.Component
 
 A button that allows the user (assumedly a teacher) to add a module to the course.
 
-**Input: ** internal activeCourse modules firebase changeActiveCourse
-**Output** JSXElement
+**Input:** internal activeCourse modules firebase changeActiveCourse
+
+**Output:** JSXElement
+
 
 
 
@@ -388,8 +432,10 @@ function VarkProfile(props)
 
 Displays the entire VARK Profile.
 
-**Input: ** Vcnt Acnt Rcnt Kcnt
-**Output** JSXElement
+**Input:** Vcnt Acnt Rcnt Kcnt
+
+**Output:** JSXElement
+
 
 
 
@@ -402,8 +448,10 @@ class Select extends React.PureComponent
 
 Allows the user to filter which VARK-type of items to display.
 
-**Input: ** passState default
-**Output** JSXElement
+**Input:** passState default
+
+**Output:** JSXElement
+
 
 
 
@@ -416,8 +464,10 @@ class CreateForm extends React.Component
 
 The form that allows you to create a class.
 
-**Input: ** username courses createCourse
-**Output** JSXElement
+**Input:** username courses createCourse
+
+**Output:** JSXElement
+
 
 
 
@@ -430,8 +480,10 @@ class NameForm extends React.Component
 
 The form that allows you to enroll in a class.
 
-**Input: ** username courses addCourse
-**Output** JSXElement
+**Input:** username courses addCourse
+
+**Output:** JSXElement
+
 
 
 

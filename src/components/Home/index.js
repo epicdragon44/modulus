@@ -1744,22 +1744,28 @@ class MainPanel extends React.Component {
             showVark
         } = this.state;
 
+        var varkSwitchDisplay = (teacherMode) ? (
+            <div>
+                <p>VARK is <b>Enabled</b></p>
+                <label className="switch">
+                    <input
+                        name="showVark"
+                        type="checkbox"
+                        checked={showVark}
+                        onChange={this.onChangeCheckbox}
+                    />
+                    <span class="slider round"></span>
+                </label>
+                <br /><br /><br />
+                <hr />
+            </div>
+        ) : (null);
+
         var varkContent = (this.state.showVark) ? (
             <div className="managecontent">
                 <center>
                     <h3><br /> <br />Course VARK Profile</h3> 
-                    <p>VARK is <b>Enabled</b></p>
-                    <label className="switch">
-                        <input
-                            name="showVark"
-                            type="checkbox"
-                            checked={showVark}
-                            onChange={this.onChangeCheckbox}
-                        />
-                        <span class="slider round"></span>
-                    </label>
-                    <br /><br /><br />
-                    <hr />
+                    {varkSwitchDisplay}
                     <br /><br />
                     <table className="offsetleft">
                         <tr>
@@ -1781,7 +1787,9 @@ class MainPanel extends React.Component {
             <div className="managecontent">
                 <center>
                     <h3><br /> <br />Course VARK Profile</h3> 
-                    <p>VARK is <b>Disabled</b></p>
+                    <div>
+                        <p>VARK is <b>Disabled</b></p>
+                    </div>
                     <label className="switch">
                         <input
                             name="showVark"
