@@ -137,7 +137,18 @@ class SignUpFormBase extends Component {
                         onChange={this.onChangeCheckbox}
                     />
                 </label><br /><br />
-                <button disabled={isInvalid} type="submit">
+                <center>
+                    <Recaptcha
+                        sitekey = "6LfvB_IUAAAAADxPHcPo2P8I9wwZmSsHwmqH9cqZ"
+                        //6LfvB_IUAAAAADxPHcPo2P8I9wwZmSsHwmqH9cqZ   is the actual API key for production
+                        //6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI   is the testing API key
+                        render = "explicit"
+                        onloadCallback = {this.recaptchaLoaded}
+                        verifyCallback = {this.verifyCallback}
+                    />
+                </center>
+                <br /><br />
+                <button disabled={!isValid} type="submit">
                     Sign Up
                 </button>
 
