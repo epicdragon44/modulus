@@ -502,6 +502,7 @@ input[type=button].internaladd, input[type=submit].internaladd, input[type=reset
   padding: 10px 10px;
   text-decoration: none;
   margin: 4px 2px;
+  margin-top: 10px;
   cursor: pointer;
   border-radius: 10px;
 }
