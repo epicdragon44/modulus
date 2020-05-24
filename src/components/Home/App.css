@@ -589,3 +589,34 @@ select:active {
 .teachernotice {
   font-size: large;
 }
+
+.leftcontentitem {
+  width: 60%;
+}
+
+.rightcontentitem {
+  width: 40%;
+}
+
+input.smallbutton {
+  background-color: whitesmoke;
+  color: #003459;
+  height: 20px;
+}
+
+input.smallbutton:hover {
+  background-color: whitesmoke;
+  color: black;
+  font-weight: bold;
+}
+
+.renamebutton {
+  font-size: medium;
+  cursor: pointer;
+}
+
+.renamebutton:hover {
+  font-size: medium;
+  cursor: pointer;
+  font-weight: bold;
+}

@@ -5,6 +5,9 @@ import { withAuthorization } from '../Session';
 
 import { Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import { PieChart } from 'react-minimal-pie-chart';
+import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
+import { contextMenu } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.min.css';
 import * as firebase from 'firebase'
 import backarrow from './backarrow.png';
 require('@firebase/database');
@@ -388,6 +391,64 @@ class MyModal extends React.Component{
     }
  }
 
+class RenameItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            value: this.props.internal,
+            active: false,
+            newVal: this.props.internal,
+        };
+    }
+
+    onClick() {
+        this.setState({
+            active: true,
+        });
+    }
+
+    handleChange(event) {    this.setState({newVal: event.target.value});  }
+
+    handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
+        this.setState({
+            value: this.state.newVal,
+        });
+
+        alert(this.state.newVal);
+        
+        //TODO: plugs into the backend to change the name for the item using this.state.newVal (the new name of the item) 
+        //this.props.modules should contain an array of javascript objects with every module inside
+        //this.props.activeCourse should contain the string name of the currently active course
+        //this.props.moduleTitle should contain the string title of the current module
+        //this.props.vark should contain the current vark type
+
+        event.preventDefault();
+    }    
+
+    render() {
+        var inside = (<p className="renamebutton">[Rename]</p>);
+        if (this.state.active) {
+            inside = (
+                <form onSubmit={this.handleSubmit}>
+                <label>
+                    <input type="text" value={this.state.newVal} onChange={this.handleChange} />
+                </label>
+                <input className="smallbutton" type="submit" value="Submit" />
+            </form>
+            );         
+        }
+
+        return (
+            <div className="renameitem" onClick={() => this.onClick()}> 
+                {inside}
+            </div>
+        );
+    }
+}
+
 class ModuleContentItem extends React.Component {
     constructor(props) {
         super(props);
@@ -402,12 +463,40 @@ class ModuleContentItem extends React.Component {
     }
 
     render() {
+
+        var teacherMode = this.props.teacherMode;
+        var teacherDisplay = (<div />);
+        if (teacherMode) {
+            teacherDisplay = (
+                <RenameItem
+                    internal={this.props.name}
+                    moduleTitle={this.props.name}
+                    activeCourse={this.props.activeCourse}
+                    modules={this.props.modules}
+                    vark={this.props.vark}
+                />
+            );
+        }
+
         let precede = this.props.vark;
         var attribute = precede+"modulecontentitem"
         return (
-            <div className={attribute} onClick={() => this.openModal()}> 
-                {this.props.name}
+            <div>
+                <table width="100%">
+                    <tr>
+                        <td className="leftcontentitem">
+                            <div className={attribute} onClick={() => this.openModal()}> 
+                                {this.props.name}
+                            </div>
+                        </td>
+                        <td className="rightcontentitem">
+                            {teacherDisplay}
+                        </td>
+                    </tr>
+                </table>
             </div>
+
+            
         );
     }
 }
