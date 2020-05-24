@@ -1004,6 +1004,10 @@ hr {
   transform: rotate(45deg);
 }
 
+.tabtext {
+  margin-bottom: 0.5em;
+}
+
 .react-tabs {
   -webkit-tap-highlight-color: transparent;
 }
@@ -1051,7 +1055,7 @@ hr {
   border-right: none;
   border-left: none;
   border-bottom: 10px solid #003459;
-  padding-bottom:0;
+  padding-bottom: 0;
 }
 
 .react-tabs__tab--disabled {

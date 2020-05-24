@@ -1623,9 +1623,9 @@ class MainPanel extends React.Component {
             </div>
         ) : (null);
 
-        var ModulesTab = (teacherMode) ? (<Tab>View Modules</Tab>) : (<Tab>Modules</Tab>);
-        var EditModulesTab = (teacherMode) ? (<Tab>Edit Modules</Tab>) : (null);
-        var OtherTab = (teacherMode) ? (<Tab>Manage Course</Tab>) : (<Tab>Other</Tab>);
+        var ModulesTab = (teacherMode) ? (<Tab><p className="tabtext">View Modules</p></Tab>) : (<Tab><p className="tabtext">Modules</p></Tab>);
+        var EditModulesTab = (teacherMode) ? (<Tab><p className="tabtext">Edit Modules</p></Tab>) : (null);
+        var OtherTab = (teacherMode) ? (<Tab><p className="tabtext">Manage Course</p></Tab>) : (<Tab><p className="tabtext">Other</p></Tab>);
         
         var ViewModulesPanel = (
             <TabPanel>
