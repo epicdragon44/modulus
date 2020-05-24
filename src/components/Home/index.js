@@ -111,13 +111,13 @@ class MainPanel extends React.Component { //the entire right half of the screen 
 
         return (
             <div class="mainpanel">
-                {/* <div class="varkguide">
+                <div class="varkguide">
                     <div class="varkguideintro"> Different colors correspond to different learning styles.</div>
                     <div class="varkguideelement"><div class="foo red"></div> = Visual</div>
                     <div class="varkguideelement"><div class="foo blue"></div> = Auditory</div>
                     <div class="varkguideelement"><div class="foo green"></div> = Reading</div>
                     <div class="varkguideelement"><div class="foo purple"></div> = Kinesthetic</div>
-                </div> */}
+                </div>
 
                 <div class="courseheader">
                     {welcomeMsg}
@@ -239,13 +239,16 @@ class Container extends React.Component { //the main container for everything on
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
             console.log(course.CourseName);
-            // need statement here to find matching coursename
-            return [ {
-                title: course.CourseName,
-                contents: ['w'], //yeet
-                vark: ['w'],
+            if ( course.CourseName === name)
+                return [ {
+                    title: course.CourseName,
+                    contents: ['w'], //yeet
+                    vark: ['w'],
 
-            }];
+                }];
+            else{
+                console.log("whoops");
+            }
         }
 
 
@@ -286,9 +289,9 @@ class Home extends React.Component {
         super(props);
         const usr = JSON.parse(localStorage.getItem('authUser'));
         this.state = {
-            username: "",
-            email: "",
-            courses: [],
+            username: usr.username,
+            email: usr.email,
+            courses: usr.courses,
         }
 
     }
