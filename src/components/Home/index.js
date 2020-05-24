@@ -7,6 +7,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import 'react-contexify/dist/ReactContexify.min.css';
 import * as firebase from 'firebase'
 import { Resizable, ResizableBox } from 'react-resizable';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import backarrow from './backarrow.png';
 import darkdeleteicon from './deletedark.svg';
@@ -1268,6 +1269,7 @@ class MainPanel extends React.Component {
         super(props);
         this.state = {
             varkselection: "All",
+            copied: false,
         };
         this.handleRemove = this.handleRemove.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
@@ -1530,6 +1532,24 @@ class MainPanel extends React.Component {
             </div>
         );
 
+        var joinClassCode = (teacherMode) ? (
+            <div className="managecontent">
+                <center>
+                    <br />
+                    <h3>
+                        Course Join Code
+                    </h3>
+                    <p className="smallparagraph">
+                        {this.props.activeCourse}<br /><br />
+                    </p>
+                    <CopyToClipboard text={this.props.activeCourse} onCopy={() => this.setState({copied: true})}>
+                        <a className="smalllinkbutton">{(this.state.copied) ? ("Copied!") : ("Copy to Clipboard")}</a>
+                    </CopyToClipboard>
+                    <br /><br />
+                </center>
+            </div>
+        ) : (null);
+
         var manageStudents = (teacherMode) ? ( //TODO: ACTUALLY LET THEM MANAGE STUDENTS ENROLLED HERE
             <div className="managecontent">
                 <center>
@@ -1565,6 +1585,8 @@ class MainPanel extends React.Component {
                 {ViewModulesPanel}
                 {EditModulesPanel}
                 <TabPanel>
+                    {joinClassCode}
+                    <br />
                     {contactTeacher}
                     {manageStudents}
                     <br />
@@ -1622,7 +1644,10 @@ class CreateForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {    this.setState({value: event.target.value});  }
+    handleChange(event) {    
+        let newString = event.target.value.substring(0, 20);
+        this.setState({value: newString});  
+    }
 
     handleSubmit(event) {
         this.props.createCourse(this.state.value);
@@ -1630,13 +1655,19 @@ class CreateForm extends React.Component {
     }
 
     render() {
+        let charCount = 20-this.state.value.length;
+
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Enter the name for your new course below<br /><br />
-                    <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <p className="reallysmallparagraph">{charCount} characters remaining</p>
                 <br /><br />
                 <input type="submit" value="Submit" />
+                <br />
+                
             </form>
         );
     }

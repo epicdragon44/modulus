@@ -11,6 +11,7 @@
     "react": "^16.13.1",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-contexify": "^4.1.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-dynamic-modal": "^1.1.1",
     "react-minimal-pie-chart": "^8.0.0",

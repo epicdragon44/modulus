@@ -342,6 +342,10 @@ div {
   font-size: medium;
 }
 
+.reallysmallparagraph {
+  font-size: small;
+}
+
 .varkguide {
   display: flex;
   background-color: lightgray;
