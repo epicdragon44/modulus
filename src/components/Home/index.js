@@ -1364,7 +1364,7 @@ class MainPanel extends React.Component {
         var stukeys = [];
         if ( stulist != undefined) {
             for (let [key, value] of Object.entries(stulist)) {
-                if ((value === "true") && (key !== "exampleStudentEmail")) 
+                if ((value === true) && (key !== "exampleStudentEmail")) 
                     stukeys.push(JSON.stringify(key));
             }
         }
