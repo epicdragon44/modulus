@@ -391,6 +391,63 @@ class MyModal extends React.Component{
     }
  }
 
+ class RenameModule extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            value: this.props.internal,
+            active: false,
+            newVal: this.props.internal,
+        };
+    }
+
+    onClick() {
+        this.setState({
+            active: true,
+        });
+    }
+
+    handleChange(event) {    this.setState({newVal: event.target.value});  }
+
+    handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
+        this.setState({
+            value: this.state.newVal,
+        });
+
+        alert(this.state.newVal);
+        
+        //TODO: plugs into the backend to change the name for the item using this.state.newVal (the new name of the item) 
+        //this.props.modules should contain an array of javascript objects with every module inside
+        //this.props.activeCourse should contain the string name of the currently active course
+        //this.props.moduleTitle should contain the string title of the current module
+
+        event.preventDefault();
+    }    
+
+    render() {
+        var inside = (<p className="renamebutton">[Rename]</p>);
+        if (this.state.active) {
+            inside = (
+                <form onSubmit={this.handleSubmit}>
+                <label>
+                    <input type="text" value={this.state.newVal} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+            );         
+        }
+
+        return (
+            <div className="renameitem" onClick={() => this.onClick()}> 
+                {inside}
+            </div>
+        );
+    }
+}
+
 class RenameItem extends React.Component {
     constructor(props) {
         super(props);
@@ -530,6 +587,11 @@ function ModuleItem(props) {
     var attribute = active+"moduleitem";
 
     var teacherMode = props.teacherMode;
+
+    if (teacherMode) {
+        attribute+="teacher";
+    }
+
     var addCourseItemItem = (<div />);
     if (teacherMode) {
         addCourseItemItem = (
@@ -542,12 +604,46 @@ function ModuleItem(props) {
         );
     }
 
+    var teacherDisplay = (<div />);
+    if (teacherMode) {
+        teacherDisplay = (
+            <RenameModule
+                internal={props.name}
+                moduleTitle={props.name}
+                activeCourse={props.activeCourse}
+                modules={props.modules}
+            />
+        );
+    }
+
+    var topbar = (
+        <div className="moduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
+            {props.name}
+        </div>
+    );
+    if (teacherMode) {
+        topbar = (
+            <div className="teachermoduletitle">
+                <table width="100%">
+                    <tr>
+                        <td className="leftcontentitem">
+                            <div onClick={() => setActive(active==="active" ? "" : "active")}> 
+                                {props.name}
+                            </div>
+                        </td>
+                        <td className="rightcontentitem">
+                            {teacherDisplay}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        );
+    }
+
     return (
         <div>
             <div className={attribute} >
-                <div class="moduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
-                    {props.name}
-                </div>
+                {topbar}
                 <div className="modulecontents">
                     {props.contents.map(
                         contentitem => 
