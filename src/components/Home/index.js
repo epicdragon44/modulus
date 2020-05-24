@@ -880,7 +880,7 @@ class ModuleContentItem extends React.Component {
                 itemName={this.props.name}
                 firebase={this.props.firebase}
             />
-    );
+        );
 
 
         var datacells = (
@@ -1125,7 +1125,7 @@ function ModuleItem(props) {
                             (contentitem!=="DELETE THAT YOU HOT DOG") ?
                             (<ModuleContentItem
                                 name={contentitem}
-                                vark={props.vark[props.contents.indexOf(contentitem)]}
+                                vark={(props.showVark) ? (props.vark[props.contents.indexOf(contentitem)]) : ("")}
                                 internal={props.internals[props.contents.indexOf(contentitem)]}
                                 addVarkClicks={props.addVarkClicks}
                                 teacherMode={props.teacherMode}
@@ -1258,6 +1258,7 @@ class MainPanel extends React.Component {
         this.state = {
             varkselection: "All",
             copied: false,
+            showVark: true,
         };
         this.handleRemove = this.handleRemove.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
@@ -1323,6 +1324,15 @@ class MainPanel extends React.Component {
             }
         }
     }
+
+    onChangeCheckbox = event => {
+        // TODO:
+        // In the database, create an attribute under the Course that's like VarkEnabled, and it's one of two values: "true" or "false"
+        // Then, right here, push to the current course the value of (event.target.checked+""), which will be either "true" or "false"
+        // To help you, this.props.activeCourse should have the current course code
+        // When users make new courses in the future, this attribute should automatically be included, and set to true by default
+        this.setState({ [event.target.name]: event.target.checked });
+    };
 
     render() { //active: "" means the module is minimized, "active" means its expanded
         var showModules = true;
@@ -1435,6 +1445,7 @@ class MainPanel extends React.Component {
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
+                                showVark={this.state.showVark}
                             />) : (null)
                         )
                     }
@@ -1458,6 +1469,7 @@ class MainPanel extends React.Component {
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
+                                showVark={this.state.showVark}
                             />) : (null)
                         )
                     }
@@ -1563,37 +1575,69 @@ class MainPanel extends React.Component {
             </TabPanel>
         ) : (null);
 
-        var VarkPanel = (
+        const {
+            showVark
+        } = this.state;
+
+        var varkContent = (this.state.showVark) ? (
+            <div className="managecontent">
+                <center>
+                    <h3><br /> <br />Course VARK Profile</h3> 
+                    <p>VARK is <b>Enabled</b></p>
+                    <label className="switch">
+                        <input
+                            name="showVark"
+                            type="checkbox"
+                            checked={showVark}
+                            onChange={this.onChangeCheckbox}
+                        />
+                        <span class="slider round"></span>
+                    </label>
+                    <br /><br />
+                    <table className="offsetleft">
+                        <tr>
+                            <td>
+                                {varkProfile}
+                            </td>
+                            <td>
+                                <p className="smallparagraph" style={{color: "red"}}>Visual</p>
+                                <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
+                                <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
+                                <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <br /><br /><br />
+                </center>
+            </div>
+        ) : (
+            <div className="managecontent">
+                <center>
+                    <h3><br /> <br />Course VARK Profile</h3> 
+                    <p>VARK is <b>Disabled</b></p>
+                    <label className="switch">
+                        <input
+                            name="showVark"
+                            type="checkbox"
+                            checked={showVark}
+                            onChange={this.onChangeCheckbox}
+                        />
+                        <span class="slider round"></span>
+                    </label>
+                    
+                    <br /><br /><br /><br />
+                </center>
+            </div>
+        );
+
+        var ManagePanel = (
             <TabPanel>
                 {joinClassCode}
                 <br />
                 {contactTeacher}
                 {manageStudents}
                 <br />
-                <div className="managecontent">
-                    <center>
-                        <h3><br /> <br />Course VARK Profile</h3> 
-                        <p className="smallparagraph">Every course has a different profile,<br />composed of different types and numbers of items.</p> <br />
-                        <table className="offsetleft">
-                            <tr>
-                                <td>
-                                    {varkProfile}
-                                </td>
-                                <td>
-                                    <p className="smallparagraph" style={{color: "red"}}>Visual</p>
-                                    <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
-                                    <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
-                                    <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </center>
-                    <center>
-                        <br />
-                        <p className="smallparagraph">To learn more about the different learning models,<br /> visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.</p>
-                        <br /> <br />
-                    </center>
-                </div>
+                {varkContent}
                 <br />
                 {unenroll}
                 <br /><br /><br /><br /><br />
@@ -1609,7 +1653,7 @@ class MainPanel extends React.Component {
                 </TabList>
                 {ViewModulesPanel}
                 {EditModulesPanel}
-                {VarkPanel}
+                {ManagePanel}
             </Tabs>
         ) : (<div />);
 
@@ -1807,7 +1851,7 @@ class Container extends React.Component {
 
     createCourse = (nameOfCourse) => { //actually adds the course
         // alert("Created " + nameOfCourse);
-        //TODO: generate classcode, make the course with nameOfCourse, add it to the db
+        // generate classcode, make the course with nameOfCourse, add it to the db
         // use getModules(nameOfCourse) to get arbitrary items
         const usr = JSON.parse(localStorage.getItem('authUser'));
         const email = Object.values(usr).slice()[1].toString();
