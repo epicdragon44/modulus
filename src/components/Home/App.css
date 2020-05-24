@@ -672,3 +672,8 @@ input.smallbutton:hover {
   font-size: medium;
   text-align: center;
 }
+
+hr {
+  color: #003459;
+  margin-top: 0px;
+}

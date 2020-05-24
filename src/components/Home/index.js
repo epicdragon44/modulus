@@ -72,8 +72,10 @@ class Sidebar extends React.Component { //the entire left sidebar
                             </tr>
                         </table>
                     </center>
+                    <hr />
+                    <br />
                     <div className="courselist">
-                        {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You're not enrolled in any courses yet.<br/>Enroll or teach using the buttons above.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
+                        {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You don't have any courses yet.<br/>Enroll or teach using the buttons above.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<div><CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/><br /></div>)))}
                     </div>
                 </div>
             </div>
