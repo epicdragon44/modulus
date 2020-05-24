@@ -1584,7 +1584,7 @@ class MainPanel extends React.Component {
                     <br /><br />
                     <h3>Manage Students</h3>
                     <p className="smallparagraph">By default, all enrolled students can view your course.<br />
-                    You can block individuals by flipping their switch off.</p><br /><br />
+                    You can block individuals by flipping their switch off.</p><br />
                 </center>
                 {(listOfStudents.length<=1) ? (
                     <p className="smallparagraph">You don't have any students yet.</p>
@@ -1658,6 +1658,8 @@ class MainPanel extends React.Component {
                         />
                         <span class="slider round"></span>
                     </label>
+                    <br /><br /><br />
+                    <hr />
                     <br /><br />
                     <table className="offsetleft">
                         <tr>
@@ -1698,7 +1700,6 @@ class MainPanel extends React.Component {
         var ManagePanel = (
             <TabPanel>
                 {joinClassCode}
-                <br />
                 {contactTeacher}
                 <br />
                 {varkContent}
