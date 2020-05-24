@@ -30,6 +30,10 @@ li a:hover {
     border-top: 0.375em solid #333;
 }
 
+img.logo {
+    margin-top: 0.55em;
+    height: 50%;
+}
 
 .navigationbutton {
     color: #333;
@@ -44,18 +48,18 @@ li a:hover {
     cursor: pointer;
     border: 1px solid #333;
     box-shadow: 0 10px 29px 0 black;
-  }
+}
 
-  .navigationbutton:hover {
-    background-color: lightgray;
-    color: #333;
-    height: 3em;
-    margin-top: 0.5em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    margin-left: 0.5em;
-    text-align: center;
-    font-size: medium;
-    cursor: pointer;
-    border: 1px solid #333;
-  }
+.navigationbutton:hover {
+background-color: lightgray;
+color: #333;
+height: 3em;
+margin-top: 0.5em;
+padding-top: 0.5em;
+padding-bottom: 0.5em;
+margin-left: 0.5em;
+text-align: center;
+font-size: medium;
+cursor: pointer;
+border: 1px solid #333;
+}

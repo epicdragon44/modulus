@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from './inversemodulus.png';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
@@ -29,6 +30,14 @@ class AddCourseButton extends React.Component {
             </button>
         );
     }
+}
+
+function Logo() {
+    return (
+        <div className="logo" >
+            <img className="logo" src={logo} alt="Modulus Logo" />
+        </div>
+    )
 }
 
 const Navigation = () => (
@@ -74,7 +83,7 @@ const NavigationAuth = ({ authUser }) => (
                 <Link to={ROUTES.LANDING}>Modulus</Link>
             </li> */}
             <li className="left">
-                <AddCourseButton />
+                <Logo />
             </li>
             <li>
                 <SignOutButton />

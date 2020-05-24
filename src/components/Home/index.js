@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './moduluslogo.png';
 import './App.css';
 import { withAuthorization } from '../Session';
 
@@ -11,15 +10,6 @@ import 'react-contexify/dist/ReactContexify.min.css';
 import * as firebase from 'firebase'
 import backarrow from './backarrow.png';
 require('@firebase/database');
-
-function Logo() {
-    return (
-        <div className="logo" >
-            <br />
-            <img width="100%" src={logo} alt="Modulus Logo" />
-        </div>
-    )
-}
 
 function CourseListItem(props) {
     return (
@@ -60,7 +50,7 @@ class Sidebar extends React.Component { //the entire left sidebar
         return (
             <div>
                 <div className="sidebar">
-                <Logo /><br />
+                <br />
                 <div className="courselist">
                 {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
                    <AddCourseItem addCourseMode={this.addCourseMode}/>
