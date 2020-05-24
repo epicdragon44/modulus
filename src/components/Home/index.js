@@ -373,7 +373,41 @@ class MyModal extends React.Component{
                                 {internalDisplay}
                             </Modal>
                         );
-            }   else { //just create a button and insert the link as the button's destination
+            }else if(link.includes("youtube") || link.includes("youtu.be")){
+                if(link.includes("youtu.be"))
+                    link = link.substring(0, link.indexOf("youtu.be")) + "youtube.com/watch?v=" + link.substring(link.indexOf("be/") + 3, link.length);
+                if(link.includes("youtube"))
+                    link = link.substring(0, link.indexOf("/watch?v=")) + "/embed/" + link.substring(link.indexOf("v=") + 2, link.length);
+                var beforeCode = "<iframe width=\"560\" height=\"315\" src=\"";
+                var afterCode = "\" frameBorder=\"0\"\n" +
+                    "allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n" +
+                    "allowFullScreen></iframe>";
+                var code = beforeCode + link + afterCode;
+
+                internalDisplay = (<div dangerouslySetInnerHTML={{__html: code}}></div>);
+
+                return ( //small modal
+                    <Modal
+                        className="modaldialog"
+                        onRequestClose={onRequestClose}
+                        effect={Effect.ScaleUp}>
+                        <h1 className="modaldialog">
+                            <table style={{maxHeight: "50px"}}>
+                                <tr>
+                                    <td>
+                                        <button id="backbutton" onClick={ModalManager.close}><img src={backarrow} alt="Return" height="15px"/></button>
+                                    </td>
+                                    <td style={{paddingLeft: 100}}>
+                                        {internalDisplay}
+                                    </td>
+                                </tr>
+                            </table>
+                        </h1>
+                    </Modal>
+                );
+
+            }
+            else { //just create a button and insert the link as the button's destination
                 var beforeCode = "<a class=\"linkbutton\" target=\"_blank\" href=\"";
                 var afterCode = "\">Click here to open content in new tab</a>";
                 var code = beforeCode + link + afterCode;
