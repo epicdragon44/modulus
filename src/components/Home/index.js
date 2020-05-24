@@ -94,6 +94,47 @@ class MyModal extends React.Component{
             //this.props.modules should contain an array of javascript objects with every module inside
             //this.props.activeCourse should contain the string name of the currently active course
             //this.props.moduleTitle should contain the string title of the current module
+            const allCourses = JSON.parse(localStorage.getItem('courses'));
+            var courseID;
+            for (let i = 0, len = allCourses.length; i < len; ++i) {
+                var course = allCourses[i];
+                if (course.CourseName === this.props.activeCourse) {
+                    courseID = course.appID; // identifies current course child name to update
+                    console.log(course);
+                    break;
+                }
+            }
+            const arrModules = this.props.modules;
+            const curCourse = this.props.activeCourse;
+            const curModule = this.props.moduleTitle;
+            for ( let i = 0; i < arrModules.length; ++i) {
+                var neededModule;
+                if ( arrModules[i].title === curModule) {
+                    neededModule = arrModules[i]; break; // finds needed module to edit
+                }
+            }
+            this.props.firebase.modules(courseID).on('value', snapshot => {
+                const modulesObject = snapshot.val();
+                const modulesList = Object.keys(modulesObject).map(key => ({
+                    ...modulesObject[key],
+                    appID: key,
+                }));
+                localStorage.setItem('modules', JSON.stringify(modulesList));
+            });
+            const contents = neededModule.contents; // add your new items
+            const internals = neededModule.internals;
+            const vark = neededModule.vark;
+            contents.push(this.state.itemName);
+            internals.push(this.state.value);
+            vark.push(this.state.varkselection);
+            console.log(contents);
+            console.log(internals);
+            console.log(vark);
+            //we need to edit a whole module at a time
+
+
+
+            // this.props.db.ref('courses/' + courseID + '/')
         }
         else {
             //TODO: plugs into the backend to change the link for the item using this.state.value (the link to implement) 
@@ -560,9 +601,9 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         var showVarkProfile = true;
 
         var teacherMode = this.getTeacherEmail(this.props.activeCourse)===this.getCurrentUserEmail();
-        console.log(this.getTeacherEmail(this.props.activeCourse));
-        console.log(this.getCurrentUserEmail());
-        console.log(teacherMode);
+        // console.log(this.getTeacherEmail(this.props.activeCourse));
+        // console.log(this.getCurrentUserEmail());
+        // console.log(teacherMode);
 
         var welcomeMsg;
         var unenroll;

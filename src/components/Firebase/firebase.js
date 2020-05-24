@@ -68,6 +68,8 @@ class Firebase {
     course = appID => this.db.ref(`courses/${appID}`);
     courses = () => this.db.ref('courses');
 
+    modules = courseID => this.db.ref(`courses/${courseID}/modules`);
+
 
 }
 
