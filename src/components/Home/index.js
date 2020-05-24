@@ -87,7 +87,7 @@ class Sidebar extends React.Component { //the entire left sidebar
         return (
             <div className="sidebar">
                 <Logo />
-                {/*TODO: Add a default class or do something so that you aren't trying to print undefined list*/}
+                {/*this part cannot draw null list*/}
                 {/*<div class="sidebarheader"><p><b>Your courses:</b></p></div>*/}
                 {/*<div class="courselist">*/}
                 {/*    {this.props.arrCourses.map(course => <CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)}*/}
