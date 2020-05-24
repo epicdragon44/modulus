@@ -87,8 +87,8 @@ div {
 .courselistitem {
   background-color: white;
   border: 1px solid black;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 13px;
+  padding-bottom: 18px;
   margin-top: 5px;
   margin-bottom: 5px;
   height: 20px;
@@ -101,8 +101,8 @@ div {
 .courselistitem:hover {
   background-color: lightgray;
   border: 1px solid black;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 13px;
+  padding-bottom: 18px;
   margin-top: 5px;
   margin-bottom: 5px;
   height: 20px;
@@ -148,7 +148,7 @@ div {
   font-size: large;
   padding-left: 1em;
   padding-bottom: 1em;
-  padding-top: 1em;
+  padding-top: 0.95em;
 }
 
 .modulecontents {
@@ -302,4 +302,30 @@ button {
   padding-top: 2.5em;
   padding-left: 5em;
   font-size: xx-large;
+}
+
+.removecoursebutton {
+  color: red;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-left: 10.5em;
+  margin-top: 5em;
+  text-align: center;
+  width: 10em;
+  font-size: medium;
+  cursor: pointer;
+  border: 1px solid red;
+}
+
+.removecoursebutton:hover {
+  color: white;
+  background-color: red;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-left: 10.5em;
+  text-align: center;
+  width: 10em;
+  font-size: medium;
+  cursor: pointer;
+  border: 1px solid red;
 }

@@ -54,7 +54,7 @@ class Sidebar extends React.Component { //the entire left sidebar
     render() {
         return (
             <div>
-<div className="sidebar">
+                <div className="sidebar">
                 <Logo />
                  <div className="sidebarheader"><p><b>Your courses:</b></p></div>
                 <div className="courselist">
@@ -111,25 +111,57 @@ function ModuleItem(props) {
 }
 
 class MainPanel extends React.Component { //the entire right half of the screen where all the modules are
+    constructor (props){
+        super(props);
+        this.handleRemove = this.handleRemove.bind(this);
+    }
+
+    handleRemove(event) {
+        this.props.removeCourse(this.props.activeCourse);
+    }
 
     render() { //active: "" means the module is minimized, "active" means its expanded
 
         var welcomeMsg;
+        var unenroll;
         if (this.props.activeCourse==="none") {
             welcomeMsg = "Select or add a course on the left to get started.";
+            unenroll = (
+                <div />
+            );
         }
         else {
             welcomeMsg = "Welcome to " + (this.props.activeCourse);
+            unenroll = (
+                <div className="removecoursebutton" onClick={this.handleRemove}>
+                    Unenroll
+                </div>
+            );
             if (welcomeMsg === "Welcome to Welcome") {
                 welcomeMsg = "Welcome to Modulus!"
+                unenroll = (
+                    <div />
+                );
             }
         }
 
+        
+
+
         return (
             <div className="mainpanel">
-                <div className="courseheader">
-                    {welcomeMsg}
-                </div>
+                <table>
+                    <tr>
+                        <td>
+                            <div className="courseheader">
+                                {welcomeMsg}
+                            </div>
+                        </td>
+                        <td className="rightalign">
+                            {unenroll}
+                        </td>
+                    </tr>
+                </table>              
 
                 <div className="modulelist">
                     {Object.values(this.props.modules).map(module =>
@@ -159,15 +191,6 @@ class NameForm extends React.Component {
 
     handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
         let shouldAddCourse = false;
-        // TODO: @dan this is meant to check if user currently has the course he wants to add. You asked me to do this. This doesn't work
-        // const usr = JSON.parse(localStorage.getItem('authUser')); // Checks if course is already added. If so, set false to course is not added
-        // console.log(this.state.value);
-        // if (Object.values(usr).slice()[2].some(this.state.value)) {
-        //     //this.state.value = false; //dont force state values like this, instead, use the setState method
-        //     this.setState({
-        //         value: false,
-        //     })
-        // }
 
         //check that the course is available on the database. If not, throw an error to the user
         const allCourses = JSON.parse(localStorage.getItem('courses')); 
@@ -244,7 +267,6 @@ class Container extends React.Component { //the main container for everything on
     }
 
     addCourse = (nameOfCourse) => { //actually adds the course
-        //Done, pushes correctly to user's updated list of courses. 
         var newCourses = this.state.arrCourses.slice();
         newCourses.push(nameOfCourse);
         this.setState({
@@ -259,6 +281,26 @@ class Container extends React.Component { //the main container for everything on
         });
     }
 
+    removeCourse = (nameOfCourse) => {
+        var newCourses = this.state.arrCourses.slice();
+        var newnewCourses = [];
+        newCourses.forEach(element => {
+            if (!(element===nameOfCourse)) {
+                newnewCourses.push(element);
+            }
+        });
+        newCourses = newnewCourses.slice();
+        this.setState({
+            arrCourses: newCourses.slice(),
+        }, () => {this.changeActiveCourse(this.state.arrCourses.slice()[0]);});
+        const usr = JSON.parse(localStorage.getItem('authUser'));
+        console.log(Object.values(usr).slice()[2]);
+        localStorage.setItem('authUser', JSON.stringify(usr));
+        console.log(Object.values(usr).slice()[2]);
+        this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
+            courses: newCourses.slice(),
+        });
+    }
 
     getModules(name) {
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
@@ -304,7 +346,7 @@ class Container extends React.Component { //the main container for everything on
     render() {
         var mainpanel;
         if (this.state.mainPanelMode===0) {
-            mainpanel = <MainPanel username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)}/>
+            mainpanel = <MainPanel username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse}/>
         } else if (this.state.mainPanelMode===1) {
             mainpanel = <AddCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} addCourse={this.addCourse}/>
         }
