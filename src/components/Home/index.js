@@ -1021,6 +1021,7 @@ class MainPanel extends React.Component {
         this.filterCallback = this.filterCallback.bind(this);
         this.getCurrentUserEmail = this.getCurrentUserEmail.bind(this);
         this.getTeacherEmail = this.getTeacherEmail.bind(this);
+        this.getTeacherName = this.getTeacherName.bind(this);
         this.codeToName = this.codeToName.bind(this);
     }
     componentDidMount() {
@@ -1059,6 +1060,10 @@ class MainPanel extends React.Component {
         return teacher;
     }
 
+    getTeacherName(teacherEmail) {
+        return "Example Teacher Name"
+    }
+
     getCurrentUserEmail() {
         const usr = JSON.parse(localStorage.getItem('authUser'));
         const curEmail = Object.values(usr).slice()[1]; // returns string of current user's email
@@ -1086,8 +1091,10 @@ class MainPanel extends React.Component {
         var welcomeMsg;
         var unenroll;
         var filter;
+        var teacherReveal;
         if (this.props.activeCourse==="none") {
             welcomeMsg = "No course selected.";
+            teacherReveal = "";
             unenroll = (
                 <div />
             );
@@ -1098,6 +1105,8 @@ class MainPanel extends React.Component {
         }
         else {
             welcomeMsg = "Welcome to " + this.codeToName(this.props.activeCourse); //CodeToName
+            let teachermsg = "This course is taught by " + this.getTeacherName(this.getTeacherEmail(this.props.activeCourse));
+            teacherReveal = (<p className="teachernotice">{teachermsg}</p>);
             unenroll = (
                 <div className="removecoursebutton" onClick={this.handleRemove}>
                     Unenroll
@@ -1208,7 +1217,9 @@ class MainPanel extends React.Component {
                         <td>
                             <div className="courseheader">
                                 {welcomeMsg}
-                                <br /><br />
+                                <br />
+                                {teacherReveal}
+                                <br />
                                 <table>
                                     <tr>
                                         <td>
