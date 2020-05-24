@@ -55,6 +55,11 @@ function VarkProfile(props) {
 }
 
 function AccountPage(props) {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+
     const usr = JSON.parse(localStorage.getItem('authUser'));
     var values = Object.values(usr).slice()[6];
     var Vcnt = 0;
