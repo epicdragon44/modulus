@@ -453,6 +453,17 @@ button {
   border-radius: 10px;
 }
 
+button.inline {
+  background-color: #003459;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
 button.addmodule {
   background-color: #003459;
   width: 75%;

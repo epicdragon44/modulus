@@ -9,6 +9,10 @@ import * as firebase from 'firebase'
 import { Resizable, ResizableBox } from 'react-resizable';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import backarrow from './backarrow.png';
+import darkdeleteicon from './deletedark.svg';
+import darkrenameicon from './renamedark.svg';
+import whitedeleteicon from './deletewhite.svg';
+import whiterenameicon from './renamewhite.svg';
 require('@firebase/database');
 
 //DOC: Item 1: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
@@ -155,6 +159,17 @@ class MyModal extends React.Component {
             const contents = neededModule.contents; // add your new items
             const internals = neededModule.internals;
             const vark = neededModule.vark;
+
+            //double check we don't already have an item with that name
+            let iteration;
+            for (iteration in contents) {
+                if (contents[iteration]===this.state.itemName) {
+                    alert('You already have an item with that name!');
+                    event.preventDefault();
+                    return;
+                }
+            }
+
             contents.push(this.state.itemName);
             internals.push(this.state.value);
             vark.push(this.state.varkselection);
@@ -508,6 +523,16 @@ class RenameModule extends React.Component {
             }
         }
         const arrModules = this.props.modules;
+
+        //check if we already have a module with that name
+        let iteration;
+        for (iteration in arrModules) {
+            if (arrModules[iteration].title===this.state.newVal) {
+                alert('You already have a module with that name!');
+                return;
+            }
+        }
+
         const curModule = this.props.moduleTitle;
         for ( let i = 0; i < arrModules.length; ++i) {
             if ( arrModules[i].title === curModule) {
@@ -523,7 +548,7 @@ class RenameModule extends React.Component {
     }
 
     render() {
-        var inside = (<p className="renamebutton">[Rename]</p>);
+        var inside = (<p className="renamebutton"><img src={whiterenameicon} height="15px"/></p>);
         if (this.state.active) {
             inside = (
             <form onSubmit={this.handleSubmit}>
@@ -597,7 +622,7 @@ class RenameItem extends React.Component {
         const vark = neededModule2.vark;
         for ( let i = 0; i < contents.length; ++i) {
             let itemTemp = contents[i];
-            if ( (itemTemp === this.props.itemName) && (vark[i] === this.props.vark)) {
+            if ( (itemTemp === this.props.itemName) /*&& (vark[i] === this.props.vark)*/) {
                 contents[i] = this.state.newVal;
             }
         }
@@ -613,7 +638,7 @@ class RenameItem extends React.Component {
     }
 
     render() {
-        var inside = (<p className="renamebutton">&nbsp;&nbsp;[Rename]</p>);
+        var inside = (<p className="renamebutton">&nbsp;&nbsp;<img src={darkrenameicon} height="15px"/></p>);
         if (this.state.active) {
             inside = (
             <form onSubmit={this.handleSubmit}>
@@ -734,11 +759,18 @@ class AddModuleItem extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.clearField = this.clearField.bind(this);
         this.state = {
             value: this.props.internal,
             active: false,
-            newVal: this.props.internal,
+            newVal: "Enter Module Name",
         };
+    }
+
+    clearField() {
+        this.setState({
+            newVal: "",
+        });
     }
 
     onClick() {
@@ -763,6 +795,16 @@ class AddModuleItem extends React.Component {
         }
         const arrModules = this.props.modules;
         const moduleTitle = this.state.newVal;
+
+        //check if we already have a module with that name
+        let iteration;
+        for (iteration in arrModules) {
+            if (arrModules[iteration].title===moduleTitle) {
+                alert('You already have a module with that name!');
+                return;
+            }
+        }
+        
         const blankModule =  
         {
             title: moduleTitle,
@@ -781,19 +823,20 @@ class AddModuleItem extends React.Component {
     }
     
     render() {
-        var inside = (<p className="addrenamebutton">Add a Module</p>);
-        if (this.state.active) {
-            inside = (
-                <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                            <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} />
-                        </label>
-                        <input className="button" type="submit" value="Add" />
-                    </form>
-                </div>
-            );
-        }
+        var inside = 
+        // (this.state.active) ?
+        (
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} onClick={this.clearField}/>
+                    </label>
+                    <input className="button" type="submit" value="Add a Module" />
+                </form>
+                
+            </div>
+        ) 
+        // : (<p className="addrenamebutton">Add a Module</p>);
 
         return (
             <div className="addmoduleitem">
