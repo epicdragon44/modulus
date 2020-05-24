@@ -9,7 +9,7 @@ require('@firebase/database');
 
 function Logo() {
     return (
-        <div class="logo" >
+        <div className="logo" >
             <br />
             <img width="100%" src={logo} alt="Modulus Logo" />
         </div>
@@ -26,7 +26,7 @@ function CourseListItem(props) {
 
 function AddCourseItem(props) {
     return (
-        <div class="addcourseitem" onClick={props.addCourseMode}>
+        <div className="addcourseitem" onClick={props.addCourseMode}>
             +
         </div>
     );
@@ -51,8 +51,8 @@ class Sidebar extends React.Component { //the entire left sidebar
             <div>
 <div className="sidebar">
                 <Logo />
-                 <div class="sidebarheader"><p><b>Your courses:</b></p></div>
-                <div class="courselist">
+                 <div className="sidebarheader"><p><b>Your courses:</b></p></div>
+                <div className="courselist">
                    {this.props.arrCourses.map(course => <CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)}
                    <AddCourseItem addCourseMode={this.addCourseMode}/>
                 </div>
@@ -91,7 +91,7 @@ function ModuleItem(props) {
             <div class="moduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
                 {props.name}
             </div>
-            <div class="modulecontents">
+            <div className="modulecontents">
                 {props.contents.map(
                     contentitem => 
                     <ModuleContentItem 
@@ -118,20 +118,12 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         }
 
         return (
-            <div class="mainpanel">
-                <div class="varkguide">
-                    <div class="varkguideintro"> Different colors correspond to different learning styles.</div>
-                    <div class="varkguideelement"><div class="foo red"></div> = Visual</div>
-                    <div class="varkguideelement"><div class="foo blue"></div> = Auditory</div>
-                    <div class="varkguideelement"><div class="foo green"></div> = Reading</div>
-                    <div class="varkguideelement"><div class="foo purple"></div> = Kinesthetic</div>
-                </div>
-
-                <div class="courseheader">
+            <div className="mainpanel">
+                <div className="courseheader">
                     {welcomeMsg}
                 </div>
 
-                <div class="modulelist">
+                <div className="modulelist">
                     {this.props.modules.map(module =>
                         <ModuleItem
                             name={module.title}
@@ -165,7 +157,10 @@ class NameForm extends React.Component {
         //  - OTHERWISE, ADD THE COURSENAME TO THE LIST OF COURSES THEY ARE ENROLLED IN
         const usr = JSON.parse(localStorage.getItem('authUser'));
         if (usr.courses.includes(this.state.value)) {
-            this.state.value = false;
+            //this.state.value = false;
+            this.setState({
+                value: false,
+            })
         }
 
         //below this line, the code is dan's
@@ -190,9 +185,9 @@ class NameForm extends React.Component {
 
 function AddCoursePanel(props) {
     return (
-        <div class="mainpanel">
-            <div class="addcourseview">
-                <div class="addcoursetitle">
+        <div className="mainpanel">
+            <div className="addcourseview">
+                <div className="addcoursetitle">
                     <b>Add a course</b>
                 </div>
                 <NameForm username={props.username} courses={props.courses} addCourse={props.addCourse}/>
@@ -247,20 +242,36 @@ class Container extends React.Component { //the main container for everything on
         if ( name === "none")
             return []
 
-        console.log(allCourses);
-
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
 
             console.log(course.CourseName);
-            if ( course.CourseName === name)
-                //here 
-                return [ {
-                    title: course.CourseName,
-                    contents: ["Item 1", "Item 2", "Item 3"],
-                    vark: ['V', "A", "R"],
-                    internals: ["https://www.youtube.com/watch?v=2qv_vCHZkcg&t=1689s", "oogwayascends.mp3", "In the beginning, there was darkness."]
-                }];
+            if ( course.CourseName === name) { //now we've retrieved the correct course to display
+                //here we need to return all of the modules in that course in an array
+
+                var arrayOfModules = (Object.values(course.modules));
+                for (let j = 0, len2 = arrayOfModules.length; j<len2; ++j) {
+                    arrayOfModules[j].contents = (Object.values(arrayOfModules[j].contents));
+                    arrayOfModules[j].vark = (Object.values(arrayOfModules[j].vark));
+                    arrayOfModules[j].internals = (Object.values(arrayOfModules[j].internals));
+                }
+                return arrayOfModules;
+
+                // we need to convert the objects so that every internal thing is an array, as well as the whole thing, like this [ 
+                //     {
+                //         title: course.CourseName,
+                //         contents: ["Item 1", "Item 2", "Item 3"],
+                //         vark: ['V', "A", "R"],
+                //         internals: ["https://www.youtube.com/watch?v=2qv_vCHZkcg&t=1689s", "oogwayascends.mp3", "In the beginning, there was darkness."]
+                //     },
+                //     {
+                //         title: course.CourseName,
+                //         contents: ["Item 1", "Item 2", "Item 3"],
+                //         vark: ['V', "A", "R"],
+                //         internals: ["https://www.youtube.com/watch?v=2qv_vCHZkcg&t=1689s", "oogwayascends.mp3", "In the beginning, there was darkness."]
+                //     },
+                // ];
+            }
             else{
                 console.log("whoops");
             }
@@ -276,8 +287,8 @@ class Container extends React.Component { //the main container for everything on
         }
         return (
             <div className="App">
-                <div class="container">
-                    <div class="left-element">
+                <div className="container">
+                    <div className="left-element">
                         <Sidebar
                             username={this.state.username}
                             activeCourse={this.state.activeCourse}
@@ -286,7 +297,7 @@ class Container extends React.Component { //the main container for everything on
                             addCourseMode={this.addCourseMode}
                         />
                     </div>
-                    <div class="right-element">
+                    <div className="right-element">
                         {mainpanel}
                     </div>
                 </div>
@@ -322,7 +333,6 @@ class Home extends React.Component {
                 courseList: coursesList,
             });
         });
-
     }
 
     render() {
