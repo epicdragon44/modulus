@@ -206,7 +206,7 @@ class MyModal extends React.Component {
             }
 
             const newPush = this.props.modules; // record to database
-            console.log(newPush);
+            
 
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
@@ -250,7 +250,7 @@ class MyModal extends React.Component {
             }
 
             const newPush = this.props.modules; // record to database
-            console.log(newPush);
+            
 
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
@@ -711,8 +711,7 @@ class RenameItem extends React.Component {
         }
         const arrModules = this.props.modules;
         const curModule = this.props.moduleTitle;
-        console.log(arrModules);
-        console.log(curModule);
+        
         for ( let i = 0; i < arrModules.length; ++i) {
             var neededModule2;
             if ( arrModules[i].title === curModule) {
@@ -728,7 +727,7 @@ class RenameItem extends React.Component {
         let count = 0;
         for ( let i = 0; i < contents.length; ++i) { //check we're not duplicating item names
             let itemTemp = contents[i];
-            console.log(itemTemp);
+            //console.log(itemTemp);
             if ( (itemTemp === this.state.newVal) /*&& (vark[i] === this.props.vark)*/) {
                 alert('You already have an item with that name!');
                 event.preventDefault();
@@ -744,7 +743,7 @@ class RenameItem extends React.Component {
         }
 
         const newPush = this.props.modules; // record to database
-        console.log(newPush);
+        
 
         this.props.firebase.courses().child(courseID).update({
             modules: newPush.slice(),
@@ -814,8 +813,7 @@ class DeleteItem extends React.Component {
         }
         const arrModules = this.props.modules;
         const curModule = this.props.moduleTitle;
-        console.log(arrModules);
-        console.log(curModule);
+        
         for ( let i = 0; i < arrModules.length; ++i) {
             var neededModule2;
             if ( arrModules[i].title === curModule) {
@@ -836,7 +834,7 @@ class DeleteItem extends React.Component {
         }
 
         const newPush = this.props.modules; // record to database
-        console.log(newPush);
+       
 
         this.props.firebase.courses().child(courseID).update({
             modules: newPush.slice(),
@@ -1299,16 +1297,6 @@ class MainPanel extends React.Component {
         this.getTeacherName = this.getTeacherName.bind(this);
         this.codeToName = this.codeToName.bind(this);
     }
-    componentDidMount() {
-        this.props.firebase.courses().on('value', snapshot => {
-            const coursesObject = snapshot.val();
-            const coursesList = Object.keys(coursesObject).map(key => ({
-                ...coursesObject[key],
-                appID: key,
-            }));
-            localStorage.setItem('courses', JSON.stringify(coursesList));
-        });
-    }
 
     handleRemove(event) {
         this.props.removeCourse(this.props.activeCourse);
@@ -1336,7 +1324,13 @@ class MainPanel extends React.Component {
     }
 
     getTeacherName(teacherEmail) {
-        //TODO: return teacher name based on teacher email
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                return course.nteacherName;
+            }
+        }
         return "Example Teacher Name";
     }
 
@@ -1357,21 +1351,47 @@ class MainPanel extends React.Component {
     }
 
     getListOfStudents() {
-        // TODO:
-        // In the database, create an attribute under the Course that's named StudentList, and has sub-attributes
-        // Each sub-attribute is a Key Value pair with the Student's email being the key, and either "true" or "false" as the value. 
-        // True indicates the user is still enrolled. False means the user has been kicked.
-        // This function needs to return an array of all the keys (all the student emails)
-        // When users make new courses in the future, this attribute should automatically be included, and should have no sub-attributes by default
-
-        return (["Bob@gmail.com", "JohnTheLongName@outlook.com"]); //Placeholder output, delete later
+        // This will return the list of students emails
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var stulist;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                stulist = course.ostudentList; // identifies current course child name to update
+                break;
+            }
+        }
+        var stukeys = [];
+        if ( stulist != undefined) {
+            for (let [key, value] of Object.entries(stulist)) {
+                if (value === "true") 
+                    stukeys.push(key);
+            }
+        }
+        console.log(stukeys);
+        return stukeys; 
     }
 
     getListOfStudentKicks() {
-        // Continuation of the TODO in getListOfStudents:
+        
         // This function needs to return an array of all the values (all the true/false strings)
-
-        return (["false", "true"]); //Placeholder output, delete later
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var stulist;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                stulist = course.ostudentList; // identifies current course child name to update
+                break;
+            }
+        }
+        var stu = [];
+        if ( stulist != undefined) {
+            for (let [key, value] of Object.entries(stulist)) {
+                    stu.push(value);
+            }
+        }
+        console.log(stu);
+        return stu; 
     }
 
     setStudentKick(studentEmail, kickStatus) { //kickStatus is a string, studentEmail is a string
@@ -1382,11 +1402,20 @@ class MainPanel extends React.Component {
     }
 
     onChangeCheckbox = event => {
-        // TODO:
-        // In the database, create an attribute under the Course that's named VarkEnabled, and it's one of two values: "true" or "false"
-        // Then, right here, push to the current course the value of (event.target.checked+""), which will be either "true" or "false"
-        // To help you, this.props.activeCourse should have the current course code
-        // When users make new courses in the future, this attribute should automatically be included, and set to true by default
+        // changes whether the course shows VARK or no
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                courseID = course.appID; // identifies current course child name to update
+                break;
+            }
+        }
+        this.props.firebase.courses().child(courseID).update({
+            varkEnabled: event.target.checked,
+        });
+
         this.setState({ [event.target.name]: event.target.checked }); //Keep this line of code
     };
 
@@ -1937,9 +1966,9 @@ class Container extends React.Component {
                 arrCourses: newCourses.slice(),
             }, () => {this.changeActiveCourse(courseCode);});
             const usr = JSON.parse(localStorage.getItem('authUser'));
-            //console.log(Object.values(usr).slice()[2]);
+           
             localStorage.setItem('authUser', JSON.stringify(usr));
-            //console.log(Object.values(usr).slice()[2]);
+           
             this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
                 courses: newCourses.slice(),
             });
@@ -1970,11 +1999,17 @@ class Container extends React.Component {
 
         const modulesT = this.getModules(-1);
         const tempName = username + nameOfCourse + classCode;
+        const tempStudents = {
+            "exampleStudentEmail": true,
+        }
         this.props.firebase.course(tempName).update({
             CourseName: nameOfCourse,
             modules: modulesT,
             nclasscode: classCode,
             nteacher: email,
+            nteacherName: username,
+            ostudentList: tempStudents,
+            varkEnabled: true,
         })
 
         //done for you: at the end, enroll the person in their own course by calling this.addCourse(classCode);
@@ -1988,9 +2023,9 @@ class Container extends React.Component {
             varkClicks: newVark.slice(),
         });
         const usr = JSON.parse(localStorage.getItem('authUser'));
-        //console.log(Object.values(usr).slice()[6]);
+        
         localStorage.setItem('authUser', JSON.stringify(usr));
-        //console.log(Object.values(usr).slice()[6]);
+        
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             wvarkclicks: newVark.slice(),
         });
@@ -2009,9 +2044,9 @@ class Container extends React.Component {
             arrCourses: newCourses.slice(),
         }, () => {this.changeActiveCourse(this.state.arrCourses.slice()[0]);});
         const usr = JSON.parse(localStorage.getItem('authUser'));
-        //console.log(Object.values(usr).slice()[2]);
+    
         localStorage.setItem('authUser', JSON.stringify(usr));
-        //console.log(Object.values(usr).slice()[2]);
+        
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             courses: newCourses.slice(),
         });
@@ -2151,7 +2186,7 @@ class Home extends React.Component {
                 appID: key,
             }));
             localStorage.setItem('courses', JSON.stringify(coursesList));
-            //console.log(JSON.parse(localStorage.getItem('courses')));
+           
             this.setState({
                 username: Object.values(usr).slice()[4],
                 email: Object.values(usr).slice()[1],
