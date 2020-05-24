@@ -382,8 +382,20 @@ div {
   font-size: medium;
 }
 
+.studentsmallparagraph {
+  font-size: medium;
+  margin-left: 3em;
+}
+
 .reallysmallparagraph {
   font-size: small;
+}
+
+.studentrow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 7.5em;
 }
 
 .varkguide {

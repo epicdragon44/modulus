@@ -1325,9 +1325,34 @@ class MainPanel extends React.Component {
         }
     }
 
+    getListOfStudents() {
+        // TODO:
+        // In the database, create an attribute under the Course that's named StudentList, and has sub-attributes
+        // Each sub-attribute is a Key Value pair with the Student's email being the key, and either "true" or "false" as the value. 
+        // True indicates the user is still enrolled. False means the user has been kicked.
+        // This function needs to return an array of all the keys (all the student emails)
+        // When users make new courses in the future, this attribute should automatically be included, and should have no sub-attributes by default
+
+        return (["Bob@gmail.com", "JohnTheLongName@outlook.com"]); //Placeholder output, delete later
+    }
+
+    getListOfStudentKicks() {
+        // Continuation of the TODO in getListOfStudents:
+        // This function needs to return an array of all the values (all the true/false strings)
+
+        return (["false", "true"]); //Placeholder output, delete later
+    }
+
+    setStudentKick(studentEmail, kickStatus) { //kickStatus is a string, studentEmail is a string
+        // Continuation of the TODO in getListOfStudents:
+        // This function needs to set the kickStatus(value) of the studentEmail(key) to what's been passed into this function
+
+        alert(studentEmail + ' ' + kickStatus); //Placeholder output, delete later
+    }
+
     onChangeCheckbox = event => {
         // TODO:
-        // In the database, create an attribute under the Course that's like VarkEnabled, and it's one of two values: "true" or "false"
+        // In the database, create an attribute under the Course that's named VarkEnabled, and it's one of two values: "true" or "false"
         // Then, right here, push to the current course the value of (event.target.checked+""), which will be either "true" or "false"
         // To help you, this.props.activeCourse should have the current course code
         // When users make new courses in the future, this attribute should automatically be included, and set to true by default
@@ -1550,11 +1575,51 @@ class MainPanel extends React.Component {
             </div>
         ) : (null);
 
-        var manageStudents = (teacherMode) ? ( //TODO: ACTUALLY LET THEM MANAGE STUDENTS ENROLLED HERE
+        var listOfStudents = this.getListOfStudents();
+        var listOfStudentKicks = this.getListOfStudentKicks();
+
+        var manageStudents = (teacherMode) ? (
             <div className="managecontent">
                 <center>
-                    <h1>Manage Students here</h1>
+                    <br /><br />
+                    <h3>Manage Students</h3>
+                    <p className="smallparagraph">By default, all enrolled students can view your course.<br />
+                    You can block individuals by flipping their switch off.</p><br /><br />
                 </center>
+                {(listOfStudents.length<=1) ? (
+                    <p className="smallparagraph">You don't have any students yet.</p>
+                ) : listOfStudents.map(
+                    student => (
+                        (listOfStudentKicks[listOfStudents.indexOf(student)]==="false") ? (
+                            <div className="studentrow">
+                                <label className="switch">
+                                    <input
+                                        name="studentswitch"
+                                        type="checkbox"
+                                        checked={false}
+                                        onChange={() => this.setStudentKick(student, "true")}
+                                    />
+                                    <span class="slider round"></span>
+                                </label>
+                                <p className="studentsmallparagraph">{student}</p>
+                            </div>
+                        ) : (
+                            <div className="studentrow">
+                                <label className="switch">
+                                    <input
+                                        name="studentswitch"
+                                        type="checkbox"
+                                        checked={true}
+                                        onChange={() => this.setStudentKick(student, "false")}
+                                    />
+                                    <span class="slider round"></span>
+                                </label>
+                                <p className="studentsmallparagraph">{student}</p>
+                            </div>
+                        )
+                    )
+                )}
+                <br /><br /><br />
             </div>
         ) : (null);
 
@@ -1635,10 +1700,10 @@ class MainPanel extends React.Component {
                 {joinClassCode}
                 <br />
                 {contactTeacher}
-                {manageStudents}
                 <br />
                 {varkContent}
                 <br />
+                {manageStudents}
                 {unenroll}
                 <br /><br /><br /><br /><br />
             </TabPanel>
