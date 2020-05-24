@@ -450,6 +450,10 @@ h1.modaldialog {
   color: #003459;
 }
 
+.widespace {
+  line-height: 150%;
+}
+
 #backbutton {
   padding-top: 5px;
   padding-bottom: 10px;
@@ -482,14 +486,18 @@ a.linkbutton:hover {
 
 .varkprofiletext {
   text-align: right;
-  padding-left: 1em;
+  padding-left: 0.5em;
   padding-right: 2em;
   line-height: 70%;
   font-size: medium;
   border-right: 1px solid black;
 }
 
-.varkprofile {
-  /* border: 1px solid #003459;
-  border-radius: 10px; */
+.offsetleft {
+  position: relative;
+  right: 2em;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
 }

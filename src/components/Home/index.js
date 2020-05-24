@@ -236,7 +236,7 @@ function VarkProfile(props) {
                     </td>
                     <td>
                         <div className="varkprofiletext">
-                            <p><b>VARK Profile</b></p>
+                            <p><b>Course VARK Profile</b></p>
                             <p style={{color: "red"}}>Visual</p>
                             <p style={{color: "blue"}}>Auditory</p>
                             <p style={{color: "green"}}>Reading/Writing</p>

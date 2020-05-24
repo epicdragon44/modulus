@@ -17,6 +17,19 @@ div.content {
     box-shadow: 0 10px 29px 0 gray;
     border-radius: 10px;
 }
+div.largecontent {
+    margin-top: 7em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60em;
+    height: fit-content;
+    vertical-align: middle;
+    text-align: center;
+    flex: auto;
+    background-color: white;
+    box-shadow: 0 10px 29px 0 gray;
+    border-radius: 10px;
+}
 a {
     display: block;
     color: #003459;
@@ -25,10 +38,9 @@ a {
     text-decoration: none;
 }
 
-a {
-    display: block;
-    color: #002136;
-    text-align: center;
-    padding: 14px 16px;
+a.nonformatted {
+    display: inline;
+    padding: 0px 0px;
+    color: #0c74b4;
     text-decoration: none;
 }

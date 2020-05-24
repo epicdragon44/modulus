@@ -59,7 +59,7 @@ class PasswordChangeForm extends Component {
         <button disabled={isInvalid} type="submit">
           Reset My Password
         </button>
-
+        <br /><br /><br /><br /><br />
         {error && <p>{error.message}</p>}
       </form>
     );
