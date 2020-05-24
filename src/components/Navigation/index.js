@@ -91,11 +91,11 @@ const NavigationAuth = ({ authUser }) => (
             <AccountMenuItem link={ROUTES.ACCOUNT} />
             <DashboardMenuItem link={ROUTES.HOME} />
             
-            {authUser.roles.includes(ROLES.ADMIN) && (
+            {/* {authUser.roles.includes(ROLES.ADMIN) && (
                 <li>
                     <Link to={ROUTES.ADMIN}>Admin</Link>
                 </li>
-            )}
+            )} */}
             
         </ul>
     </div>

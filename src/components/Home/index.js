@@ -32,18 +32,19 @@ function codeToName(classcode) {
 
 function AddCourseItem(props) {
     return (
-            <div className="addcourseitem" onClick={props.addCourseMode}>
+        (!currentUserIsAdmin()) ? 
+            (<div className="addcourseitem" onClick={props.addCourseMode}>
                 Enroll in a course
-            </div>
+            </div>) : (<div />)
     );
 }
 
 function CreateCourseItem(props) {
     return (
         (currentUserIsAdmin()) ? 
-            (<div><div className="addcourseitem" onClick={props.createCourseMode}>
+            (<div className="addcourseitem" onClick={props.createCourseMode}>
                 Create a course
-            </div><br /></div>) : (<div />)
+            </div>) : (<div />)
     );
 }
 
@@ -90,11 +91,11 @@ class Sidebar extends React.Component { //the entire left sidebar
                     <div className="courselist">
                         <br />
                         <AddCourseItem addCourseMode={this.addCourseMode}/>
-                        <br />
                         <CreateCourseItem createCourseMode={this.createCourseMode}/>
+                        <br />
                         <hr />
                         <br />
-                        {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You don't have any courses yet.<br/>Enroll or teach using the buttons above.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<div><CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/><br /></div>)))}
+                        {(this.props.arrCourses.length<=1) ? (<p className="dividertext">You don't have any courses yet.</p>) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<div><CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/><br /></div>)))}
                     </div>
                 </div>
             </div>
@@ -1071,7 +1072,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         var unenroll;
         var filter;
         if (this.props.activeCourse==="none") {
-            welcomeMsg = "Select or add a course on the left to get started.";
+            welcomeMsg = "No course selected.";
             unenroll = (
                 <div />
             );
