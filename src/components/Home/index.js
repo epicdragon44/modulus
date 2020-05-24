@@ -173,12 +173,16 @@ function ModuleItem(props) {
             <div className="modulecontents">
                 {props.contents.map(
                     contentitem => 
-                    <ModuleContentItem 
+                    (props.varkMode==="All" || props.varkMode===props.vark[props.contents.indexOf(contentitem)])
+                    ?
+                    (<ModuleContentItem 
                         name={contentitem} 
                         vark={props.vark[props.contents.indexOf(contentitem)]} 
                         internal={props.internals[props.contents.indexOf(contentitem)]}
                         addVarkClicks={props.addVarkClicks}
-                    />
+                    />)
+                    :
+                    (<div />)
                 )}
             </div>
         </div>
@@ -249,14 +253,81 @@ function VarkProfile(props) {
     );
 }
 
+class Select extends React.PureComponent {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+      options: [
+        {
+            name: 'Filter items by VARK type',
+            value: "All",
+        },
+        {
+            name: 'Visual',
+            value: 'V',
+        },
+        {
+            name: 'Auditory',
+            value: 'A',
+        },
+        {
+            name: 'Reading/Writing',
+            value: 'R',
+        },
+        {
+            name: 'Kinesthetic',
+            value: 'K',
+        },
+      ],
+      value: '?',
+    };
+  
+    handleChange = (event) => {
+      this.props.passState(event.target.value);
+      this.setState({ value: event.target.value });
+    };
+  
+    render() {
+      const { options, value } = this.state;
+  
+      return (
+        <React.Fragment>
+          <select onChange={this.handleChange} value={value}>
+            {options.map(item => (
+              <option key={item.value} value={item.value}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </React.Fragment>
+      );
+    }
+}
+
 class MainPanel extends React.Component { //the entire right half of the screen where all the modules are
     constructor (props){
-        super(props);
+        super(props); 
+        this.state = {
+            varkselection: "All",
+        };
         this.handleRemove = this.handleRemove.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+        this.filterCallback = this.filterCallback.bind(this);
     }
 
     handleRemove(event) {
         this.props.removeCourse(this.props.activeCourse);
+    }
+
+    handleFilter(theState) {
+        this.setState({varkselection: theState}, () => this.filterCallback());
+        
+    }
+
+    filterCallback() {
+        this.render();
     }
 
     render() { //active: "" means the module is minimized, "active" means its expanded
@@ -266,12 +337,16 @@ class MainPanel extends React.Component { //the entire right half of the screen 
 
         var welcomeMsg;
         var unenroll;
+        var filter;
         if (this.props.activeCourse==="none") {
             welcomeMsg = "Select or add a course on the left to get started.";
             unenroll = (
                 <div />
             );
             showVarkProfile = false;
+            filter = (
+                <div />
+            );
         }
         else {
             welcomeMsg = "Welcome to " + (this.props.activeCourse);
@@ -280,6 +355,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                     Unenroll
                 </div>
             );
+            filter = (<Select passState={this.handleFilter}/>);
             if (welcomeMsg === "Welcome to Welcome") {
                 welcomeMsg = "Select or add a course on the left to get started."
                 showModules = false;
@@ -287,6 +363,9 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                     <div />
                 );
                 showVarkProfile = false;
+                filter = (
+                    <div />
+                );
             }
         }
 
@@ -294,16 +373,20 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         if (showModules) {
             moduleList = (
                 <div className="modulelist">
-                    {Object.values(this.props.modules).map(module =>
-                        <ModuleItem
-                            name={module.title}
-                            contents={module.contents}
-                            vark={module.vark}
-                            internals={module.internals}
-                            active=""
-                            username={this.props.username}
-                            addVarkClicks={this.props.addVarkClicks}
-                        />)}
+                    {
+                        Object.values(this.props.modules).map(module =>
+                            <ModuleItem
+                                name={module.title}
+                                contents={module.contents}
+                                vark={module.vark}
+                                internals={module.internals}
+                                active=""
+                                username={this.props.username}
+                                addVarkClicks={this.props.addVarkClicks}
+                                varkMode={this.state.varkselection}
+                            />
+                        )
+                    }
                 </div>
             );
         }
@@ -352,7 +435,16 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                             <div className="courseheader">
                                 {welcomeMsg}
                                 <br /><br />
-                                {unenroll}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            {unenroll}
+                                        </td>
+                                        <td>
+                                            {filter}
+                                        </td>
+                                    </tr>
+                                </table>
                                 <br />
                             </div>
                         </td>
@@ -379,17 +471,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 <br />
                 <br />
                 <br />
-                {/* <div className="modulelist">
-                    {Object.values(this.props.modules).map(module =>
-                        <ModuleItem
-                            name={module.title}
-                            contents={module.contents}
-                            vark={module.vark}
-                            internals={module.internals}
-                            active=""
-                            username={this.props.username}
-                        />)}
-                </div> */}
             </div>
         )
     }
