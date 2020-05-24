@@ -1252,10 +1252,10 @@ class Container extends React.Component { //the main container for everything on
             hash2 = ((hash2 << 5) - hash2) + char;
             hash2 = hash2 & hash2;
         }
-        var classCode = hash1 + hash2; // <-- set this to the class code
+        var classCode = hash1 + hash2 + ""; // <-- set this to the class code
 
         const modulesT = this.getModules("THISISANEWCOURSE");
-        const tempName = username + nameOfCourse;
+        const tempName = username + nameOfCourse + classCode;
         this.props.firebase.course(tempName).update({
             CourseName: nameOfCourse,
             modules: modulesT,
@@ -1264,7 +1264,7 @@ class Container extends React.Component { //the main container for everything on
         })
 
         //done for you: at the end, enroll the person in their own course by calling this.addCourse(classCode);
-        this.addCourse(classCode);
+        this.addCourse(nameOfCourse);
     }
 
     addVarkClicks = (varkCharacter) => {
