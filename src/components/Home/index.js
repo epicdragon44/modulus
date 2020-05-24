@@ -122,7 +122,7 @@ class Sidebar extends React.Component {
 //DOC: Component: Displays a popup dialog.
 //Input: itemName, firebase, text, modules, activeCourse, moduleTitle, internal, vark, onRequestClose, teacherMode, addItemMode (optional)
 //Output: JSXElement
-class MyModal extends React.Component {
+class MyModal extends React.Component {     
     constructor(props) {
         super(props);
         this.handleFilter = this.handleFilter.bind(this);
@@ -269,7 +269,6 @@ class MyModal extends React.Component {
 
             const newPush = this.props.modules; // record to database
             
-
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
             });
@@ -897,7 +896,9 @@ class ModuleContentItem extends React.Component {
     }
 
     openModal() { //this registers the click
-        this.props.addVarkClicks(this.props.vark);
+        if (this.props.varkStatus) {
+            this.props.addVarkClicks(this.props.vark);
+        }
         if (this.props.instantOpen) {
             window.open(this.props.internal, '_blank');
         }
@@ -1192,6 +1193,7 @@ function ModuleItem(props) {
                         (
                             (contentitem!=="DELETE THAT YOU HOT DOG") ?
                             (<ModuleContentItem
+                                varkStatus={props.varkStatus}
                                 instantOpen={props.instantOpen}
                                 name={contentitem}
                                 vark={(props.showVark) ? (props.vark[props.contents.indexOf(contentitem)]) : ("")}
@@ -1576,6 +1578,7 @@ class MainPanel extends React.Component {
                         Object.values(this.props.modules).map(module =>
                             (module.title!=="DELETE THAT YOU HOT DOG") ? 
                             (<ModuleItem
+                                varkStatus={varkStatus}
                                 instantOpen={this.props.instantOpen}
                                 name={module.title}
                                 contents={module.contents}
@@ -1601,6 +1604,7 @@ class MainPanel extends React.Component {
                         Object.values(this.props.modules).map(module =>
                             (module.title!=="DELETE THAT YOU HOT DOG") ? 
                             (<ModuleItem
+                                varkStatus={varkStatus}
                                 instantOpen={this.props.instantOpen}
                                 name={module.title}
                                 contents={module.contents}
