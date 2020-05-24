@@ -374,7 +374,7 @@ class ModuleContentItem extends React.Component {
         this.props.addVarkClicks(this.props.vark);
 
         const header = this.props.name;
-        ModalManager.open(<MyModal text={header} modules={this.props.modules} activeCourse={this.props.activeCourse} moduleTitle={this.props.moduleTitle} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true} teacherMode={this.props.teacherMode}/>);
+        ModalManager.open(<MyModal itemName={this.props.name} firebase={this.props.firebase} text={header} modules={this.props.modules} activeCourse={this.props.activeCourse} moduleTitle={this.props.moduleTitle} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true} teacherMode={this.props.teacherMode}/>);
     }
 
     render() {
@@ -395,7 +395,7 @@ class AddModuleContentItemItem extends React.Component {
     }
 
     openModal() { //this registers the click
-        ModalManager.open(<MyModal firebase={this.props.firebase} moduleTitle={this.props.moduleTitle} activeCourse={this.props.activeCourse} modules={this.props.modules} onRequestClose={() => true} teacherMode={true} addItemMode={true}/>);
+        ModalManager.open(<MyModal itemName="add" firebase={this.props.firebase} moduleTitle={this.props.moduleTitle} activeCourse={this.props.activeCourse} modules={this.props.modules} onRequestClose={() => true} teacherMode={true} addItemMode={true}/>);
     }
 
     render() {
