@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logowithtext.svg';
+import logo from './moduluslogo.png';
 import './App.css';
 import { withAuthorization } from '../Session';
 
