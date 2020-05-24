@@ -29,46 +29,6 @@ function AddCourseItem(props) {
     );
 }
 
-class SessionBar extends React.Component { //provides functions logout and settings
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            user: props.username, //stores the username, can offer up individualized settings from database based on username
-        }
-    }
-    render() { //TODO: need to implement backend for these buttons
-        return (
-            <div class="sessionbar">
-                <button class="logout">
-                    Logout
-                </button>
-                <button class="settings">
-                    Settings
-                </button>
-            </div>
-        );
-    }
-}
-
-class NameBar extends React.Component { //just tells the user welcome back! basically who's currently logged in
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: props.username,
-        }
-    }
-
-    render() {
-        let msg = "Welcome back " + this.state.username + "!";
-        return (
-            <div class="namebar">
-                {msg}
-            </div>
-        );
-    }
-}
-
 class Sidebar extends React.Component { //the entire left sidebar
     constructor(props) {
         super(props);
@@ -85,7 +45,8 @@ class Sidebar extends React.Component { //the entire left sidebar
 
     render() {
         return (
-            <div className="sidebar">
+            <div>
+<div className="sidebar">
                 <Logo />
                 {/*this part cannot draw null list*/}
                 {/*<div class="sidebarheader"><p><b>Your courses:</b></p></div>*/}
@@ -96,16 +57,14 @@ class Sidebar extends React.Component { //the entire left sidebar
                 <NameBar username={this.props.username} />
                 <SessionBar username={this.props.username} />
             </div>
+            </div>
+            
         );
     }
 }
 
 function ModuleContentItem(props) {
     const [openedStatus, open] = React.useState("");
-    React.useEffect(() => {
-        //TODO: actually open the item
-
-    });
 
     let precede;
     if (openedStatus==="active") {
@@ -152,13 +111,13 @@ class MainPanel extends React.Component { //the entire right half of the screen 
 
         return (
             <div class="mainpanel">
-                <div class="varkguide">
+                {/* <div class="varkguide">
                     <div class="varkguideintro"> Different colors correspond to different learning styles.</div>
                     <div class="varkguideelement"><div class="foo red"></div> = Visual</div>
                     <div class="varkguideelement"><div class="foo blue"></div> = Auditory</div>
                     <div class="varkguideelement"><div class="foo green"></div> = Reading</div>
                     <div class="varkguideelement"><div class="foo purple"></div> = Kinesthetic</div>
-                </div>
+                </div> */}
 
                 <div class="courseheader">
                     {welcomeMsg}
@@ -190,9 +149,15 @@ class NameForm extends React.Component {
 
     handleChange(event) {    this.setState({value: event.target.value});  }
 
-    handleSubmit(event) {
-        this.props.addCourse(this.state.value);
-        //TODO: plug into the backend and retrieve the course, assign it to this username's database of enrolled courses so that the function getModules in container works properly. Don't forget to check that the course isnt already added using the courses prop
+    handleSubmit(event) { //plugs into the backend to add the course, and passes the function on up for the main container to do the re-rendering
+        let shouldAddCourse = true;
+        //TODO: 
+        //  - GET A LIST OF THE COURSES THE USER (THIS.PROPS.USERNAME) IS CURRENTLY ENROLLED
+        //  - IF THAT LIST ALREADY INCLUDES THE COURSENAME (THIS.STATE.VALUE), SET SHOULDADDCOURSE TO FALSE
+        //  - OTHERWISE, ADD THE COURSENAME TO THE LIST OF COURSES THEY ARE ENROLLED IN
+        if (shouldAddCourse) {
+            this.props.addCourse(this.state.value);
+        }
         event.preventDefault();
     }
 
@@ -261,8 +226,8 @@ class Container extends React.Component { //the main container for everything on
     }
 
     getModules(name) {
-        //TODO: pull this info from backend based on the username and current activeCourse
-        //these if functions just placeholder for now
+        //TODO: BASED ON USERNAME (THIS.STATE.USERNAME) AND CURRENTLY OPEN COURSE (THIS.STATE.ACTIVECOURSE), PULL THE MODULES FROM DATABASE HERE AND RETURN IT AS AN ARRAY OF JAVASCRIPT OBJECTS. 
+        //YOU CAN SEE THE DUMMY EXAMPLES BELOW, BUT PLEASE REPLACE THIS SHIT
 
         if (name==="none") {
             return []
@@ -325,12 +290,12 @@ class Container extends React.Component { //the main container for everything on
     }
 }
 
-class Home extends React.Component { //just creates a container lmfao for the point of obeying convention when integrating with index.js
+class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: props.name,
-            courses: props.courses,
+            username: props.name,  //TODO: PUT CURRENT EMAIL HERE
+            courses: props.courses,//TODO: PULL COURSES FROM TABLE OF USERS HERE
         }
     }
 

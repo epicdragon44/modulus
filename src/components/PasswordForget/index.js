@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 const PasswordForgetPage = () => (
-    <div>
-        <h1>PasswordForget</h1>
+    <div className="content">
+        <h1><br /><br />Forgot Password</h1><br />
         <PasswordForgetForm />
     </div>
 );
@@ -43,7 +43,7 @@ class PasswordForgetFormBase extends Component {
                     onChange={this.onChange}
                     type="text"
                     placeholder="Email Address"
-                />
+                /><br /><br /><br />
                 <button disabled={isInvalid} type="submit">
                     Reset My Password
                 </button>

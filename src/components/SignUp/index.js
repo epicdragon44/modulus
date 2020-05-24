@@ -6,8 +6,8 @@ import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
 const SignUpPage = () => (
-    <div>
-        <h1>SignUp</h1>
+    <div className="content">
+        <br /><br /><h1>Sign Up</h1>
         <SignUpForm />
     </div>
 );
@@ -96,28 +96,28 @@ class SignUpFormBase extends Component {
                     onChange={this.onChange}
                     type="text"
                     placeholder="Full Name"
-                />
+                /><br /><br />
                 <input
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Email Address"
-                />
+                /><br /><br />
                 <input
                     name="passwordOne"
                     value={passwordOne}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Password"
-                />
+                /><br /><br />
                 <input
                     name="passwordTwo"
                     value={passwordTwo}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Confirm Password"
-                />
+                /><br /><br />
                 <label>
                     Admin:
                     <input
@@ -126,7 +126,7 @@ class SignUpFormBase extends Component {
                         checked={isAdmin}
                         onChange={this.onChangeCheckbox}
                     />
-                </label>
+                </label><br /><br />
                 <button disabled={isInvalid} type="submit">
                     Sign Up
                 </button>

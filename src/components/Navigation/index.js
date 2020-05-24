@@ -6,6 +6,8 @@ import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
+import './nav.css';
+
 const Navigation = () => (
     <AuthUserContext.Consumer>
         {authUser =>
@@ -18,36 +20,40 @@ const Navigation = () => (
     </AuthUserContext.Consumer>
 );
 
+function MenuItem(props) {
+    return (
+        <li>
+            <Link to={props.link}>{props.name}</Link>
+        </li>
+    );
+}
+
 const NavigationAuth = ({ authUser }) => (
-    <ul>
-        <li>
-            <Link to={ROUTES.LANDING}>Landing</Link>
-        </li>
-        <li>
-            <Link to={ROUTES.HOME}>Home</Link>
-        </li>
-        <li>
-            <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        {/*{authUser.roles.includes(ROLES.ADMIN) && (*/}
-        {/*    <li>*/}
-        {/*        <Link to={ROUTES.ADMIN}>Admin</Link>*/}
-        {/*    </li>*/}
-        {/*)}*/}
-        <li>
-            <SignOutButton />
-        </li>
-    </ul>
+    <div>
+        <ul>
+            <li className="left">
+                <Link to={ROUTES.LANDING}>Modulus</Link>
+            </li>
+            <MenuItem link={ROUTES.HOME} name="Dashboard" />
+            <MenuItem link={ROUTES.ACCOUNT} name="Account" />
+            {/*{authUser.roles.includes(ROLES.ADMIN) && (*/}
+            {/*    <li>*/}
+            {/*        <Link to={ROUTES.ADMIN}>Admin</Link>*/}
+            {/*    </li>*/}
+            {/*)}*/}
+            <li>
+                <SignOutButton />
+            </li>
+        </ul>
+    </div>
 );
 
 const NavigationNonAuth = () => (
     <ul>
-        <li>
-            <Link to={ROUTES.LANDING}>Landing</Link>
+        <li className="left">
+                <Link to={ROUTES.LANDING}>Modulus</Link>
         </li>
-        <li>
-            <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-        </li>
+        <MenuItem link={ROUTES.ACCOUNT} name="Sign In" />
     </ul>
 );
 

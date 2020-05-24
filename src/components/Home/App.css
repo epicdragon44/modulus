@@ -8,6 +8,10 @@
   height: 100%;
 }
 
+div {
+  overflow: auto;
+}
+
 .left-element {
   background: whitesmoke;
   display: inline-block;
@@ -56,12 +60,12 @@
 }
 
 .courselist {
-  height: 40em;
+  height: 50em;
   text-align: left;
   padding-bottom: 2.5em;
   padding-left: 1em;
   padding-right: 1em;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .sessionbar {
@@ -249,20 +253,20 @@
   font-size: xx-large;
 }
 
-input[type=text] {
-  width: 10em;
+/* input[type=text] {
   padding: 5px 5px;
   margin: 5px 0;
   box-sizing: border-box;
   border: none;
+  width: 16.5em;
   transition: width 0.4s ease-in-out;
   border-bottom: 2px solid lightgray;
 }
 
 input[type=text]:focus {
-  width: 35em;
+  width: 20em;
   border-bottom: 2px solid #003459;
-}
+} */
 
 input[type=button], input[type=submit], input[type=reset] {
   background-color: #003459;
