@@ -153,10 +153,10 @@ class MyModal extends React.Component{
             }
             
             const newPush = this.props.modules; // record to database 
-            // TODO: why is firebase undefined here??? If this is fixed the function will 100% work
-            // this.props.firebase.courses().child(courseID).update({
-            //     modules: newPush.slice(),
-            // });
+            //TODO: why is firebase undefined here??? If this is fixed the function will 100% work
+            this.props.firebase.courses().child(courseID).update({
+                modules: newPush.slice(),
+            });
         }
         event.preventDefault();
     }
@@ -471,6 +471,7 @@ function ModuleItem(props) {
                         moduleTitle={props.name}
                         activeCourse={props.activeCourse}
                         modules={props.modules}
+                        firebase={props.firebase}
                     />)
                     :
                     (<div />)
