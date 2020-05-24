@@ -454,30 +454,31 @@ function ModuleItem(props) {
     }
 
     return (
-        <div className={attribute} >
-            <div class="moduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
-                {props.name}
-            </div>
-            <div className="modulecontents">
-                {props.contents.map(
-                    contentitem => 
-                    (props.varkMode==="All" || props.varkMode===props.vark[props.contents.indexOf(contentitem)])
-                    ?
-                    (<ModuleContentItem 
-                        name={contentitem} 
-                        vark={props.vark[props.contents.indexOf(contentitem)]} 
-                        internal={props.internals[props.contents.indexOf(contentitem)]}
-                        addVarkClicks={props.addVarkClicks}
-                        teacherMode={props.teacherMode}
-                        moduleTitle={props.name}
-                        activeCourse={props.activeCourse}
-                        modules={props.modules}
-                        firebase={props.firebase}
-                    />)
-                    :
-                    (<div />)
-                )}
-                {addCourseItemItem}
+        <div>
+            <div className={attribute} >
+                <div class="moduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
+                    {props.name}
+                </div>
+                <div className="modulecontents">
+                    {props.contents.map(
+                        contentitem => 
+                        (props.varkMode==="All" || props.varkMode===props.vark[props.contents.indexOf(contentitem)])
+                        ?
+                        (<ModuleContentItem 
+                            name={contentitem} 
+                            vark={props.vark[props.contents.indexOf(contentitem)]} 
+                            internal={props.internals[props.contents.indexOf(contentitem)]}
+                            addVarkClicks={props.addVarkClicks}
+                            teacherMode={props.teacherMode}
+                            moduleTitle={props.name}
+                            activeCourse={props.activeCourse}
+                            modules={props.modules}
+                        />)
+                        :
+                        (<div />)
+                    )}
+                    {addCourseItemItem}
+                </div>
             </div>
         </div>
     );
