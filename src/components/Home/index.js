@@ -77,7 +77,7 @@ class Sidebar extends React.Component { //the entire left sidebar
                     </div>
                 </div>
             </div>
-            
+
         );
     }
 }
@@ -101,7 +101,7 @@ class MyModal extends React.Component{
     handleChange(event) {    this.setState({value: event.target.value});  }
     handleItemNameChange(event) {    this.setState({itemName: event.target.value});  }
 
-    handleSubmit(event) { 
+    handleSubmit(event) {
         if (this.props.addItemMode) {
             const allCourses = JSON.parse(localStorage.getItem('courses'));
             var courseID;
@@ -120,22 +120,22 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-           
+
             const contents = neededModule.contents; // add your new items
             const internals = neededModule.internals;
             const vark = neededModule.vark;
             contents.push(this.state.itemName);
             internals.push(this.state.value);
             vark.push(this.state.varkselection);
-            
-            
+
+
             const newPush = this.props.modules;
-            
-            
+
+
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
             });
-            
+
         }
         else {
             const allCourses = JSON.parse(localStorage.getItem('courses'));
@@ -155,20 +155,20 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-            
+
             const contents = neededModule.contents;  // modify the corresponding item
             const internals = neededModule.internals;
             const vark = neededModule.vark;
             for ( let i = 0; i < contents.length; ++i) {
-                let itemTemp = contents[i]; 
+                let itemTemp = contents[i];
                 if ( itemTemp === this.props.itemName && vark[i] === this.props.vark) {
                     internals[i] = this.state.value;
                 }
             }
-            
-            const newPush = this.props.modules; // record to database 
+
+            const newPush = this.props.modules; // record to database
             console.log(newPush);
-            
+
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
             });
@@ -200,19 +200,19 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-            
+
             const contents = neededModule.contents;  // modify the corresponding item
             const vark = neededModule.vark;
             for ( let i = 0; i < contents.length; ++i) {
-                let itemTemp = contents[i]; 
+                let itemTemp = contents[i];
                 if ( itemTemp === this.props.itemName) {
                     vark[i] = this.state.varkselection;
                 }
             }
-            
-            const newPush = this.props.modules; // record to database 
+
+            const newPush = this.props.modules; // record to database
             console.log(newPush);
-            
+
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
             });
@@ -268,7 +268,7 @@ class MyModal extends React.Component{
                             perspective     :  1300,
                             backgroundColor : 'rgba(0, 0, 0, 0.3)'
                             },
-                        
+
                             content: {
                             position                : 'relative',
                             margin                  : '15% auto',
@@ -313,7 +313,7 @@ class MyModal extends React.Component{
                         onRequestClose={onRequestClose}
                         effect={Effect.ScaleUp}>
                         <h1 className="modaldialog">
-                            {internalDisplay}    
+                            {internalDisplay}
                         </h1>
                     </Modal>
                 );
@@ -329,7 +329,7 @@ class MyModal extends React.Component{
                 }
                 if (link.includes("/viewform")) //if its a google form/quiz
                     link += "?embedded=true";
-                    
+
 
                         //embed it
                         var beforeCode = "<iframe src=\"";
@@ -352,7 +352,7 @@ class MyModal extends React.Component{
                                     perspective     :  1300,
                                     backgroundColor : 'rgba(0, 0, 0, 0.3)'
                                     },
-                                
+
                                     content: {
                                     position                : 'relative',
                                     margin                  : '15% auto',
@@ -377,7 +377,7 @@ class MyModal extends React.Component{
                 var beforeCode = "<a class=\"linkbutton\" target=\"_blank\" href=\"";
                 var afterCode = "\">Click here to open content in new tab</a>";
                 var code = beforeCode + link + afterCode;
-                
+
                 internalDisplay = (<div dangerouslySetInnerHTML={{__html: code}}></div>);
 
                 return ( //small modal
@@ -389,18 +389,18 @@ class MyModal extends React.Component{
                             <table style={{maxHeight: "50px"}}>
                                 <tr>
                                     <td>
-                                        <button id="backbutton" onClick={ModalManager.close}><img src={backarrow} alt="Return" height="15px"/></button> 
+                                        <button id="backbutton" onClick={ModalManager.close}><img src={backarrow} alt="Return" height="15px"/></button>
                                     </td>
                                     <td>
                                         {internalDisplay}
                                     </td>
                                 </tr>
-                            </table>             
+                            </table>
                         </h1>
                     </Modal>
                 );
             }
-        }   
+        }
     }
  }
 
@@ -425,7 +425,7 @@ class MyModal extends React.Component{
 
     handleChange(event) {    this.setState({newVal: event.target.value});  }
 
-    handleSubmit(event) { 
+    handleSubmit(event) {
         this.setState({
             value: this.state.newVal,
         });
@@ -452,7 +452,7 @@ class MyModal extends React.Component{
             modules: newPush.slice(),
         });
         event.preventDefault();
-    }    
+    }
 
     render() {
         var inside = (<p className="renamebutton">[Rename]</p>);
@@ -464,11 +464,11 @@ class MyModal extends React.Component{
                 </label>
                 <input type="submit" value="Submit" />
             </form>
-            );         
+            );
         }
 
         return (
-            <div className="renameitem" onClick={() => this.onClick()}> 
+            <div className="renameitem" onClick={() => this.onClick()}>
                 {inside}
             </div>
         );
@@ -540,7 +540,7 @@ class RenameItem extends React.Component {
         });
 
         event.preventDefault();
-    }    
+    }
 
     render() {
         var inside = (<p className="renamebutton">[Rename]</p>);
@@ -552,11 +552,11 @@ class RenameItem extends React.Component {
                 </label>
                 <input className="smallbutton" type="submit" value="Submit" />
             </form>
-            );         
+            );
         }
 
         return (
-            <div className="renameitem" onClick={() => this.onClick()}> 
+            <div className="renameitem" onClick={() => this.onClick()}>
                 {inside}
             </div>
         );
@@ -601,7 +601,7 @@ class ModuleContentItem extends React.Component {
                 <table width="100%">
                     <tr>
                         <td className="leftcontentitem">
-                            <div className={attribute} onClick={() => this.openModal()}> 
+                            <div className={attribute} onClick={() => this.openModal()}>
                                 {this.props.name}
                             </div>
                         </td>
@@ -612,7 +612,7 @@ class ModuleContentItem extends React.Component {
                 </table>
             </div>
 
-            
+
         );
     }
 }
@@ -633,7 +633,7 @@ class AddModuleContentItemItem extends React.Component {
         var inner = (<div>Add an item</div>);
 
         return (
-            <div className={attribute} onClick={() => this.openModal()}> 
+            <div className={attribute} onClick={() => this.openModal()}>
                 {inner}
             </div>
         );
@@ -654,7 +654,7 @@ function ModuleItem(props) {
     var addCourseItemItem = (<div />);
     if (teacherMode) {
         addCourseItemItem = (
-            <AddModuleContentItemItem 
+            <AddModuleContentItemItem
                 moduleTitle={props.name}
                 activeCourse={props.activeCourse}
                 modules={props.modules}
@@ -687,7 +687,7 @@ function ModuleItem(props) {
                 <table width="100%">
                     <tr>
                         <td className="leftcontentitem">
-                            <div onClick={() => setActive(active==="active" ? "" : "active")}> 
+                            <div onClick={() => setActive(active==="active" ? "" : "active")}>
                                 {props.name}
                             </div>
                         </td>
@@ -706,12 +706,12 @@ function ModuleItem(props) {
                 {topbar}
                 <div className="modulecontents">
                     {props.contents.map(
-                        contentitem => 
+                        contentitem =>
                         (props.varkMode==="All" || props.varkMode===props.vark[props.contents.indexOf(contentitem)])
                         ?
-                        (<ModuleContentItem 
-                            name={contentitem} 
-                            vark={props.vark[props.contents.indexOf(contentitem)]} 
+                        (<ModuleContentItem
+                            name={contentitem}
+                            vark={props.vark[props.contents.indexOf(contentitem)]}
                             internal={props.internals[props.contents.indexOf(contentitem)]}
                             addVarkClicks={props.addVarkClicks}
                             teacherMode={props.teacherMode}
@@ -824,15 +824,15 @@ class Select extends React.PureComponent {
       ],
       value: '?',
     };
-  
+
     handleChange = (event) => {
       this.props.passState(event.target.value);
       this.setState({ value: event.target.value });
     };
-  
+
     render() {
       const { options, value } = this.state;
-  
+
       return (
         <React.Fragment>
             <select name="search_categories" id="search_categories" onChange={this.handleChange} value={value}>
@@ -849,7 +849,7 @@ class Select extends React.PureComponent {
 
 class MainPanel extends React.Component { //the entire right half of the screen where all the modules are
     constructor (props){
-        super(props); 
+        super(props);
         this.state = {
             varkselection: "All",
         };
@@ -893,8 +893,15 @@ class MainPanel extends React.Component { //the entire right half of the screen 
     }
 
     getCourseID(nameOfCourse) {
-        //TODO: return the ID of the course based on the name of the course. Should be super simple.
 
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var needed;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.CourseName === nameOfCourse) {
+                return course.nclasscode;
+            }
+        }
         return "983y5ut4iwhi";
     }
 
@@ -1024,7 +1031,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         var varkProfile = (<div />);
         if (showVarkProfile) {
             varkProfile = (
-                <VarkProfile 
+                <VarkProfile
                     Vcnt={Vcnt}
                     Acnt={Acnt}
                     Rcnt={Rcnt}
@@ -1064,7 +1071,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                     </tr>
                 </table>
                 <br />
-                {moduleList}     
+                {moduleList}
                 {addModuleItem}
                 <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
             </div>
@@ -1229,7 +1236,32 @@ class Container extends React.Component { //the main container for everything on
     createCourse = (nameOfCourse) => { //actually adds the course
         alert("Created " + nameOfCourse);
         //TODO: generate classcode, make the course with nameOfCourse, add it to the db
-        var classCode = "002"; // <-- set this to the class code
+        // use getModules(nameOfCourse) to get arbitrary items
+        const usr = JSON.parse(localStorage.getItem('authUser'));
+        const email = Object.values(usr).slice()[1].toString();
+        const username = Object.values(usr).slice()[4];
+        var hash1 = 0;
+        var hash2 = 0;
+        for (let i = 0; i < email.length; i++) {
+            const char = email.charCodeAt(i);
+            hash1 = ((hash1 << 5) - hash1) + char;
+            hash1 = hash1 & hash1;
+        }
+        for (let i = 0; i < nameOfCourse.length; i++) {
+            const char = nameOfCourse.charCodeAt(i);
+            hash2 = ((hash2 << 5) - hash2) + char;
+            hash2 = hash2 & hash2;
+        }
+        var classCode = hash1 + hash2; // <-- set this to the class code
+
+        const modulesT = this.getModules("THISISANEWCOURSE");
+        const tempName = username + nameOfCourse;
+        this.props.firebase.course(tempName).update({
+            CourseName: nameOfCourse,
+            modules: modulesT,
+            nclasscode: classCode,
+            nteacher: email,
+        })
 
         //done for you: at the end, enroll the person in their own course by calling this.addCourse(classCode);
         this.addCourse(classCode);
@@ -1272,7 +1304,16 @@ class Container extends React.Component { //the main container for everything on
     }
 
     getModules(name) {
-
+        if (name==="THISISANEWCOURSE") {
+            return [
+                {
+                    title: "Example Module",
+                    contents: ["Example Item",],
+                    vark: ['V',],
+                    internals: ["https://youtu.be/e3RbWSfhlp4",]
+                },
+            ];
+        }
         const allCourses = JSON.parse(localStorage.getItem('courses')); // here is a parsed json of the course list
         if ( name === "none")
             return []
@@ -1292,7 +1333,7 @@ class Container extends React.Component { //the main container for everything on
                 }
                 return arrayOfModules;
 
-                // we need to convert the objects so that every internal thing is an array, as well as the whole thing, like this [ 
+                // we need to convert the objects so that every internal thing is an array, as well as the whole thing, like this [
                 //     {
                 //         title: course.CourseName,
                 //         contents: ["Item 1", "Item 2", "Item 3"],
@@ -1364,6 +1405,7 @@ class Home extends React.Component {
                 appID: key,
             }));
             localStorage.setItem('courses', JSON.stringify(coursesList));
+            console.log(JSON.parse(localStorage.getItem('courses')));
             this.setState({
                 username: Object.values(usr).slice()[4],
                 email: Object.values(usr).slice()[1],
