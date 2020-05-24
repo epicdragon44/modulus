@@ -128,7 +128,9 @@ class ModuleContentItem extends React.Component {
         this.openModal = this.openModal.bind(this);
     }
 
-    openModal() {
+    openModal() { //this registers the click
+        this.props.addVarkClicks(this.props.vark);
+
         const header = this.props.name;
         ModalManager.open(<MyModal text={header} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true}/>);
     }
@@ -175,6 +177,7 @@ function ModuleItem(props) {
                         name={contentitem} 
                         vark={props.vark[props.contents.indexOf(contentitem)]} 
                         internal={props.internals[props.contents.indexOf(contentitem)]}
+                        addVarkClicks={props.addVarkClicks}
                     />
                 )}
             </div>
@@ -242,8 +245,6 @@ function VarkProfile(props) {
                     </td>
                 </tr>
             </table>
-            
-            
         </div>
     );
 }
@@ -301,6 +302,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                             internals={module.internals}
                             active=""
                             username={this.props.username}
+                            addVarkClicks={this.props.addVarkClicks}
                         />)}
                 </div>
             );
@@ -359,7 +361,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                             {varkProfile}
                         </td>
                     </tr>
-                </table>                       
+                </table>
                 <br />
                 {moduleList}     
                 <br />
@@ -462,6 +464,7 @@ class Container extends React.Component { //the main container for everything on
             activeCourse: "none", //to be updated with the current open course
             username: props.name,
             mainPanelMode: 0, //0 means modules view (default), 1 means add-course view
+            varkClicks: props.varkClicks,
         }
 
     }
@@ -492,6 +495,21 @@ class Container extends React.Component { //the main container for everything on
         console.log(Object.values(usr).slice()[2]);
         this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
             courses: newCourses.slice(),
+        });
+    }
+
+    addVarkClicks = (varkCharacter) => {
+        var newVark = this.state.varkClicks.slice();
+        newVark.push(varkCharacter);
+        this.setState({
+            varkClicks: newVark.slice(),
+        });
+        const usr = JSON.parse(localStorage.getItem('authUser'));
+        console.log(Object.values(usr).slice()[6]);
+        localStorage.setItem('authUser', JSON.stringify(usr));
+        console.log(Object.values(usr).slice()[6]);
+        this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
+            wvarkclicks: newVark.slice(),
         });
     }
 
@@ -560,7 +578,7 @@ class Container extends React.Component { //the main container for everything on
     render() {
         var mainpanel;
         if (this.state.mainPanelMode===0) {
-            mainpanel = <MainPanel username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse}/>
+            mainpanel = <MainPanel username={this.state.username} activeCourse={this.state.activeCourse} modules={this.getModules(this.state.activeCourse)} removeCourse={this.removeCourse} addVarkClicks={this.addVarkClicks}/>
         } else if (this.state.mainPanelMode===1) {
             mainpanel = <AddCoursePanel username={this.state.username} currentCourses={this.state.arrCourses} addCourse={this.addCourse}/>
         }
@@ -593,8 +611,8 @@ class Home extends React.Component {
             username: Object.values(usr).slice()[4],
             email: Object.values(usr).slice()[1],
             courses: Object.values(usr).slice()[2],
+            varkClicks: Object.values(usr).slice()[6],
         }
-
     }
     componentDidMount() {
         const usr = JSON.parse(localStorage.getItem('authUser'));
@@ -617,7 +635,7 @@ class Home extends React.Component {
 
     render() {
         return ( //when login is implemented, it should create an app with the appropriate username passed in
-            <Container name={this.state.username} courses={this.state.courses} firebase={this.props.firebase}/>
+            <Container name={this.state.username} courses={this.state.courses} firebase={this.props.firebase} varkClicks={this.state.varkClicks} />
         );
     }
 }
