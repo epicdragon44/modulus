@@ -1,61 +1,61 @@
 import React from 'react';
 import './landingstyle.css';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
+import AboutUs from "./AboutUs";
+const linkstyle = {
+    fontSize: 20,
+    color: 'white',
+};
 const Landing = () => (
     <div>
-        <body className="noscrollbar">
-            <AnchorLink href='#header'>Header</AnchorLink>
-            <AnchorLink href='#info'>Info</AnchorLink>
-            <AnchorLink href='#research'>Research</AnchorLink>
-            <AnchorLink href='#aboutus'>About Us</AnchorLink>
-
-            <section id='header'>
+        <body>
+             <section id='header'>
                 <div className="parallax1">
-                    <div className="text-block">
+                    <div className="text-block1">
                         <h1 className="header">Modulus</h1>
                         <p className="header2">Where Learning Happens</p>
-                        <AnchorLink href='#info'>Info</AnchorLink>
+                        <AnchorLink style={linkstyle} href='#info'>Click for more information &raquo;</AnchorLink>
                     </div>
                 </div>
             </section>
             <section id='info'>
                 <div className="parallax2"></div>
-                <p>This is going to be info about what modulus is, why we made it, and how it works</p>
+                <div className="text-block2">
+                    <AnchorLink style={linkstyle} href='#header'>&laquo; Top</AnchorLink>
+                    <h2 className="topper1"><b>WHAT</b> is Modulus</h2>
+                    <p>Modulus is an online education platform, similar in concept to Canvas or Blackboard, both of which are used by schools and universities around the nation. But unlike existing platforms, Modulus directly integrates the VARK learning styles - a psychological framework for teaching - into an incredibly simple to use, modular course structure that anyone can use to teach anything. The result is a fairer, more accessible, and more equitable online education for everyone.</p>
+                    <h2 className="topper2"><b>WHY</b> is Modulus</h2>
+                    <p>In light of the recent COVID-19 crisis, we’ve seen staggering demand for online courses as students grapple with a reality in which education is now delivered over the internet. But traditional e-learning platforms like Khanacademy struggle to keep up with the pace of demand, while LMS platforms like Canvas, which requires teachers to sign up as part of large, wealthy organizations such as school districts, are difficult to use and lock out small independent teachers that just want to continue teaching. And on top of all that, all platforms rely solely on one medium of teaching, such as Udemy through videos, and Edmodo through text, without regard for user learning preferences.
+                    </p>
+                    <h2 className="topper3"><b>HOW</b> is Modulus</h2>
+                    <p>Enrolling in courses is as easy as typing the name of the course into a field, and each course has the same layout: tasks, color coded by their teaching style, grouped into lists we call “Modules.” There’s no complicated embedded forms, hard-to-navigate buttons, tabbed menus, or other user interface disasters, and the whole interface has been built from the ground up to be fast, responsive, and intuitive.
+                    </p>
+                    <p style={{margin: 30}}></p>
+                    <AnchorLink style={linkstyle} href='#research'>Research &raquo;</AnchorLink>
+                </div>
             </section>
             <section id='research'>
                 <div className="parallax3"></div>
-                <p>This is going to be the research page</p>
+                <div className="text-block3">
+                    <AnchorLink style={linkstyle} href='#info'>&laquo; Description</AnchorLink>
+                    <h2 className="Research">Research</h2>
+                    <p className="researchparagraph">The Basis of our Application is backed by Research</p>
+                    <p className="researchparagraph">Click to read Research Papers regarding the VARK Model: </p>
+                    <button type="submit" className="Button1" onClick={x => window.open("https://www.sciencedirect.com/science/article/pii/S1877042810020926")}>Source 1</button>
+                    <button type="submit" className="Button2" onClick={x => window.open("https://doi.org/10.2147/AMEP.S235002")}>Source 2</button>
+                    <button type="submit" className="Button3" onClick={x => window.open("https://www.researchgate.net/publication/228652724_Learning_styles_and_online_education/citation/download")}>Source 3</button>
+                    <p style={{margin: 130}}></p>
+                    <AnchorLink style={linkstyle} href='#aboutus'>About Us &raquo;</AnchorLink>
+                </div>
             </section>
             <section id='aboutus'>
                 <div className="parallax4"></div>
-                <p>This is going to be the about us page</p>
+                <div className="text-block4">
+                    <AnchorLink style={linkstyle} href='#research'>&laquo; Research</AnchorLink>
+                    <AboutUs />
+                </div>
             </section>
         </body>
-
-
-        {/*<head>*/}
-            {/*    <meta charSet="utf-8"/>*/}
-            {/*    <title>Landing</title>*/}
-            {/*</head>*/}
-            {/*<body>*/}
-            {/*   < div className="container">*/}
-            {/*        <div className="parallax1">*/}
-            {/*            <div className="text-block">*/}
-            {/*                <h1 className="header">Modulus</h1>*/}
-            {/*                <p className="header2">Where Learning Happens</p>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-
-            {/*        /!*<p>*!/*/}
-            {/*        /!*    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pharetra egestas lacinia. Phasellus id tincidunt libero, a fermentum velit. Vivamus et lectus laoreet, maximus sapien id, consequat magna. Etiam hendrerit ipsum non massa aliquet, eu pellentesque metus mattis. Nullam at libero ex. Donec non tortor nisi. Donec aliquet placerat eros. Aenean ullamcorper tortor commodo justo dignissim imperdiet vitae eget eros.*!/*/}
-
-            {/*        /!*    Pellentesque faucibus nunc nisl, eu molestie ex fringilla ac. Etiam commodo vel tortor vitae vestibulum. Suspendisse condimentum molestie mauris, in condimentum eros malesuada ac. Sed dictum augue id tempor porttitor. Vestibulum nec sem accumsan, ultrices urna vel, tempus felis. Aliquam et tortor vehicula, congue sem ac, euismod urna. Morbi facilisis ornare lorem, a luctus nulla mattis at. Duis ullamcorper tristique ex, nec euismod nunc pulvinar ac. Aenean sollicitudin quam eget lorem gravida gravida. Sed vitae semper massa. Mauris in tincidunt nisi, a malesuada dui. Aenean consectetur vestibulum egestas.*!/*/}
-            {/*        /!*</p>*!/*/}
-
-            {/*        <div className="parallax2">*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</body>*/}
     </div>
 
 );

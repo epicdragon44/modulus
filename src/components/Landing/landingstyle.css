@@ -10,29 +10,8 @@
     rgba(0, 0, 0, 0.5)), url("./images/header.jpg");
     background-size: cover;
     background-attachment: fixed;
-    height: 650px;
+    height: 800px;
     width: 100%;
-}
-.parallax2 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)), url("images/library.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    height: 800px;
-}
-.parallax3 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)), url("images/research.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    height: 800px;
-}
-.parallax4 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)), url("images/team.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    height: 800px;
 }
 .header {
     font-weight: 900;
@@ -56,7 +35,7 @@
     -webkit-text-fill-color: transparent;
     margin-bottom: 180px;
 }
-.text-block {
+.text-block1 {
     position: absolute;
     background-color: transparent;
     color: white;
@@ -69,6 +48,185 @@
     margin: auto;
     text-align: center;
 }
-.noscrollbar {
-    overflow: hidden;
+.topper1 {
+    font-weight: 900;
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#f8f798, #f8cf55);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0px;
+}
+.topper2 {
+    font-weight: 900;
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#cefdac, #96fa72);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0px;
+}
+.topper3 {
+    font-weight: 900;
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#fac2b0, #f8b77f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0px;
+}
+.parallax2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("images/library.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+}
+.text-block2 {
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto;
+    text-align: center;
+    left: 18%;
+    right: 18%;
+    top: 850px
+}
+
+.parallax3 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("images/research.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+}
+.text-block3 {
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto;
+    text-align: center;
+    left: 10%;
+    right: 10%;
+    top: 1650px
+}
+.Research {
+    font-weight: 900;
+    font-size: 110px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    background: -webkit-linear-gradient(#fabf80, #faa294);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0px;
+}
+.researchparagraph {
+    font-weight: 900;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+}
+.parallax4 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("images/team.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+}
+.text-block4 {
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    margin: auto;
+    text-align: center;
+    left: 10%;
+    right: 10%;
+    top: 2450px
+}
+.Button1 {
+    box-shadow: 0px 10px 14px -7px #3e7327;
+    background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+    background-color:#77b55a;
+    border-radius:4px;
+    border:1px solid #4b8f29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:20px;
+    font-weight:bold;
+    padding:6px 12px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #5b8a3c;
+    margin: 30px;
+}
+.Button1:hover {
+    background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+    background-color:#72b352;
+}
+.Button1:active {
+    position:relative;
+    top:1px;
+}
+.Button2 {
+    box-shadow: 0px 10px 14px -7px #273d73;
+    background:linear-gradient(to bottom, #4e86e6 5%, #4f9edb 100%);
+    background-color:#4e86e6;
+    border-radius:4px;
+    border:1px solid #29328f;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:20px;
+    font-weight:bold;
+    padding:6px 12px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #3d3d8a;
+    margin: 30px;
+}
+.Button2:hover {
+    background:linear-gradient(to bottom, #4f9edb 5%, #4e86e6 100%);
+    background-color:#4f9edb;
+}
+.Button2:active {
+    position:relative;
+    top:1px;
+}
+.Button3 {
+    box-shadow: 0px 10px 14px -7px #8c7829;
+    background:linear-gradient(to bottom, #e6724e 5%, #d9a750 100%);
+    background-color:#e6724e;
+    border-radius:4px;
+    border:1px solid #8f3a29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:20px;
+    font-weight:bold;
+    padding:6px 12px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #8a413e;
+    margin: 30px;
+}
+.Button3:hover {
+    background:linear-gradient(to bottom, #d9a750 5%, #e6724e 100%);
+    background-color:#d9a750;
+}
+.Button3:active {
+    position:relative;
+    top:1px;
 }
