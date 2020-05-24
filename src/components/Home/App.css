@@ -146,6 +146,20 @@ div {
   border-radius: 10px;
 }
 
+.addmoduleitem {
+  margin-left: 7em;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  margin-right: 7em;
+  max-height: 55px;
+  padding-left: 1em;
+  height: 55px;
+  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  overflow: hidden;
+  background-color: #003459;
+  border-radius: 10px;
+}
+
 .activemoduleitem {
   margin-left: 7em;
   margin-top: 1em;
@@ -437,6 +451,20 @@ button {
   border-radius: 10px;
 }
 
+button.addmodule {
+  background-color: #003459;
+  width: 75%;
+  border: none;
+  color: white;
+  padding: 6px 32px;
+  text-decoration: none;
+  margin: 4px 4px;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  margin-left: 7em;
+}
+
 .courseheader {
   color: #003459;
   padding-top: 2.5em;
@@ -619,6 +647,17 @@ input.smallbutton:hover {
   font-size: medium;
   cursor: pointer;
   font-weight: bold;
+}
+
+.addrenamebutton {
+  font-size: large;
+  cursor: pointer;
+  color: white;
+}
+
+.addrenamebutton:hover {
+  font-size: large;
+  cursor: pointer;
 }
 
 .teachermoduletitle {

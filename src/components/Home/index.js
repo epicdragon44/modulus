@@ -10,11 +10,23 @@ import backarrow from './backarrow.png';
 require('@firebase/database');
 
 function CourseListItem(props) {
-    return (
+    var code = codeToName(props.name);
+    //CodeToName : turn the variable code into the name
+
+    return ( 
         <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
-            {props.name}
+            {code} 
         </div>
     );
+}
+function codeToName(classcode) {
+	const allCourses = JSON.parse(localStorage.getItem('courses'));
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === classcode) {
+                return course.CourseName;
+            }
+        }
 }
 
 function AddCourseItem(props) {
@@ -466,15 +478,6 @@ class MyModal extends React.Component{
             value: this.state.newVal,
         });
 
-        if (this.props.moduleTitle==="New Module") {
-            //inside of this if statement, it means that the module doesn't actually exist on the database at all yet. We need to make one.
-            //TODO: make a new module with this.state.newVal as its name.
-            //To help you, you have:
-            //this.props.activeCourse which is the currently active course
-            //this.props.modules which contains all the current modules
-            //this.props.firebase to let you access firebase
-        }
-
         // this will rename the current module
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var courseID;
@@ -681,6 +684,80 @@ class AddModuleContentItemItem extends React.Component {
         return (
             <div className={attribute} onClick={() => this.openModal()}>
                 {inner}
+            </div>
+        );
+    }
+}
+
+class AddModuleItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            value: this.props.internal,
+            active: false,
+            newVal: this.props.internal,
+        };
+    }
+
+    onClick() {
+        this.setState({
+            active: true,
+        });
+    }
+
+    handleChange(event) {    this.setState({newVal: event.target.value});  }
+
+    handleSubmit() {
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                courseID = course.appID; // identifies current course child name to update, courseID != classcode
+                break;
+            }
+        }
+        const arrModules = this.props.modules;
+        const moduleTitle = this.state.newVal;
+        const blankModule =  
+        {
+            title: moduleTitle,
+            contents: ["Example Item",],
+            vark: ['A',],
+            internals: ["https://youtu.be/e3RbWSfhlp4",]
+        } // creates example blank module using module title
+
+        
+        arrModules.push(blankModule);
+            
+        const newPush = arrModules.slice();
+
+        this.props.firebase.courses().child(courseID).update({
+            modules: newPush.slice(),
+        });
+    }
+    
+    render() {
+        var inside = (<p className="addrenamebutton">Add a Module</p>);
+        if (this.state.active) {
+            inside = (
+                <form onSubmit={this.handleSubmit}>
+                <label>
+                    <input type="text" value={this.state.newVal} onChange={this.handleChange} />
+                </label>
+                <input className="button" type="submit" value="Submit" />
+            </form>
+            );
+        }
+
+        return (
+            <div className="addmoduleitem">
+                <div className="renameitem" onClick={() => this.onClick()}>
+                    {inside}
+                </div>
             </div>
         );
     }
@@ -904,7 +981,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         this.filterCallback = this.filterCallback.bind(this);
         this.getCurrentUserEmail = this.getCurrentUserEmail.bind(this);
         this.getTeacherEmail = this.getTeacherEmail.bind(this);
-        this.getCourseID = this.getCourseID.bind(this);
+        this.codeToName = this.codeToName.bind(this);
     }
 
     handleRemove(event) {
@@ -938,23 +1015,22 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         return curEmail;
     }
 
-    getCourseID(nameOfCourse) { // this cannot exist
+    codeToName(code) {
         const allCourses = JSON.parse(localStorage.getItem('courses'));
-        var needed;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
-            if (course.CourseName === nameOfCourse) {
-                return course.nclasscode;
+            if (course.nclasscode === code) {
+                return course.CourseName;
             }
         }
-        return "983y5ut4iwhi";
     }
+
 
     render() { //active: "" means the module is minimized, "active" means its expanded
         var showModules = true;
         var showVarkProfile = true;
 
-        var courseid = this.getCourseID(this.props.activeCourse);
+        var courseid = (this.props.activeCourse);
 
         var teacherMode = this.getTeacherEmail(this.props.activeCourse)===this.getCurrentUserEmail();
         // console.log(this.getTeacherEmail(this.props.activeCourse));
@@ -975,7 +1051,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
             );
         }
         else {
-            welcomeMsg = "Welcome to " + (this.props.activeCourse);
+            welcomeMsg = "Welcome to " + this.codeToName(this.props.activeCourse); //CodeToName
             unenroll = (
                 <div className="removecoursebutton" onClick={this.handleRemove}>
                     Unenroll
@@ -1007,18 +1083,11 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         var addModuleItem = (<div />);
         if (teacherMode) {
             addModuleItem = (
-                <ModuleItem
-                    name="New Module"
-                    contents={[]}
-                    vark={[]}
-                    internals={[]}
-                    active=""
-                    username={this.props.username}
-                    addVarkClicks={this.props.addVarkClicks}
-                    varkMode={this.state.varkselection}
-                    teacherMode={true}
+                <AddModuleItem
+                    internal=""
                     activeCourse={this.props.activeCourse}
                     modules={this.props.modules}
+                    firebase={this.props.firebase}
                 />
             );
         }
@@ -1302,7 +1371,8 @@ class Container extends React.Component { //the main container for everything on
             hash2 = ((hash2 << 5) - hash2) + char;
             hash2 = hash2 & hash2;
         }
-        var classCode = hash1 + hash2 + ""; // <-- set this to the class code
+        const rand = Math.round(Math.random()*10000);
+        var classCode = hash1 + "" + hash2 + rand; // <-- set this to the class code
 
         const modulesT = this.getModules(-1);
         const tempName = username + nameOfCourse + classCode;
