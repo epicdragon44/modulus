@@ -750,9 +750,9 @@ class RenameItem extends React.Component {
             inside = (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    <input type="text" value={this.state.newVal} onChange={this.handleChange} onClick={this.clearField}/>
+                    <input className="whiteinternal" type="text" value={this.state.newVal} onChange={this.handleChange} onClick={this.clearField}/>
                 </label>
-                <input className="internal" type="submit" value="Submit" />
+                <input className="whiteinternal" type="submit" value="Submit" />
             </form>
             );
         }
@@ -1575,6 +1575,43 @@ class MainPanel extends React.Component {
             </TabPanel>
         ) : (null);
 
+        var VarkPanel = (
+            <TabPanel>
+                {joinClassCode}
+                <br />
+                {contactTeacher}
+                {manageStudents}
+                <br />
+                <div className="managecontent">
+                    <center>
+                        <h3><br /> <br />Course VARK Profile</h3> 
+                        <p className="smallparagraph">Every course has a different profile,<br />composed of different types and numbers of items.</p> <br />
+                        <table className="offsetleft">
+                            <tr>
+                                <td>
+                                    {varkProfile}
+                                </td>
+                                <td>
+                                    <p className="smallparagraph" style={{color: "red"}}>Visual</p>
+                                    <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
+                                    <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
+                                    <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                    <center>
+                        <br />
+                        <p className="smallparagraph">To learn more about the different learning models,<br /> visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.</p>
+                        <br /> <br />
+                    </center>
+                </div>
+                <br />
+                {unenroll}
+                <br /><br /><br /><br /><br />
+            </TabPanel>
+        );
+
         var restOfPage = (showRest) ? (
             <Tabs>
                 <TabList>
@@ -1584,40 +1621,7 @@ class MainPanel extends React.Component {
                 </TabList>
                 {ViewModulesPanel}
                 {EditModulesPanel}
-                <TabPanel>
-                    {joinClassCode}
-                    <br />
-                    {contactTeacher}
-                    {manageStudents}
-                    <br />
-                    <div className="managecontent">
-                        <center>
-                            <h3><br /> <br />Course VARK Profile</h3> 
-                            <p className="smallparagraph">Every course has a different profile,<br />composed of different types and numbers of items.</p> <br />
-                            <table className="offsetleft">
-                                <tr>
-                                    <td>
-                                        {varkProfile}
-                                    </td>
-                                    <td>
-                                        <p className="smallparagraph" style={{color: "red"}}>Visual</p>
-                                        <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
-                                        <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
-                                        <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </center>
-                        <center>
-                            <br />
-                            <p className="smallparagraph">To learn more about the different learning models,<br /> visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.</p>
-                            <br /> <br />
-                        </center>
-                    </div>
-                    <br />
-                    {unenroll}
-                    <br /><br /><br /><br /><br />
-                </TabPanel>
+                {VarkPanel}
             </Tabs>
         ) : (<div />);
 
