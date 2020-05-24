@@ -903,7 +903,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
     }
 
     getCourseID(nameOfCourse) {
-
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var needed;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
