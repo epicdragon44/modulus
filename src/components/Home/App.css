@@ -389,6 +389,7 @@ input[type=text] {
 input[type=text].internal {
   border-radius: 10px;
   border-bottom: none;
+  max-width: 10em;
 }
 
 input[type=text].internal:focus {
@@ -661,12 +662,39 @@ select:active {
   font-size: large;
 }
 
+.editflex {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.editflextext {
+  padding-left: 1em;
+  padding-top: 0.8em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.editflexicon {
+  padding-left: 1em;
+  padding-top: 0.05em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .leftcontentitem {
-  width: 60%;
+  width: fit-content;
+  padding-right: 5em;
 }
 
 .rightcontentitem {
-  width: 40%;
+  width: 5%;
+}
+
+.farrightcontentitem {
+  width: 5%;
 }
 
 input.smallbutton {

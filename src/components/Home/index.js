@@ -341,11 +341,10 @@ class MyModal extends React.Component {
                         <center>
                             <h1 style={{fontSize: "xx-large"}}>Edit this item</h1>
                             <Select passState={this.handleFilter} default={"Choose a VARK type"}/>
-                            <br /><br />
                             <form onSubmit={this.handleSubmit}>
                                 <label>
                                     <p className="teachernotice">Enter the link to the item:</p>
-                                    <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
+                                    <input type="text" value={this.state.value} onChange={this.handleChange}/></label>
                                     <br /><br />
                                 <input type="submit" value="Submit" />
                             </form>
@@ -491,11 +490,20 @@ class RenameModule extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.clearField = this.clearField.bind(this);
         this.state = {
             value: this.props.internal,
             active: false,
-            newVal: this.props.internal,
+            newVal: "Enter new module name",
         };
+    }
+
+    clearField() {
+        if (this.state.newVal==="Enter new module name") {
+            this.setState({
+                newVal: "",
+            });
+        }
     }
 
     onClick() {
@@ -548,12 +556,16 @@ class RenameModule extends React.Component {
     }
 
     render() {
-        var inside = (<p className="renamebutton"><img src={whiterenameicon} height="15px"/></p>);
+        var inside = (
+            <p className="renamebutton">
+                <img src={whiterenameicon} height="15px"/>              
+            </p>
+        );
         if (this.state.active) {
             inside = (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} />
+                    <input className="internal" type="text" value={this.state.newVal} onChange={this.handleChange} onClick={this.clearField}/>
                 </label>
                 <input className="internal" type="submit" value="Submit" />
             </form>
@@ -568,8 +580,193 @@ class RenameModule extends React.Component {
     }
 }
 
+//DOC: Item 15: Inline button that, when clicked, allows the user to delete a module.
+class DeleteModule extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            value: this.props.internal,
+            active: false,
+            newVal: this.props.internal,
+        };
+    }
+
+    onClick() {
+        this.setState({
+            active: true,
+        });
+    }
+
+    handleChange(event) {    this.setState({newVal: event.target.value});  }
+
+    handleSubmit(event) {
+        this.setState({
+            value: this.state.newVal,
+            active: false,
+        });
+
+        // this will rename the current module
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                courseID = course.appID; // identifies current course child name to update
+                break;
+            }
+        }
+        const arrModules = this.props.modules;
+
+        const curModule = this.props.moduleTitle;
+        for ( let i = 0; i < arrModules.length; ++i) {
+            if ( arrModules[i].title === curModule) {
+                arrModules[i].title = "DELETE THAT YOU HOT DOG"; // sets the new name to delete ot
+            }
+        }
+        const newPush = this.props.modules; // push to firebase
+        this.props.firebase.courses().child(courseID).update({
+            modules: newPush.slice(),
+        });
+
+        event.preventDefault();
+    }
+
+    render() {
+        var inside = (
+            <p className="renamebutton">
+                <img src={whitedeleteicon} height="15px"/>              
+            </p>
+        );
+        if (this.state.active) {
+            inside = (
+            <form onSubmit={this.handleSubmit}>
+                <input className="internal" type="submit" value="Confirm Deletion" />
+            </form>
+            );
+        }
+
+        return (
+            <div className="renameitem" onClick={() => this.onClick()}>
+                {inside}
+            </div>
+        );
+    }
+}
+
 //DOC: Item 14: Inline button that, when clicked, allows the user to rename an item.
 class RenameItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.clearField = this.clearField.bind(this);
+        this.state = {
+            value: this.props.internal,
+            active: false,
+            newVal: "Enter new item name",
+        };
+    }
+
+    clearField() {
+        if (this.state.newVal==="Enter new item name")
+            this.setState({newVal: ""});
+    }
+
+    onClick() {
+        this.setState({
+            active: true,
+        });
+    }
+
+    handleChange(event) {    this.setState({newVal: event.target.value});  }
+
+    handleSubmit(event) {
+        this.setState({
+            value: this.state.newVal,
+            active: false,
+        });
+
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var courseID;
+        for (let i = 0, len = allCourses.length; i < len; ++i) {
+            var course = allCourses[i];
+            if (course.nclasscode === this.props.activeCourse) {
+                courseID = course.appID; // identifies current course child name to update
+                break;
+            }
+        }
+        const arrModules = this.props.modules;
+        const curModule = this.props.moduleTitle;
+        console.log(arrModules);
+        console.log(curModule);
+        for ( let i = 0; i < arrModules.length; ++i) {
+            var neededModule2;
+            if ( arrModules[i].title === curModule) {
+                neededModule2 = arrModules[i]; break; // finds needed module to edit
+            }
+            else
+                console.log("bope");
+        }
+
+        const contents = neededModule2.contents;  // renames the corresponding item
+        const vark = neededModule2.vark;
+
+        let count = 0;
+        for ( let i = 0; i < contents.length; ++i) { //check we're not duplicating item names
+            let itemTemp = contents[i];
+            console.log(itemTemp);
+            if ( (itemTemp === this.state.newVal) /*&& (vark[i] === this.props.vark)*/) {
+                alert('You already have an item with that name!');
+                event.preventDefault();
+                return;
+            }
+        }
+
+        for ( let i = 0; i < contents.length; ++i) { //good, actually rename it now
+            let itemTemp = contents[i];
+            if ( (itemTemp === this.props.itemName) /*&& (vark[i] === this.props.vark)*/) {
+                contents[i] = this.state.newVal;
+            }
+        }
+
+        const newPush = this.props.modules; // record to database
+        console.log(newPush);
+
+        this.props.firebase.courses().child(courseID).update({
+            modules: newPush.slice(),
+        });
+
+        event.preventDefault();
+    }
+
+    render() {
+        var inside = (<p className="renamebutton">&nbsp;&nbsp;<img src={darkrenameicon} height="15px"/></p>);
+        if (this.state.active) {
+            inside = (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    <input type="text" value={this.state.newVal} onChange={this.handleChange} onClick={this.clearField}/>
+                </label>
+                <input className="internal" type="submit" value="Submit" />
+            </form>
+            );
+        }
+
+        return (
+            <div className="renameitem" onClick={() => this.onClick()}>
+                {inside}
+            </div>
+        );
+    }
+}
+
+
+//DOC: Item 14: Inline button that, when clicked, allows the user to rename an item.
+class DeleteItem extends React.Component {
     constructor(props) {
         super(props);
         this.onClick = this.onClick.bind(this);
@@ -620,10 +817,11 @@ class RenameItem extends React.Component {
 
         const contents = neededModule2.contents;  // renames the corresponding item
         const vark = neededModule2.vark;
-        for ( let i = 0; i < contents.length; ++i) {
+
+        for ( let i = 0; i < contents.length; ++i) { //good, actually rename it now
             let itemTemp = contents[i];
             if ( (itemTemp === this.props.itemName) /*&& (vark[i] === this.props.vark)*/) {
-                contents[i] = this.state.newVal;
+                contents[i] = "DELETE THAT YOU HOT DOG";
             }
         }
 
@@ -638,14 +836,11 @@ class RenameItem extends React.Component {
     }
 
     render() {
-        var inside = (<p className="renamebutton">&nbsp;&nbsp;<img src={darkrenameicon} height="15px"/></p>);
+        var inside = (<p className="renamebutton">&nbsp;&nbsp;<img src={darkdeleteicon} height="15px"/></p>);
         if (this.state.active) {
             inside = (
             <form onSubmit={this.handleSubmit}>
-                <label>
-                    <input type="text" value={this.state.newVal} onChange={this.handleChange} />
-                </label>
-                <input className="smallbutton" type="submit" value="Submit" />
+                <input className="internal" type="submit" value="Confirm Deletion" />
             </form>
             );
         }
@@ -677,53 +872,58 @@ class ModuleContentItem extends React.Component {
         var attribute = precede+"modulecontentitem"
 
         var teacherMode = this.props.teacherMode;
-        var teacherDisplay = (<div />);
-        if (teacherMode) {
-            teacherDisplay = (
-                <RenameItem
-                    internal={this.props.name}
-                    moduleTitle={this.props.moduleTitle}
-                    activeCourse={this.props.activeCourse}
-                    modules={this.props.modules}
-                    vark={this.props.vark}
-                    itemName={this.props.name}
-                    firebase={this.props.firebase}
-                />
-            );
-        }
+        var renameDisplay = (
+            <RenameItem
+                internal={this.props.name}
+                moduleTitle={this.props.moduleTitle}
+                activeCourse={this.props.activeCourse}
+                modules={this.props.modules}
+                vark={this.props.vark}
+                itemName={this.props.name}
+                firebase={this.props.firebase}
+            />
+        );
+        var deleteDisplay = (
+            <DeleteItem
+                internal={this.props.name}
+                moduleTitle={this.props.moduleTitle}
+                activeCourse={this.props.activeCourse}
+                modules={this.props.modules}
+                vark={this.props.vark}
+                itemName={this.props.name}
+                firebase={this.props.firebase}
+            />
+    );
+
 
         var datacells = (
-            <tr>
-                <td>
-                    <div className={attribute} onClick={() => this.openModal()}>
-                        {this.props.name}
-                    </div>
-                </td>
-            </tr>
+            <div className={attribute} onClick={() => this.openModal()}>
+                {this.props.name}
+            </div>
         );
         if (teacherMode) {
             datacells = (
-                <tr>
-                    <td className="leftcontentitem">
-                        <div className={attribute} onClick={() => this.openModal()}>
+                <div className={attribute} >
+                    <div className="editflex" >
+                        <div className="editflextext" onClick={() => this.openModal()}>
                             {this.props.name}
                         </div>
-                    </td>
-                    <td className="rightcontentitem">
-                        {teacherDisplay}
-                    </td>
-                </tr>
+                        <div className="editflexicon">
+                            {deleteDisplay}
+                        </div>
+                        <div className="editflexicon">
+                            {renameDisplay}
+                        </div>
+                    </div>
+                    
+                </div>
             );
         }
 
         return (
             <div>
-                <table width="100%">
-                    {datacells}
-                </table>
+                {datacells}
             </div>
-
-
         );
     }
 }
@@ -768,9 +968,11 @@ class AddModuleItem extends React.Component {
     }
 
     clearField() {
-        this.setState({
-            newVal: "",
-        });
+        if (this.state.newVal==="Enter Module Name") {
+            this.setState({
+                newVal: "",
+            });
+        }
     }
 
     onClick() {
@@ -872,10 +1074,23 @@ function ModuleItem(props) {
         );
     }
 
-    var teacherDisplay = (<div />);
+    var renameDisplay = (<div />);
     if (teacherMode) {
-        teacherDisplay = (
+        renameDisplay = (
             <RenameModule
+                internal={props.name}
+                moduleTitle={props.name}
+                activeCourse={props.activeCourse}
+                modules={props.modules}
+                firebase = {props.firebase}
+            />
+        );
+    }
+
+    var deleteDisplay = (<div />);
+    if (teacherMode) {
+        deleteDisplay = (
+            <DeleteModule
                 internal={props.name}
                 moduleTitle={props.name}
                 activeCourse={props.activeCourse}
@@ -893,18 +1108,17 @@ function ModuleItem(props) {
     if (teacherMode) {
         topbar = (
             <div className="teachermoduletitle" onClick={() => setActive(active==="active" ? "" : "active")}>
-                <table width="100%">
-                    <tr>
-                        <td className="leftcontentitem">
-                            <div>
-                                {props.name}
-                            </div>
-                        </td>
-                        <td className="rightcontentitem">
-                            {teacherDisplay}
-                        </td>
-                    </tr>
-                </table>
+                <div className="editflex">
+                    <div className="editflextext">
+                        {props.name}
+                    </div>
+                    <div className="editflexicon">
+                        {deleteDisplay}
+                    </div>
+                    <div className="editflexicon">
+                        {renameDisplay} 
+                    </div>
+                </div>
             </div>
         );
     }
