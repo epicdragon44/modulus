@@ -12,26 +12,6 @@ import account from './account.png';
 
 import './nav.css';
 
-class AddCourseButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.openLink = this.openLink.bind(this);
-    }
-
-    openLink() {
-        const url = 'https://forms.gle/8TztemWeQnrG7WGN9';
-        window.open(url, '_blank');
-    }
-    
-    render() {
-        return (
-            <button className="navigationbutton" type="button" onClick={this.openLink}>
-                Teach a course
-            </button>
-        );
-    }
-}
-
 function Logo() {
     return (
         <div className="logo" >
@@ -103,7 +83,7 @@ const NavigationAuth = ({ authUser }) => (
 );
 
 const NavigationNonAuth = () => (
-    <ul>
+    <ul className="nav">
         {/* <li className="left">
                 <Link to={ROUTES.LANDING}>Modulus</Link>
         </li> */}

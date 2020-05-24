@@ -36,7 +36,7 @@ div {
 
 .right-element {
   display: inline-block;
-  width: 80%;
+  width: 100%;
   height: 100%;
 }
 
@@ -110,7 +110,7 @@ div {
   height: 20px;
   text-align: center;
   margin-top: 15px;
-  overflow: hidden;
+  overflow: auto;
   cursor: default;
   border-radius: 10px;
   box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
@@ -119,9 +119,6 @@ div {
 .courselistitem:hover {
   background-color: whitesmoke;
   box-shadow: 0 10px 29px 0 rgb(112, 112, 112);
-  text-align: center;
-  overflow: hidden;
-  cursor: default;
 }
 
 .addcourseitem {
@@ -854,38 +851,44 @@ hr {
 
 .react-tabs__tab-list {
   margin: 0 0 10px;
-  padding: 0;
+  margin-right: 7em;
+  padding: 0 0 0 0;
+  border-bottom: 2px solid #003459;
 }
 
 .react-tabs__tab {
   display: inline-block;
-  border: 1px solid transparent;
   bottom: -1px;
   color: rgb(116, 116, 116);
   position: relative;
   list-style: none;
-  padding: 6px 12px;
   cursor: pointer;
   width: fit-content;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding: 6px 12px;
   text-align: center;
   margin-right: 1em;
   vertical-align: auto;
 }
 
 .react-tabs__tab:hover {
-  color: gray;
-  border-color: gray;
-  border-radius: 10px 10px 10px 10px;
+  color: #003459;
+  border-color: #003459;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 10px solid #003459;
 }
 
 .react-tabs__tab--selected {
   background: #fff;
   border-color: #003459;
   color: #003459;
-  border: 2px solid #003459;
-  border-radius: 10px 10px 10px 10px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 10px solid #003459;
 }
 
 .react-tabs__tab--disabled {

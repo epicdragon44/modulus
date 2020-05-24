@@ -8,6 +8,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 import './signin.css';
+import '../Navigation/nav.css'
 
 const SignInPage = () => (
     <div class="dialogwallpaper">

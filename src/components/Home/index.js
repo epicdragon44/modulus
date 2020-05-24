@@ -101,7 +101,7 @@ class Sidebar extends React.Component {
                     <br />
                     <AddCourseItem addCourseMode={this.addCourseMode}/>
                     <CreateCourseItem createCourseMode={this.createCourseMode}/>
-                    {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
+                    {(this.props.arrCourses.length<=1) ? (null) : this.props.arrCourses.map(course => ((course==="Welcome") ? (null) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
                 </div>
             </div>
 
