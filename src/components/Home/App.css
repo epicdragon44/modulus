@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 .container {
   position: fixed;
   left: 0px;
@@ -163,6 +169,7 @@ div {
   padding-right: 3em;
   border-left: 5px solid red;
   border-bottom: 2px black;
+  cursor: pointer;
 }
 
 .Amodulecontentitem {
@@ -172,6 +179,7 @@ div {
   padding-right: 3em;
   border-left: 5px solid blue;
   border-bottom: 2px black;
+  cursor: pointer;
 }
 
 .Rmodulecontentitem {
@@ -181,6 +189,7 @@ div {
   padding-right: 3em;
   border-left: 5px solid green;
   border-bottom: 2px black;
+  cursor: pointer;
 }
 
 .Kmodulecontentitem {
@@ -190,14 +199,47 @@ div {
   padding-right: 3em;
   border-left: 5px solid purple;
   border-bottom: 2px black;
+  cursor: pointer;
 }
 
-.activemodulecontentitem {
+.Vmodulecontentitem:hover {
   background-color: lightgrey;
   padding-left: 3em;
   padding-top: 1em;
   padding-bottom: 1em;
   padding-right: 3em;
+  border-left: 5px solid red;
+  border-bottom: 2px black;
+}
+
+.Amodulecontentitem:hover {
+  background-color: lightgrey;
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid blue;
+  border-bottom: 2px black;
+}
+
+.Rmodulecontentitem:hover {
+  background-color: lightgrey;
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid green;
+  border-bottom: 2px black;
+}
+
+.Kmodulecontentitem:hover {
+  background-color: lightgrey;
+  padding-left: 3em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 3em;
+  border-left: 5px solid purple;
+  border-bottom: 2px black;
 }
 
 .leftalign {
@@ -328,4 +370,42 @@ button {
   font-size: medium;
   cursor: pointer;
   border: 1px solid red;
+}
+
+.modaldialog {
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+h1.modaldialog {
+  color: #003459;
+}
+
+#backbutton {
+  font-size: xx-large;
+}
+
+a.linkbutton {
+  color: #003459;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-left: 10.5em;
+  text-align: center;
+  font-size: x-large;
+  cursor: pointer;
+  border: 1px solid #003459;
+}
+
+a.linkbutton:hover {
+  background-color: #003459;
+  color: white;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-left: 10.5em;
+  text-align: center;
+  font-size: x-large;
+  cursor: pointer;
+  border: 1px solid #003459;
 }

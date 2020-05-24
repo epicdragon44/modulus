@@ -3,6 +3,7 @@ import logo from './logowithtext.svg';
 import './App.css';
 import { withAuthorization } from '../Session';
 
+import { Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import * as firebase from 'firebase'
 require('@firebase/database');
 
@@ -68,23 +69,95 @@ class Sidebar extends React.Component { //the entire left sidebar
     }
 }
 
-function ModuleContentItem(props) {
-    const [openedStatus, open] = React.useState("");
+class MyModal extends React.Component{
+    render(){
+       const { text,onRequestClose } = this.props;
 
-    let precede;
-    if (openedStatus==="active") {
-        precede = openedStatus;
-    } else {
-        precede = props.vark;
+       var internalDisplay = ""; //set this to the appropriate stuff based on this.props.internal and vark
+
+       var beforeCode = "<a class=\"linkbutton\" target=\"_blank\" href=\"";
+       var afterCode = "\">Click here to open content in new tab</a>";
+       var code = beforeCode + this.props.internal + afterCode;
+       
+        //this be the gaey code
+        internalDisplay = (
+            <div dangerouslySetInnerHTML={{__html: 
+                code}}></div>
+        )
+
+        // if (this.props.vark==="V") { //once we have non-gaey code, we can properly implement internals, but for now we'll just embed external services
+            
+        // }
+        //  if (this.props.vark==="A") { 
+             
+        //  }
+        // if (this.props.vark==="R") {
+
+        // }
+        // if (this.props.vark==="K") {
+
+        // }
+
+        
+
+       return (
+          <Modal
+             className="modaldialog"
+             onRequestClose={onRequestClose}
+             effect={Effect.ScaleUp}>
+             <h1 className="modaldialog">
+                 <table style={{maxHeight: "50px"}}>
+                     <tr>
+                         <td>
+                            <button id="backbutton" onClick={ModalManager.close}>←</button> 
+                         </td>
+                         <td>
+                            {internalDisplay}
+                         </td>
+                     </tr>
+                 </table>             
+             </h1>
+             
+          </Modal>
+       );
+    }
+ }
+
+class ModuleContentItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.openModal = this.openModal.bind(this);
     }
 
-    var attribute = precede+"modulecontentitem"
-    return (
-        <div className={attribute} onClick={() => open("active")}>
-            {/* TODO: Remove currently contains part later and replace it with a link to open the item view with the proper internal */}
-            {props.name} currently contains {props.internal}
-        </div>
-    );
+    openModal() {
+        const header = this.props.name;
+        ModalManager.open(<MyModal text={header} internal={this.props.internal} vark={this.props.vark} onRequestClose={() => true}/>);
+    }
+
+    // const [openedStatus, open] = React.useState("");
+    // React.useEffect(() => { 
+    //    //open item view
+    // });
+
+    // let precede;
+    // if (openedStatus==="active") {
+    //     precede = openedStatus;
+    // } else {
+    //     precede = props.vark;
+    // }
+
+    //var attribute = precede+"modulecontentitem"
+    render() {
+        let precede = this.props.vark;
+        var attribute = precede+"modulecontentitem"
+        return (
+            <div className={attribute} onClick={() => this.openModal()}> 
+            {/* put onClick attribute for itemView in the div right above here */}
+                {/* TODO: Remove currently contains part later and replace it with a link to open the item view with the proper internal */}
+                {this.props.name}
+            </div>
+        );
+    }
 }
 
 function ModuleItem(props) {
@@ -144,9 +217,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 );
             }
         }
-
-        
-
 
         return (
             <div className="mainpanel">
