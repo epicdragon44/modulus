@@ -18,7 +18,7 @@ div {
   float: left;
   width: 20%;
   height: 100%;
-  box-shadow: 10px 10px 5px grey;
+  box-shadow: 20px 20px 25px lightgray;
 }
 
 .right-element {
@@ -34,7 +34,7 @@ div {
   float: left;
   width: 15%;
   height: 100%;
-  box-shadow: 10px 10px 5px grey;
+  box-shadow: 20px 20px 25px lightgray;
 }
 
 .right-element-flip {
@@ -85,9 +85,12 @@ div {
 }
 
 .courselistitem {
-  background-color: gold;
+  background-color: white;
+  border: 1px solid black;
   padding-top: 15px;
   padding-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   height: 20px;
   text-align: center;
   margin: auto;
@@ -95,14 +98,18 @@ div {
   cursor: default;
 }
 
-.activecourselistitem {
-  background-color: goldenrod;
+.courselistitem:hover {
+  background-color: lightgray;
+  border: 1px solid black;
   padding-top: 15px;
   padding-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   height: 20px;
   text-align: center;
   margin: auto;
   overflow: hidden;
+  cursor: default;
 }
 
 .addcourseitem {

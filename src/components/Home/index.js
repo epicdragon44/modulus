@@ -18,8 +18,13 @@ function Logo() {
 
 function CourseListItem(props) {
     return (
-        <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
-            {props.name}
+        <div>
+            <div className="courselistitem" onClick={() => {props.changeActiveCourse(props.name);}} >
+                {props.name}
+            </div>
+            <div style={{fontSize: "5px"}}>
+                <br />
+            </div>
         </div>
     );
 }
