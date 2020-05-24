@@ -101,7 +101,7 @@ div {
 }
 
 .courselistitem {
-  border: 1px solid #003459;
+  /* border: 1px solid #003459; */
   background-color: white;
   color: #003459;
   padding-top: 15px;
@@ -209,7 +209,7 @@ div {
 
 .modulecontents {
   transition: height 0.4s ease-in-out;
-  border: 1px solid #003459;
+  /* border: 1px solid #003459; */
   background-color: whitesmoke;
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);

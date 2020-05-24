@@ -1132,17 +1132,20 @@ function ModuleItem(props) {
                         contentitem =>
                         (props.varkMode==="All" || props.varkMode===props.vark[props.contents.indexOf(contentitem)])
                         ?
-                        (<ModuleContentItem
-                            name={contentitem}
-                            vark={props.vark[props.contents.indexOf(contentitem)]}
-                            internal={props.internals[props.contents.indexOf(contentitem)]}
-                            addVarkClicks={props.addVarkClicks}
-                            teacherMode={props.teacherMode}
-                            moduleTitle={props.name}
-                            activeCourse={props.activeCourse}
-                            modules={props.modules}
-                            firebase={props.firebase}
-                        />)
+                        (
+                            (contentitem!=="DELETE THAT YOU HOT DOG") ?
+                            (<ModuleContentItem
+                                name={contentitem}
+                                vark={props.vark[props.contents.indexOf(contentitem)]}
+                                internal={props.internals[props.contents.indexOf(contentitem)]}
+                                addVarkClicks={props.addVarkClicks}
+                                teacherMode={props.teacherMode}
+                                moduleTitle={props.name}
+                                activeCourse={props.activeCourse}
+                                modules={props.modules}
+                                firebase={props.firebase}
+                            />) : (null)
+                        )
                         :
                         (<div />)
                     )}
@@ -1428,7 +1431,8 @@ class MainPanel extends React.Component {
                 <div className="modulelist">
                     {
                         Object.values(this.props.modules).map(module =>
-                            <ModuleItem
+                            (module.title!=="DELETE THAT YOU HOT DOG") ? 
+                            (<ModuleItem
                                 name={module.title}
                                 contents={module.contents}
                                 vark={module.vark}
@@ -1441,7 +1445,7 @@ class MainPanel extends React.Component {
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
-                            />
+                            />) : (null)
                         )
                     }
                 </div>
@@ -1450,7 +1454,8 @@ class MainPanel extends React.Component {
                 <div className="modulelist">
                     {
                         Object.values(this.props.modules).map(module =>
-                            <ModuleItem
+                            (module.title!=="DELETE THAT YOU HOT DOG") ? 
+                            (<ModuleItem
                                 name={module.title}
                                 contents={module.contents}
                                 vark={module.vark}
@@ -1463,7 +1468,7 @@ class MainPanel extends React.Component {
                                 activeCourse={this.props.activeCourse}
                                 modules={this.props.modules}
                                 firebase={this.props.firebase}
-                            />
+                            />) : (null)
                         )
                     }
                     {addModuleItem}
