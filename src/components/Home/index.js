@@ -1365,7 +1365,7 @@ class MainPanel extends React.Component {
         if ( stulist != undefined) {
             for (let [key, value] of Object.entries(stulist)) {
                 if ((value === "true") && (key !== "exampleStudentEmail")) 
-                    stukeys.push(key);
+                    stukeys.push(JSON.stringify(key));
             }
         }
         console.log(stukeys);
@@ -1388,7 +1388,7 @@ class MainPanel extends React.Component {
         if ( stulist != undefined) {
             for (let [key, value] of Object.entries(stulist)) {
                 if (key !== "exampleStudentEmail")
-                    stu.push(value);
+                    stu.push(JSON.stringify(value));
             }
         }
         console.log(stu);
@@ -1979,15 +1979,18 @@ class Container extends React.Component {
             for (let i = 0, len = allCourses.length; i < len; ++i) {
                 var course = allCourses[i];
                 var stuemails;
-                if (course.nclasscode === this.props.activeCourse) {
+                if (course.nclasscode === courseCode) {
                     courseID = course.appID; // identifies current course child name to update
                     stuemails = course.ostudentList;
+                    console.log(stuemails);
+                    const newemail = Object.values(usr).slice()[1].replace(/[^A-Z0-9]/ig, "_");
+                    stuemails[newemail] = true;
+                    this.props.firebase.courses().child(courseID).update({
+                        ostudentList: stuemails,
+                    });
                     break;
                 }
             }
-            // this.props.firebase.courses().child(courseID).update({
-                
-            // });
 
         }
     }
