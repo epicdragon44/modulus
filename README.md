@@ -1,4 +1,4 @@
-# [Modulus Logo][logo]
+# ![Modulus Logo][logo]
 
 [logo]: https://raw.githubusercontent.com/Nano1337/modulus/master/src/components/Navigation/moduluslogo.png
 This is the code for the Modulus web app, which you can view at https://moduluswebapp.herokuapp.com/SignIn
