@@ -4,13 +4,13 @@ import 'firebase/database';
 
 const config = {
     apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_DATABASE_URL,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APPID,
-    measurementId: process.env.REACT_APP_MEASUREMENTID,
+    authDomain: "modulus-e56e4.firebaseapp.com",
+    databaseURL: "https://modulus-e56e4.firebaseio.com",
+    projectId: "modulus-e56e4",
+    storageBucket: "modulus-e56e4.appspot.com",
+    messagingSenderId: "768709169703",
+    appId: "1:768709169703:web:a38f5dfb315550f831b402",
+    measurementId: "G-TX7CYMZJN7"
 };
 
 class Firebase {

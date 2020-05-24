@@ -10,7 +10,7 @@ const linkstyle = {
 };
 const Landing = () => (
     <div>
-        <body>
+
              <section id='header'>
                 <div className="parallax1">
                     <div className="text-block1">
@@ -58,7 +58,6 @@ const Landing = () => (
                     <AboutUs />
                 </div>
             </section>
-        </body>
     </div>
 
 );
