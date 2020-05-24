@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-    apiKey: process.env.REACT_APP_API_KEY,
+    apiKey: "AIzaSyDdAwZEPIHGmecudZQ2VGaYKtBRTX0U6aY",
     authDomain: "modulus-e56e4.firebaseapp.com",
     databaseURL: "https://modulus-e56e4.firebaseio.com",
     projectId: "modulus-e56e4",

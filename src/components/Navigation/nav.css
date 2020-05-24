@@ -22,13 +22,10 @@ li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    vertical-align: center;
     padding-top: 1.5em;
 }
 
 li a:hover {
-    background-color: white;
-    color: black;
     padding-top: 1.25em;
     border-top: 0.375em solid #333;
 }
@@ -46,11 +43,12 @@ li a:hover {
     font-size: medium;
     cursor: pointer;
     border: 1px solid #333;
+    box-shadow: 0 10px 29px 0 black;
   }
 
   .navigationbutton:hover {
-    background-color: #333;
-    color: whitesmoke;
+    background-color: lightgray;
+    color: #333;
     height: 3em;
     margin-top: 0.5em;
     padding-top: 0.5em;

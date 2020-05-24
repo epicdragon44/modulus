@@ -6,6 +6,9 @@ import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
+import dashboard from './dashboard.png';
+import account from './account.png'; 
+
 import './nav.css';
 
 class AddCourseButton extends React.Component {
@@ -22,7 +25,7 @@ class AddCourseButton extends React.Component {
     render() {
         return (
             <button className="navigationbutton" type="button" onClick={this.openLink}>
-                Add a course
+                Teach a course
             </button>
         );
     }
@@ -39,6 +42,22 @@ const Navigation = () => (
         }
     </AuthUserContext.Consumer>
 );
+
+function DashboardMenuItem(props) {
+    return (
+        <li id="special">
+            <Link to={props.link}><img src={dashboard} alt="dashboard" height="20px"></img></Link>
+        </li>
+    );
+}
+
+function AccountMenuItem(props) {
+    return (
+        <li id="special">
+            <Link to={props.link}><img src={account} alt="account" height="20px"></img></Link>
+        </li>
+    );
+}
 
 function MenuItem(props) {
     return (
@@ -60,8 +79,8 @@ const NavigationAuth = ({ authUser }) => (
             <li>
                 <SignOutButton />
             </li>
-            <MenuItem link={ROUTES.ACCOUNT} name="Account" />
-            <MenuItem link={ROUTES.HOME} name="Dashboard" />
+            <AccountMenuItem link={ROUTES.ACCOUNT} />
+            <DashboardMenuItem link={ROUTES.HOME} />
             
             {authUser.roles.includes(ROLES.ADMIN) && (
                 <li>

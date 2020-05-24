@@ -1,24 +1,33 @@
 div.dialogwallpaper {
-    background-image: url(./wallpaper2.png);
-    height: 1800px;
+    background-image: url(./wallpaper.jpg);
+    height: 60em;
+    background-color: whitesmoke;
 }
 
 div.content {
     margin-top: 7em;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid black;
     width: 30em;
     height: 30em;
     vertical-align: middle;
     text-align: center;
     flex: auto;
-    background-color: whitesmoke;
-    box-shadow: 20px 20px 25px rgb(37, 37, 37);
+    background-color: white;
+    box-shadow: 0 10px 29px 0 gray;
+    border-radius: 10px;
 }
 a {
     display: block;
     color: #003459;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a {
+    display: block;
+    color: #002136;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;

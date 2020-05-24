@@ -28,7 +28,6 @@ div {
 }
 
 .right-element {
-  background: white;
   display: inline-block;
   width: 80%;
   height: 100%;
@@ -91,27 +90,23 @@ div {
 }
 
 .courselistitem {
+  border: 1px solid #003459;
+  box-shadow: 0 5px 5px 0 lightgray;
   background-color: white;
-  border: 1px solid black;
-  padding-top: 13px;
-  padding-bottom: 18px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  color: #003459;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: large;
   height: 20px;
   text-align: center;
   margin: auto;
   overflow: hidden;
   cursor: default;
+  border-radius: 10px;
 }
 
 .courselistitem:hover {
-  background-color: lightgray;
-  border: 1px solid black;
-  padding-top: 13px;
-  padding-bottom: 18px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  height: 20px;
+  background-color: whitesmoke;
   text-align: center;
   margin: auto;
   overflow: hidden;
@@ -129,6 +124,15 @@ div {
   margin: auto;
   overflow: hidden;
   cursor: default;
+  border-radius: 10px;
+  /* box-shadow: 0 10px 29px 0 rgba(28, 36, 59, 0.1) */
+  box-shadow: 0 10px 29px 0 gray;
+}
+
+.addcourseitem:hover {
+  background-color: #002136;
+  /* box-shadow: 0 10px 29px 0 rgba(28, 36, 59, 0.1) */
+  box-shadow: 0 10px 29px 0 gray;
 }
 
 .moduleitem {
@@ -149,97 +153,123 @@ div {
 
 .moduletitle {
   background-color: #003459;
-  height: 21px;
+  height: 16px;
   color: white;
   font-size: large;
   padding-left: 1em;
   padding-bottom: 1em;
   padding-top: 0.95em;
+  border-radius: 10px 10px 0px 0px;
+  overflow: hidden;
+  box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
+}
+
+.moduletitle:hover {
+  background-color: #002136;
+  height: 16px;
+  color: white;
+  font-size: large;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  padding-top: 0.95em;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .modulecontents {
   transition: height 0.4s ease-in-out;
   background-color: whitesmoke;
+  box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
+  box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
 }
 
 .Vmodulecontentitem {
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   padding-right: 3em;
   border-left: 5px solid red;
   border-bottom: 2px black;
   cursor: pointer;
+  font-size: large;
 }
 
 .Amodulecontentitem {
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;;
   padding-right: 3em;
   border-left: 5px solid blue;
   border-bottom: 2px black;
   cursor: pointer;
+  font-size: large;
 }
 
 .Rmodulecontentitem {
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   padding-right: 3em;
   border-left: 5px solid green;
   border-bottom: 2px black;
   cursor: pointer;
+  font-size: large;
 }
 
 .Kmodulecontentitem {
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  font-size: large;
   padding-right: 3em;
   border-left: 5px solid purple;
   border-bottom: 2px black;
   cursor: pointer;
+  font-size: large;
 }
 
 .Vmodulecontentitem:hover {
   background-color: lightgrey;
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   padding-right: 3em;
   border-left: 5px solid red;
   border-bottom: 2px black;
+  font-size: large;
 }
 
 .Amodulecontentitem:hover {
   background-color: lightgrey;
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   padding-right: 3em;
   border-left: 5px solid blue;
   border-bottom: 2px black;
+  font-size: large;
 }
 
 .Rmodulecontentitem:hover {
   background-color: lightgrey;
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   padding-right: 3em;
   border-left: 5px solid green;
   border-bottom: 2px black;
+  font-size: large;
 }
 
 .Kmodulecontentitem:hover {
   background-color: lightgrey;
   padding-left: 3em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  font-size: large;
   padding-right: 3em;
   border-left: 5px solid purple;
   border-bottom: 2px black;
+  cursor: pointer;
 }
 
 .leftalign {
@@ -247,6 +277,17 @@ div {
 }
 .rightalign {
 	float: right;
+}
+.rightalignandfloatdown {
+  float: right;
+  position: relative;
+  top: 50px;
+  left: 75px;
+}
+.floatdown {
+  position: relative;
+  top: 50px;
+  left: 75px;
 }
 
 .foo {
@@ -301,10 +342,11 @@ div {
   color: #003459;
   padding-bottom: 1em;
   padding-top: 1em;
-  font-size: xx-large;
+  font-size: large;
+
 }
 
-/* input[type=text] {
+input[type=text] {
   padding: 5px 5px;
   margin: 5px 0;
   box-sizing: border-box;
@@ -317,10 +359,36 @@ div {
 input[type=text]:focus {
   width: 20em;
   border-bottom: 2px solid #003459;
-} */
+}
+
+input[type=password] {
+  padding: 5px 5px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: none;
+  width: 16.5em;
+  transition: width 0.4s ease-in-out;
+  border-bottom: 2px solid lightgray;
+}
+
+input[type=password]:focus {
+  width: 20em;
+  border-bottom: 2px solid #003459;
+}
 
 input[type=button], input[type=submit], input[type=reset] {
   background-color: #003459;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+  background-color: #002136;
   border: none;
   color: white;
   padding: 16px 32px;
@@ -337,39 +405,37 @@ button {
   text-decoration: none;
   margin: 4px 4px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .courseheader {
   color: #003459;
   padding-top: 2.5em;
-  padding-left: 5em;
   font-size: xx-large;
+  padding-left: 5em;
+  max-width: 23em;
 }
 
 .removecoursebutton {
   color: red;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin-left: 10.5em;
-  margin-top: 5em;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
   text-align: center;
   width: 10em;
   font-size: medium;
   cursor: pointer;
   border: 1px solid red;
+  border-radius: 10px;
+  box-shadow: 0 10px 29px 0 lightgray;
 }
 
 .removecoursebutton:hover {
   color: white;
   background-color: red;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  margin-left: 10.5em;
-  text-align: center;
-  width: 10em;
-  font-size: medium;
-  cursor: pointer;
   border: 1px solid red;
+  box-shadow: 0 10px 29px 0 lightpink;
 }
 
 .modaldialog {
@@ -377,6 +443,7 @@ button {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
+  border-radius: 10px;
 }
 
 h1.modaldialog {
@@ -384,6 +451,8 @@ h1.modaldialog {
 }
 
 #backbutton {
+  padding-top: 5px;
+  padding-bottom: 10px;
   font-size: xx-large;
 }
 
@@ -396,6 +465,7 @@ a.linkbutton {
   font-size: x-large;
   cursor: pointer;
   border: 1px solid #003459;
+  border-radius: 10px;
 }
 
 a.linkbutton:hover {
@@ -408,4 +478,18 @@ a.linkbutton:hover {
   font-size: x-large;
   cursor: pointer;
   border: 1px solid #003459;
+}
+
+.varkprofiletext {
+  text-align: right;
+  padding-left: 1em;
+  padding-right: 2em;
+  line-height: 70%;
+  font-size: medium;
+  border-right: 1px solid black;
+}
+
+.varkprofile {
+  /* border: 1px solid #003459;
+  border-radius: 10px; */
 }

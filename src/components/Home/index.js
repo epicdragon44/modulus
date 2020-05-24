@@ -4,9 +4,9 @@ import './App.css';
 import { withAuthorization } from '../Session';
 
 import { Modal,ModalManager,Effect} from 'react-dynamic-modal';
+import { PieChart } from 'react-minimal-pie-chart';
 import * as firebase from 'firebase'
 require('@firebase/database');
-
 
 function Logo() {
     return (
@@ -56,10 +56,9 @@ class Sidebar extends React.Component { //the entire left sidebar
         return (
             <div>
                 <div className="sidebar">
-                <Logo />
-                 <div className="sidebarheader"><p><b>Your courses:</b></p></div>
+                <Logo /><br />
                 <div className="courselist">
-                   {this.props.arrCourses.map(course => <CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)}
+                {(this.props.arrCourses.length<=1) ? (<div />) : this.props.arrCourses.map(course => ((course==="Welcome") ? (<div />) : (<CourseListItem name={course} active={(this.props.activeCourse===course ? "active" : "")} changeActiveCourse={this.changeActiveCourse}/>)))}
                    <AddCourseItem addCourseMode={this.addCourseMode}/>
                 </div>
             </div>
@@ -183,6 +182,72 @@ function ModuleItem(props) {
     );
 }
 
+function VarkProfile(props) {
+    const lineWidth = 60;
+    return (
+        <div className="varkprofile">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <PieChart
+                            style={{
+                                fontFamily:
+                                '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
+                                fontSize: '8px',
+                                height: "150px",
+                            }}
+                            data={[
+                                {
+                                    color: 'red',
+                                    title: 'V',
+                                    value: props.Vcnt,
+                                },
+                                {
+                                    color: 'blue',
+                                    title: 'A',
+                                    value: props.Acnt,
+                                },
+                                {
+                                    color: 'green',
+                                    title: 'R',
+                                    value: props.Rcnt,
+                                },
+                                {
+                                    color: 'purple',
+                                    title: 'K',
+                                    value: props.Kcnt,
+                                },
+                            ]}
+                            radius={PieChart.defaultProps.radius - 6}
+                            lineWidth={60}
+                            segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
+                            animate
+                            label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
+                            labelPosition={100 - lineWidth / 2}
+                            labelStyle={{
+                                fill: '#fff',
+                                opacity: 0.75,
+                                pointerEvents: 'none',
+                            }}
+                        />
+                    </td>
+                    <td>
+                        <div className="varkprofiletext">
+                            <p><b>VARK Profile</b></p>
+                            <p style={{color: "red"}}>Visual</p>
+                            <p style={{color: "blue"}}>Auditory</p>
+                            <p style={{color: "green"}}>Reading/Writing</p>
+                            <p style={{color: "purple"}}>Kinesthetic</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            
+        </div>
+    );
+}
+
 class MainPanel extends React.Component { //the entire right half of the screen where all the modules are
     constructor (props){
         super(props);
@@ -195,6 +260,9 @@ class MainPanel extends React.Component { //the entire right half of the screen 
 
     render() { //active: "" means the module is minimized, "active" means its expanded
 
+        var showModules = true;
+        var showVarkProfile = true;
+
         var welcomeMsg;
         var unenroll;
         if (this.props.activeCourse==="none") {
@@ -202,6 +270,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
             unenroll = (
                 <div />
             );
+            showVarkProfile = false;
         }
         else {
             welcomeMsg = "Welcome to " + (this.props.activeCourse);
@@ -211,28 +280,18 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                 </div>
             );
             if (welcomeMsg === "Welcome to Welcome") {
-                welcomeMsg = "Welcome to Modulus!"
+                welcomeMsg = "Select or add a course on the left to get started."
+                showModules = false;
                 unenroll = (
                     <div />
                 );
+                showVarkProfile = false;
             }
         }
 
-        return (
-            <div className="mainpanel">
-                <table>
-                    <tr>
-                        <td>
-                            <div className="courseheader">
-                                {welcomeMsg}
-                            </div>
-                        </td>
-                        <td className="rightalign">
-                            {unenroll}
-                        </td>
-                    </tr>
-                </table>              
-
+        var moduleList = (<div />);
+        if (showModules) {
+            moduleList = (
                 <div className="modulelist">
                     {Object.values(this.props.modules).map(module =>
                         <ModuleItem
@@ -244,6 +303,77 @@ class MainPanel extends React.Component { //the entire right half of the screen 
                             username={this.props.username}
                         />)}
                 </div>
+            );
+        }
+
+        //counts the number of each vark item in modules
+        var Vcnt = 0;
+        var Acnt = 0;
+        var Rcnt = 0;
+        var Kcnt = 0;
+        var module;
+        var varkLetter;
+        for (module of this.props.modules) {
+            for (varkLetter of module.vark) {
+                if (varkLetter==="V") {
+                    Vcnt++;
+                }
+                if (varkLetter==="A") {
+                    Acnt++;
+                }
+                if (varkLetter==="R") {
+                    Rcnt++;
+                }
+                if (varkLetter==="K") {
+                    Kcnt++;
+                }
+            }
+        }
+
+        var varkProfile = (<div />);
+        if (showVarkProfile) {
+            varkProfile = (
+                <VarkProfile 
+                    Vcnt={Vcnt}
+                    Acnt={Acnt}
+                    Rcnt={Rcnt}
+                    Kcnt={Kcnt}
+                />
+            );
+        }
+
+        return (
+            <div className="mainpanel">
+                <table>
+                    <tr>                        
+                        <td>
+                            <div className="courseheader">
+                                {welcomeMsg}
+                                <br /><br />
+                                {unenroll}
+                                <br />
+                            </div>
+                        </td>
+
+                        <td className="rightalignandfloatdown">
+                            {varkProfile}
+                        </td>
+                    </tr>
+                </table>                       
+                <br />
+                {moduleList}     
+
+                {/* <div className="modulelist">
+                    {Object.values(this.props.modules).map(module =>
+                        <ModuleItem
+                            name={module.title}
+                            contents={module.contents}
+                            vark={module.vark}
+                            internals={module.internals}
+                            active=""
+                            username={this.props.username}
+                        />)}
+                </div> */}
             </div>
         )
     }
