@@ -554,16 +554,18 @@ class NameForm extends React.Component {
         let shouldAddCourse = false;
 
         //check that the course is available on the database. If not, throw an error to the user
-        const allCourses = JSON.parse(localStorage.getItem('courses')); 
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+        var needed;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
-            if (course.CourseName === this.state.value) {
+            if (course.nclasscode === this.state.value) {
                 shouldAddCourse = true;
+                needed = course.CourseName;
             }
         }
 
         if (shouldAddCourse) {
-            this.props.addCourse(this.state.value);
+            this.props.addCourse(needed);
         } else {
             alert('Sorry, class not found');
         }
@@ -574,7 +576,7 @@ class NameForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Enter the course name below<br /><br />
+                    Enter the course code below<br /><br />
                     <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
                 <br /><br />
                 <input type="submit" value="Submit" />
