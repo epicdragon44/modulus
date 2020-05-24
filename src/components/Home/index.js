@@ -1525,6 +1525,9 @@ class MainPanel extends React.Component {
         var showModules = true;
         var showVarkProfile = true;
 
+        var listOfStudents = this.getListOfStudents();
+        var listOfStudentKicks = this.getListOfStudentKicks();
+
         var varkStatus = this.isVarkEnabled();
 
         var courseid = (this.props.activeCourse);
@@ -1739,9 +1742,6 @@ class MainPanel extends React.Component {
             </div>
         ) : (null);
 
-        var listOfStudents = this.getListOfStudents();
-        var listOfStudentKicks = this.getListOfStudentKicks();
-
         var manageStudents = (teacherMode) ? (
             <div className="managecontent">
                 <center>
@@ -1919,6 +1919,11 @@ class MainPanel extends React.Component {
 
         let atmainpanel = (this.props.isMobile==="medium") ? ("mobile-mainpanel") : ("mainpanel");
         let atcourseheader = (this.props.isMobile==="medium") ? ("mobile-courseheader") : ("courseheader");
+
+        if (listOfStudentKicks[listOfStudents.indexOf(this.props.email)]==="false") {
+            welcomeMsg=("You've been removed from this course.");
+            restOfPage=(null);
+        }
 
         return (
             <div className={atmainpanel}>
