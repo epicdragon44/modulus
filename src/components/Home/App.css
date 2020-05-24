@@ -29,6 +29,11 @@ div {
   box-shadow: 20px 20px 25px lightgray;
 }
 
+.mainpanel {
+  margin-left: 5em;
+  padding-left: 1em;
+}
+
 .right-element {
   display: inline-block;
   width: 80%;
@@ -144,37 +149,37 @@ div {
 }
 
 .moduleitem {
-  margin-left: 7em;
+  margin-left: 0em;
   margin-top: 1em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   margin-right: 7em;
   max-height: 50px;
-  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   border-radius: 10px;
 }
 
 .addmoduleitem {
-  margin-left: 7em;
+  margin-left: 0em;
   margin-top: 1em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   margin-right: 7em;
   max-height: 55px;
   padding-left: 1em;
   height: 55px;
-  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   background-color: #003459;
   border-radius: 10px;
 }
 
 .activemoduleitem {
-  margin-left: 7em;
+  margin-left: 0em;
   margin-top: 1em;
   margin-bottom: 2em;
   margin-right: 7em;
   max-height: 500px;
-  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
 }
 
@@ -204,6 +209,7 @@ div {
 
 .modulecontents {
   transition: height 0.4s ease-in-out;
+  border: 1px solid #003459;
   background-color: whitesmoke;
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
@@ -335,6 +341,10 @@ div {
   background: purple;
 }
 
+.smallparagraph {
+  font-size: medium;
+}
+
 .varkguide {
   display: flex;
   background-color: lightgray;
@@ -444,9 +454,10 @@ button.addmodule {
 
 .courseheader {
   color: #003459;
-  padding-top: 2.5em;
+  padding-top: 2em;
+  padding-bottom: 1em;
   font-size: xx-large;
-  padding-left: 5em;
+  padding-left: 0em;
   max-width: 23em;
 }
 
@@ -492,6 +503,29 @@ a.linkbutton:hover {
   margin-left: 10.5em;
   text-align: center;
   font-size: x-large;
+  cursor: pointer;
+  border: 1px solid #003459;
+}
+
+a.smalllinkbutton {
+  color: #003459;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: center;
+  width: fit-content;
+  font-size: large;
+  cursor: pointer;
+  border: 1px solid #003459;
+  border-radius: 10px;
+}
+
+a.smalllinkbutton:hover {
+  background-color: #003459;
+  color: white;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: center;
+  font-size: large;
   cursor: pointer;
   border: 1px solid #003459;
 }
@@ -546,8 +580,14 @@ select {
   padding-bottom: 2px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  box-shadow: 0 10px 29px 0 lightgray;
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   height: 38px;
+}
+
+.varkfilter {
+  padding-left: 0em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 select:hover {
@@ -647,38 +687,31 @@ input.smallbutton:hover {
   padding-top: 0.95em;
   border-radius: 10px 10px 0px 0px;
   overflow: hidden;
-  box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
 }
 
 .teachermoduletitle:hover {
   background-color: #002136;
-  height: 50px;
-  color: white;
-  font-size: large;
-  padding-left: 1em;
-  padding-bottom: 1em;
-  padding-top: 0.95em;
-  border-radius: 10px 10px 0px 0px;
 }
 
 .moduleitemteacher {
-  margin-left: 7em;
+  margin-left: 0em;
   margin-top: 1em;
   margin-bottom: 2em;
   margin-right: 7em;
   max-height: 85px;
-  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   border-radius: 10px;
 }
 
 .activemoduleitemteacher {
-  margin-left: 7em;
+  margin-left: 0em;
   margin-top: 1em;
   margin-bottom: 2em;
   margin-right: 7em;
   max-height: fit-content;
-  box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
   overflow: hidden;
   border-radius: 10px;
 }
@@ -760,4 +793,89 @@ hr {
 .react-resizable-handle-s {
   bottom: 0;
   transform: rotate(45deg);
+}
+
+.react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.react-tabs__tab {
+  display: inline-block;
+  border: 1px solid transparent;
+  bottom: -1px;
+  color: rgb(116, 116, 116);
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  width: 5em;
+  text-align: center;
+  margin-right: 1em;
+  vertical-align: auto;
+}
+
+.react-tabs__tab:hover {
+  color: gray;
+  border-color: gray;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.react-tabs__tab--selected {
+  background: #fff;
+  border-color: #003459;
+  color: #003459;
+  border: 2px solid #003459;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.react-tabs__tab--disabled {
+  color: lightslategray;
+  cursor: default;
+}
+
+.react-tabs__tab:focus {
+  box-shadow: 0 0 5px hsl(208, 99%, 50%);
+  border-color: #003459;
+  outline: none;
+}
+
+.react-tabs__tab:focus:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  left: -4px;
+  right: -4px;
+  bottom: -5px;
+  background: #fff;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+  height: 100%;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+  height: 100%;
+}
+
+div.managecontent {
+  margin-top: 1em;
+  margin-left: 0em;
+  border: 1px solid black;
+  margin-right: auto;
+  width: 30em;
+  max-width: 90%;
+  height: fit-content;
+  vertical-align: middle;
+  text-align: center;
+  flex: auto;
+  background-color: white;
+  box-shadow: 5px 10px 10px 0 rgb(201, 201, 201);
+  border-radius: 10px;
 }

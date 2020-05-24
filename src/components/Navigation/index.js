@@ -54,7 +54,7 @@ const Navigation = () => (
 
 function DashboardMenuItem(props) {
     return (
-        <li id="special">
+        <li className="nav" id="special">
             <Link to={props.link}><img src={dashboard} alt="dashboard" height="20px"></img></Link>
         </li>
     );
@@ -62,7 +62,7 @@ function DashboardMenuItem(props) {
 
 function AccountMenuItem(props) {
     return (
-        <li id="special">
+        <li className="nav" id="special">
             <Link to={props.link}><img src={account} alt="account" height="20px"></img></Link>
         </li>
     );
@@ -70,7 +70,7 @@ function AccountMenuItem(props) {
 
 function MenuItem(props) {
     return (
-        <li id="special">
+        <li className="nav" id="special">
             <Link to={props.link}>{props.name}</Link>
         </li>
     );
@@ -78,14 +78,14 @@ function MenuItem(props) {
 
 const NavigationAuth = ({ authUser }) => (
     <div>
-        <ul>
+        <ul className="nav">
             {/* <li className="left">
                 <Link to={ROUTES.LANDING}>Modulus</Link>
             </li> */}
             <li className="left">
                 <Logo />
             </li>
-            <li>
+            <li className="nav">
                 <SignOutButton />
             </li>
             <AccountMenuItem link={ROUTES.ACCOUNT} />

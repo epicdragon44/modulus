@@ -7,7 +7,10 @@ import { PieChart } from 'react-minimal-pie-chart';
 import 'react-contexify/dist/ReactContexify.min.css';
 import * as firebase from 'firebase'
 import { Resizable, ResizableBox } from 'react-resizable';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import backarrow from './backarrow.png';
+import moduleicon from './moduleicon.svg';
+import moreicon from './moreicon.svg';
 require('@firebase/database');
 
 //DOC: Item 1: Displays a single course button in the sidebar that, when clicked, changes the main panel to display that course.
@@ -316,19 +319,19 @@ class MyModal extends React.Component {
            } else {
                 internalDisplay = (
                     <div>
-                            <center>
-                                <h1 style={{fontSize: "xx-large"}}>Edit this item</h1>
-                                <Select passState={this.handleFilter} default={"Choose a VARK type"}/>
-                                <br /><br />
-                                <form onSubmit={this.handleSubmit}>
-                                    <label>
-                                        <p className="teachernotice">Enter the link to the item:</p>
-                                        <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
-                                        <br /><br />
-                                    <input type="submit" value="Submit" />
-                                </form>
-                            </center>
-                        </div>
+                        <center>
+                            <h1 style={{fontSize: "xx-large"}}>Edit this item</h1>
+                            <Select passState={this.handleFilter} default={"Choose a VARK type"}/>
+                            <br /><br />
+                            <form onSubmit={this.handleSubmit}>
+                                <label>
+                                    <p className="teachernotice">Enter the link to the item:</p>
+                                    <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
+                                    <br /><br />
+                                <input type="submit" value="Submit" />
+                            </form>
+                        </center>
+                    </div>
                 );
 
                 return ( //small modal
@@ -890,70 +893,55 @@ function ModuleItem(props) {
 }
 
 //DOC: Item 10: Displays the entire VARK Profile
+
 function VarkProfile(props) {
     const lineWidth = 60;
     return (
         <div className="varkprofile">
-            <table width="100%">
-                <tr>
-                    <td>
-                        <PieChart
-                            style={{
-                                fontFamily:
-                                '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
-                                fontSize: '8px',
-                                height: "150px",
-                            }}
-                            data={[
-                                {
-                                    color: 'red',
-                                    title: 'V',
-                                    value: props.Vcnt,
-                                },
-                                {
-                                    color: 'blue',
-                                    title: 'A',
-                                    value: props.Acnt,
-                                },
-                                {
-                                    color: 'green',
-                                    title: 'R',
-                                    value: props.Rcnt,
-                                },
-                                {
-                                    color: 'purple',
-                                    title: 'K',
-                                    value: props.Kcnt,
-                                },
-                            ]}
-                            radius={PieChart.defaultProps.radius - 6}
-                            lineWidth={60}
-                            segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
-                            animate
-                            label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
-                            labelPosition={100 - lineWidth / 2}
-                            labelStyle={{
-                                fill: '#fff',
-                                opacity: 0.75,
-                                pointerEvents: 'none',
-                            }}
-                        />
-                    </td>
-                    <td>
-                        <div className="varkprofiletext">
-                            <p><b>Course VARK Profile</b></p>
-                            <p style={{color: "red"}}>Visual</p>
-                            <p style={{color: "blue"}}>Auditory</p>
-                            <p style={{color: "green"}}>Reading/Writing</p>
-                            <p style={{color: "purple"}}>Kinesthetic</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <PieChart
+                style={{
+                    fontFamily:
+                    '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
+                    fontSize: '8px',
+                    height: "150px",
+                }}
+                data={[
+                    {
+                        color: 'red',
+                        title: 'V',
+                        value: props.Vcnt,
+                    },
+                    {
+                        color: 'blue',
+                        title: 'A',
+                        value: props.Acnt,
+                    },
+                    {
+                        color: 'green',
+                        title: 'R',
+                        value: props.Rcnt,
+                    },
+                    {
+                        color: 'purple',
+                        title: 'K',
+                        value: props.Kcnt,
+                    },
+                ]}
+                radius={PieChart.defaultProps.radius - 6}
+                lineWidth={60}
+                segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
+                animate
+                label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
+                labelPosition={100 - lineWidth / 2}
+                labelStyle={{
+                    fill: '#fff',
+                    opacity: 0.75,
+                    pointerEvents: 'none',
+                }}
+            />
         </div>
     );
 }
-
 //DOC: Item 8: Allows the user to filter which VARK-type of items to display
 class Select extends React.PureComponent {
     constructor(props) {
@@ -995,15 +983,17 @@ class Select extends React.PureComponent {
       const { options, value } = this.state;
 
       return (
-        <React.Fragment>
-            <select name="search_categories" id="search_categories" onChange={this.handleChange} value={value}>
-                {options.map(item => (
-                <option className="option" key={item.value} value={item.value}>
-                    &nbsp;&nbsp;&nbsp;{item.name}
-                </option>
-                ))}
-            </select>
-        </React.Fragment>
+          <div className="varkfilter">
+            <React.Fragment>
+                <select name="search_categories" id="search_categories" onChange={this.handleChange} value={value}>
+                    {options.map(item => (
+                    <option className="option" key={item.value} value={item.value}>
+                        &nbsp;&nbsp;&nbsp;{item.name}
+                    </option>
+                    ))}
+                </select>
+            </React.Fragment>
+          </div>
       );
     }
 }
@@ -1060,7 +1050,8 @@ class MainPanel extends React.Component {
     }
 
     getTeacherName(teacherEmail) {
-        return "Example Teacher Name"
+        //TODO: return teacher name based on teacher email
+        return "Example Teacher Name";
     }
 
     getCurrentUserEmail() {
@@ -1091,6 +1082,8 @@ class MainPanel extends React.Component {
         var unenroll;
         var filter;
         var teacherReveal;
+        var showRest = true;
+        var teacherEmail = this.getTeacherEmail(this.props.activeCourse);
         if (this.props.activeCourse==="none") {
             welcomeMsg = "No course selected.";
             teacherReveal = "";
@@ -1101,11 +1094,12 @@ class MainPanel extends React.Component {
             filter = (
                 <div />
             );
+            showRest = false;
         }
         else {
             welcomeMsg = "Welcome to " + this.codeToName(this.props.activeCourse); //CodeToName
-            let teachermsg = "This course is taught by " + this.getTeacherName(this.getTeacherEmail(this.props.activeCourse));
-            teacherReveal = (<p className="teachernotice">{teachermsg}</p>);
+            let teachermsg = "Taught by " + this.getTeacherName(this.getTeacherEmail(this.props.activeCourse));
+            teacherReveal = teachermsg;
             unenroll = (
                 <div className="removecoursebutton" onClick={this.handleRemove}>
                     Unenroll
@@ -1130,6 +1124,7 @@ class MainPanel extends React.Component {
                 filter = (
                     <div />
                 );
+                showRest = false;
             }
         }
 
@@ -1209,40 +1204,81 @@ class MainPanel extends React.Component {
             );
         }
 
-        return (
-            <div className="mainpanel">
-                <table>
-                    <tr>
-                        <td>
-                            <div className="courseheader">
-                                {welcomeMsg}
+        var mailtostring = "mailto:" + teacherEmail;
+
+        var restOfPage = (showRest) ? (
+            <Tabs>
+                    <TabList>
+                        <Tab>Modules</Tab>
+                        <Tab>Other</Tab>
+                    </TabList>
+                    <TabPanel>
+                        {filter}
+                        {moduleList}
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="managecontent">
+                            <center>
                                 <br />
-                                {teacherReveal}
-                                <br />
-                                <table>
+                                <h3>
+                                    {teacherReveal} 
+                                </h3>
+                                <p className="smallparagraph">
+                                    {teacherEmail}<br /><br />
+                                </p>
+                                <a className="smalllinkbutton" href={mailtostring}>Contact</a>
+                                <br /><br />
+                            </center>
+                        </div>
+                        <br />
+                        <div className="managecontent">
+                            <center>
+                                <h3><br /> <br />Course VARK Profile</h3> 
+                                <p className="smallparagraph">Every course has a different profile, composed of different types and numbers of items.</p> <br />
+                                <table className="offsetleft">
                                     <tr>
                                         <td>
-                                            {unenroll}
+                                            {varkProfile}
                                         </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        </td>
-                                        <td>
-                                            {filter}
+                                            <p className="smallparagraph" style={{color: "red"}}>Visual</p>
+                                            <p className="smallparagraph" style={{color: "blue"}}>Auditory</p>
+                                            <p className="smallparagraph" style={{color: "green"}}>Reading/Writing</p>
+                                            <p className="smallparagraph" style={{color: "purple"}}>Kinesthetic</p>
                                         </td>
                                     </tr>
                                 </table>
-                                <br />
-                            </div>
-                        </td>
+                            </center>
+                            <center>
+                                <p className="smallparagraph">To learn more about the different learning models, visit <a className="nonformatted" href="https://vark-learn.com/">the VARK site</a>.</p>
+                                <br /> <br />
+                            </center>
+                        </div>
+                        <br />
+                        <div className="managecontent">
+                            <br />
+                            <h3>
+                                Unenroll from this course
+                            </h3>
+                            <center>
+                            {unenroll}
+                            </center>
+                            <br /><br />
+                        </div>
 
-                        <td className="rightalignandfloatdown">
-                            {varkProfile}
-                        </td>
-                    </tr>
-                </table>
-                <br />
-                {moduleList}
+                        <br /><br /><br /><br /><br />
+                    </TabPanel>
+                </Tabs>
+        ) : (<div />);
+
+
+        return (
+            <div className="mainpanel">
+                <h1 className="courseheader">
+                    {welcomeMsg}
+                </h1>
+                
+                {restOfPage}
                 <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
             </div>
         )
@@ -1554,19 +1590,18 @@ class Container extends React.Component {
             <div className="App">
                 <div className="container">
                     
-                        <div className="left-element">
-                            <ResizableBox width={300} height={10} axis={'x'} resizeHandles={['ne']}
-                            minConstraints={[150, 10]} maxConstraints={[400, 10]} />
-                            <Sidebar
-                                username={this.state.username}
-                                activeCourse={this.state.activeCourse}
-                                arrCourses={this.state.arrCourses}
-                                changeActiveCourse={this.changeActiveCourse}
-                                addCourseMode={this.addCourseMode}
-                                createCourseMode={this.createCourseMode}
-                            />
-                        </div>
-                    
+                    <div className="left-element">
+                        <ResizableBox width={300} height={10} axis={'x'} resizeHandles={['ne']}
+                        minConstraints={[150, 10]} maxConstraints={[400, 10]} />
+                        <Sidebar
+                            username={this.state.username}
+                            activeCourse={this.state.activeCourse}
+                            arrCourses={this.state.arrCourses}
+                            changeActiveCourse={this.changeActiveCourse}
+                            addCourseMode={this.addCourseMode}
+                            createCourseMode={this.createCourseMode}
+                        />
+                    </div>
                     <div className="right-element">
                         {mainpanel}
                     </div>
