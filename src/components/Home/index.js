@@ -125,11 +125,6 @@ class MyModal extends React.Component{
             
         }
         else {
-            //TODO: plugs into the backend to change the link for the item using this.state.value (the link to implement) 
-            //this.props.modules should contain an array of javascript objects with every module inside
-            //this.props.activeCourse should contain the string name of the currently active course
-            //this.props.moduleTitle should contain the string title of the current module
-            //this.props.firebase should let you access firebase
             const allCourses = JSON.parse(localStorage.getItem('courses'));
             var courseID;
             for (let i = 0, len = allCourses.length; i < len; ++i) {
@@ -147,20 +142,20 @@ class MyModal extends React.Component{
                     neededModule = arrModules[i]; break; // finds needed module to edit
                 }
             }
-           
-            const contents = neededModule.contents; // add your new items
+            
+            const contents = neededModule.contents;  // modify the corresponding item
             const internals = neededModule.internals;
-            const vark = neededModule.vark;
-            contents.push(this.state.itemName);
-            internals.push(this.state.value);
-            vark.push(this.state.varkselection);
+            for ( let i = 0; i < contents.length; ++i) {
+                let itemTemp = contents[i]; 
+                if ( itemTemp === this.props.itemName) {
+                    internals[i] = this.state.value;
+                }
+            }
             
-            
-            const newPush = this.props.modules;
-            
-            
+            const newPush = this.props.modules; // record to database 
+            // TODO: why is firebase undefined here??? If this is fixed the function will 100% work
             // this.props.firebase.courses().child(courseID).update({
-            //     moduleTest: newPush,
+            //     modules: newPush.slice(),
             // });
         }
         event.preventDefault();
@@ -171,11 +166,39 @@ class MyModal extends React.Component{
     }
 
     filterCallback() { //callback from handleFilter
-        //TODO: plugs into the backend to change the VARK Type for the item using this.state.varkselection (the vark type selected to implement)
-        //this.props.modules should contain an array of javascript objects with every module inside
-        //this.props.activeCourse should contain the string name of the currently active course
-        //this.props.moduleTitle should contain the string title of the current module
-        //this.props.firebase should let you access firebase
+        const allCourses = JSON.parse(localStorage.getItem('courses'));
+            var courseID;
+            for (let i = 0, len = allCourses.length; i < len; ++i) {
+                var course = allCourses[i];
+                if (course.CourseName === this.props.activeCourse) {
+                    courseID = course.appID; // identifies current course child name to update
+                    break;
+                }
+            }
+            const arrModules = this.props.modules;
+            const curModule = this.props.moduleTitle;
+            for ( let i = 0; i < arrModules.length; ++i) {
+                var neededModule;
+                if ( arrModules[i].title === curModule) {
+                    neededModule = arrModules[i]; break; // finds needed module to edit
+                }
+            }
+            
+            const contents = neededModule.contents;  // modify the corresponding item
+            const vark = neededModule.vark;
+            for ( let i = 0; i < contents.length; ++i) {
+                let itemTemp = contents[i]; 
+                if ( itemTemp === this.props.itemName) {
+                    vark[i] = this.state.varkselection;
+                }
+            }
+            
+            const newPush = this.props.modules; // record to database 
+            console.log(newPush);
+            // TODO: firebase not defined here either
+            // this.props.firebase.courses().child(courseID).update({
+            //     modules: newPush.slice(),
+            // });
         this.render();
     }
 
