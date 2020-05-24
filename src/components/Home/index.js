@@ -730,7 +730,6 @@ class AddModuleItem extends React.Component {
             internals: ["https://youtu.be/e3RbWSfhlp4",]
         } // creates example blank module using module title
 
-        
         arrModules.push(blankModule);
             
         const newPush = arrModules.slice();
@@ -1025,7 +1024,6 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         }
     }
 
-
     render() { //active: "" means the module is minimized, "active" means its expanded
         var showModules = true;
         var showVarkProfile = true;
@@ -1303,7 +1301,7 @@ class Container extends React.Component { //the main container for everything on
 
         this.state = {
             arrCourses: props.courses,
-            activeCourse: "none", //to be updated with the current open course
+            activeCourse: "none", //to be updated with the current open course code
             username: props.name,
             mainPanelMode: 0, //0 means modules view (default), 1 means add-course view, 2 means create-course view
             varkClicks: props.varkClicks,
