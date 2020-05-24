@@ -648,6 +648,7 @@ function ModuleItem(props) {
                             moduleTitle={props.name}
                             activeCourse={props.activeCourse}
                             modules={props.modules}
+                            firebase={props.firebase}
                         />)
                         :
                         (<div />)
