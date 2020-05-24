@@ -153,7 +153,8 @@ class MyModal extends React.Component{
             }
             
             const newPush = this.props.modules; // record to database 
-            //TODO: why is firebase undefined here??? If this is fixed the function will 100% work
+            console.log(newPush);
+            
             this.props.firebase.courses().child(courseID).update({
                 modules: newPush.slice(),
             });
@@ -195,10 +196,10 @@ class MyModal extends React.Component{
             
             const newPush = this.props.modules; // record to database 
             console.log(newPush);
-            // TODO: firebase not defined here either
-            // this.props.firebase.courses().child(courseID).update({
-            //     modules: newPush.slice(),
-            // });
+            
+            this.props.firebase.courses().child(courseID).update({
+                modules: newPush.slice(),
+            });
         this.render();
     }
 
