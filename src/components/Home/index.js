@@ -109,7 +109,7 @@ class MyModal extends React.Component{
             var courseID;
             for (let i = 0, len = allCourses.length; i < len; ++i) {
                 var course = allCourses[i];
-                if (course.CourseName === this.props.activeCourse) {
+                if (course.nclasscode === this.props.activeCourse) {
                     courseID = course.appID; // identifies current course child name to update
                     break;
                 }
@@ -144,7 +144,7 @@ class MyModal extends React.Component{
             var courseID;
             for (let i = 0, len = allCourses.length; i < len; ++i) {
                 var course = allCourses[i];
-                if (course.CourseName === this.props.activeCourse) {
+                if (course.nclasscode === this.props.activeCourse) {
                     courseID = course.appID; // identifies current course child name to update
                     break;
                 }
@@ -189,7 +189,7 @@ class MyModal extends React.Component{
             var courseID;
             for (let i = 0, len = allCourses.length; i < len; ++i) {
                 var course = allCourses[i];
-                if (course.CourseName === this.props.activeCourse) {
+                if (course.nclasscode === this.props.activeCourse) {
                     courseID = course.appID; // identifies current course child name to update
                     break;
                 }
@@ -480,7 +480,7 @@ class MyModal extends React.Component{
         var courseID;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
-            if (course.CourseName === this.props.activeCourse) {
+            if (course.nclasscode === this.props.activeCourse) {
                 courseID = course.appID; // identifies current course child name to update
                 break;
             }
@@ -551,7 +551,7 @@ class RenameItem extends React.Component {
         var courseID;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
-            if (course.CourseName === this.props.activeCourse) {
+            if (course.nclasscode === this.props.activeCourse) {
                 courseID = course.appID; // identifies current course child name to update
                 break;
             }
@@ -919,12 +919,12 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         this.render();
     }
 
-    getTeacherEmail(nameOfCourse) {
+    getTeacherEmail(nameOfCourse) { // use code here instead
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var teacher;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
             var course = allCourses[i];
-            if (course.CourseName === nameOfCourse) {
+            if (course.nclasscode === nameOfCourse) {
                 teacher = course.nteacher;
             }
         }
@@ -938,7 +938,7 @@ class MainPanel extends React.Component { //the entire right half of the screen 
         return curEmail;
     }
 
-    getCourseID(nameOfCourse) {
+    getCourseID(nameOfCourse) { // this cannot exist
         const allCourses = JSON.parse(localStorage.getItem('courses'));
         var needed;
         for (let i = 0, len = allCourses.length; i < len; ++i) {
@@ -1172,7 +1172,7 @@ class NameForm extends React.Component {
             var course = allCourses[i];
             if (course.nclasscode === this.state.value) {
                 shouldAddCourse = true;
-                needed = course.CourseName;
+                needed = course.nclasscode;
             }
         }
 
@@ -1242,10 +1242,10 @@ class Container extends React.Component { //the main container for everything on
 
     }
 
-    changeActiveCourse(nameOfActiveCourse) {
+    changeActiveCourse(courseCode) {
         this.setState({
             mainPanelMode: 0,
-            activeCourse: nameOfActiveCourse,
+            activeCourse: courseCode,
         }, () => {this.render();});
     }
 
@@ -1263,19 +1263,24 @@ class Container extends React.Component { //the main container for everything on
         this.render(); //force React to rerender
     }
 
-    addCourse = (nameOfCourse) => { //actually adds the course
+    addCourse = (courseCode) => { //actually adds the course
         var newCourses = this.state.arrCourses.slice();
-        newCourses.push(nameOfCourse);
-        this.setState({
-            arrCourses: newCourses.slice(),
-        }, () => {this.changeActiveCourse(nameOfCourse);});
-        const usr = JSON.parse(localStorage.getItem('authUser'));
-        //console.log(Object.values(usr).slice()[2]);
-        localStorage.setItem('authUser', JSON.stringify(usr));
-        //console.log(Object.values(usr).slice()[2]);
-        this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
-            courses: newCourses.slice(),
-        });
+        if (newCourses.includes(courseCode)) {
+            alert("You've already enrolled in this course!");
+        }
+        else {
+            newCourses.push(courseCode);
+            this.setState({
+                arrCourses: newCourses.slice(),
+            }, () => {this.changeActiveCourse(courseCode);});
+            const usr = JSON.parse(localStorage.getItem('authUser'));
+            //console.log(Object.values(usr).slice()[2]);
+            localStorage.setItem('authUser', JSON.stringify(usr));
+            //console.log(Object.values(usr).slice()[2]);
+            this.props.firebase.users().child(Object.values(usr).slice()[0]).update({
+                courses: newCourses.slice(),
+            });
+        }
     }
 
     createCourse = (nameOfCourse) => { //actually adds the course
@@ -1299,7 +1304,7 @@ class Container extends React.Component { //the main container for everything on
         }
         var classCode = hash1 + hash2 + ""; // <-- set this to the class code
 
-        const modulesT = this.getModules("THISISANEWCOURSE");
+        const modulesT = this.getModules(-1);
         const tempName = username + nameOfCourse + classCode;
         this.props.firebase.course(tempName).update({
             CourseName: nameOfCourse,
@@ -1309,7 +1314,7 @@ class Container extends React.Component { //the main container for everything on
         })
 
         //done for you: at the end, enroll the person in their own course by calling this.addCourse(classCode);
-        this.addCourse(nameOfCourse);
+        this.addCourse(classCode);
     }
 
     addVarkClicks = (varkCharacter) => {
@@ -1327,11 +1332,11 @@ class Container extends React.Component { //the main container for everything on
         });
     }
 
-    removeCourse = (nameOfCourse) => {
+    removeCourse = (courseCode) => {
         var newCourses = this.state.arrCourses.slice();
         var newnewCourses = [];
         newCourses.forEach(element => {
-            if (!(element===nameOfCourse)) {
+            if (!(element===courseCode)) {
                 newnewCourses.push(element);
             }
         });
@@ -1349,7 +1354,7 @@ class Container extends React.Component { //the main container for everything on
     }
 
     getModules(name) {
-        if (name==="THISISANEWCOURSE") {
+        if (name===-1) {
             return [
                 {
                     title: "Example Module",
@@ -1367,7 +1372,7 @@ class Container extends React.Component { //the main container for everything on
             var course = allCourses[i];
 
 
-            if ( course.CourseName === name) { //now we've retrieved the correct course to display
+            if ( course.nclasscode === name) { //now we've retrieved the correct course to display
                 //here we need to return all of the modules in that course in an array
 
                 var arrayOfModules = (Object.values(course.modules));
