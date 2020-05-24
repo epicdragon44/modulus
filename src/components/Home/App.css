@@ -171,7 +171,6 @@ div {
   max-height: 500px;
   box-shadow: 0 10px 29px 0 rgb(153, 153, 153);
   overflow: hidden;
-  border-radius: 10px;
 }
 
 .moduletitle {
@@ -274,48 +273,19 @@ div {
 }
 
 .Vmodulecontentitem:hover {
-  background-color: lightgrey;
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  padding-right: 3em;
-  border-left: 5px solid red;
-  border-bottom: 2px black;
-  font-size: large;
+  background-color: rgb(255, 200, 209);
 }
 
 .Amodulecontentitem:hover {
-  background-color: lightgrey;
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  padding-right: 3em;
-  border-left: 5px solid blue;
-  border-bottom: 2px black;
-  font-size: large;
+  background-color: rgb(200, 200, 255);
 }
 
 .Rmodulecontentitem:hover {
-  background-color: lightgrey;
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  padding-right: 3em;
-  border-left: 5px solid green;
-  border-bottom: 2px black;
-  font-size: large;
+  background-color: rgb(208, 255, 208);
 }
 
 .Kmodulecontentitem:hover {
-  background-color: lightgrey;
-  padding-left: 3em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  font-size: large;
-  padding-right: 3em;
-  border-left: 5px solid purple;
-  border-bottom: 2px black;
-  cursor: pointer;
+  background-color: rgb(255, 204, 255);
 }
 
 .leftalign {
